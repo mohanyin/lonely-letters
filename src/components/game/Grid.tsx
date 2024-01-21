@@ -1,5 +1,6 @@
 import { styled } from "@linaria/react";
 
+import Tile from "@/components/game/Tile";
 import { useGameStore } from "@/store/game";
 import { Border, BorderRadius, Colors } from "@/styles/core";
 
@@ -29,9 +30,14 @@ function Grid() {
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const index = r * 4 + c;
-      tiles.push(
-        <GridSpot onClick={() => placeTile(index)}>{grid[index]}</GridSpot>,
-      );
+      const letter = grid[index];
+      if (letter === null) {
+        tiles.push(
+          <GridSpot onClick={() => placeTile(index)}>{grid[index]}</GridSpot>,
+        );
+      } else {
+        tiles.push(<Tile letter={letter} />);
+      }
     }
   }
 

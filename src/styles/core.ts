@@ -29,6 +29,7 @@ const HEADLINE_2 = `
   font-family: ${Type.FONT_FAMILY};
   font-weight: ${Type.FONT_WEIGHT_BOLD};
   font-size: 3.5em;
+  line-height: 1;
 `;
 const OVERLINE = `
   font-family: ${Type.FONT_FAMILY_CONDENSED};
