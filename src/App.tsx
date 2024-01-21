@@ -1,11 +1,13 @@
 import { styled } from "@linaria/react";
-import { useState } from "react";
+import { useEffect } from "react";
 
 import AppBar from "@/components/AppBar";
 import Display from "@/components/game/Display";
 import Footer from "@/components/game/Footer";
 import Grid from "@/components/game/Grid";
+import { useGameStore } from "@/store/game";
 import { Type } from "@/styles/core";
+
 import "@/App.css";
 
 const AppStyles = styled.div`
@@ -15,7 +17,9 @@ const AppStyles = styled.div`
 `;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const start = useGameStore((store) => store.start);
+
+  useEffect(() => start(), [start]);
 
   return (
     <AppStyles>

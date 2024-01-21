@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
-import { useState } from "react";
 
+import { useGameStore } from "@/store/game";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 
 const FooterStyles = styled.div`
@@ -37,18 +37,18 @@ const NextLabel = styled.div`
 `;
 
 function Footer() {
-  const [count, setCount] = useState(0);
+  const remainingTiles = useGameStore((store) => store.remainingTiles);
 
   return (
     <FooterStyles>
       <div />
       <MainTileContainer>
-        <Tile>M</Tile>
+        <Tile>{remainingTiles[0]}</Tile>
       </MainTileContainer>
       <div>
         <NextTileContainer>
           <NextLabel>Next</NextLabel>
-          <Tile>N</Tile>
+          <Tile>{remainingTiles[1]}</Tile>
         </NextTileContainer>
       </div>
     </FooterStyles>

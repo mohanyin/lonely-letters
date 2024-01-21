@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
-import { useState } from "react";
 
+import { useGameStore } from "@/store/game";
 import { Colors, TypeStyles, BorderRadius, Border } from "@/styles/core";
 import { ROW, ROW_RIGHT } from "@/styles/layout";
 
@@ -48,14 +48,14 @@ const LettersRemaining = styled.div`
 `;
 
 function Display() {
-  const [count, setCount] = useState(0);
+  const score = useGameStore((state) => state.score);
 
   return (
     <div>
       <Header>Puzzle ### - 01/01/2024</Header>
       <DisplayContainer>
         <ScoreRow>
-          <Score>32,355</Score>
+          <Score>{score}</Score>
           <TypeLabel>Score</TypeLabel>
         </ScoreRow>
         <LettersRemainingRow>
