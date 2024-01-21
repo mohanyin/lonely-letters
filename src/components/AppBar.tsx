@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { styled } from "@linaria/react";
+import { useState } from "react";
+
 import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
 
 const AppBarStyles = styled.header`

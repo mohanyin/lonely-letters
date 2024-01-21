@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { styled } from "@linaria/react";
+import { useState } from "react";
+
 import { Border, BorderRadius, Colors } from "@/styles/core";
 
 const ROWS = 4;

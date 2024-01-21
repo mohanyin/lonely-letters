@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { styled } from "@linaria/react";
+import { useState } from "react";
+
 import AppBar from "@/components/AppBar";
 import Display from "@/components/game/Display";
+import Footer from "@/components/game/Footer";
+import Grid from "@/components/game/Grid";
 import { Type } from "@/styles/core";
 import "@/App.css";
-import Grid from "@/components/game/Grid";
-import Footer from "@/components/game/Footer";
 
 const AppStyles = styled.div`
   max-width: 1280px;

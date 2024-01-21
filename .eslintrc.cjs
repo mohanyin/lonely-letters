@@ -6,6 +6,8 @@ module.exports = {
     "prettier",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
@@ -15,5 +17,14 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "import/order": [
+      "error",
+      { alphabetize: { order: "asc" }, "newlines-between": "always" },
+    ],
+  },
+  settings: {
+    "import/resolver": {
+      typescript: true,
+    },
   },
 };
