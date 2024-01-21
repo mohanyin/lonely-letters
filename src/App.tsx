@@ -11,7 +11,7 @@ import "@/App.css";
 const AppStyles = styled.div`
   max-width: 1280px;
   padding: 20px;
-  font-family: ${Type.FONT_FAMILY};
+  font-family: "${Type.FONT_FAMILY}";
 `;
 
 function App() {

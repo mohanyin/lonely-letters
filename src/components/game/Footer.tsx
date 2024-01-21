@@ -10,25 +10,25 @@ const FooterStyles = styled.div`
 `;
 
 const MainTileContainer = styled.div`
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE_DOUBLE};
-  background: ${Colors.GOLD};
   grid-column: 2 / 4;
   padding: 16px;
+  background: ${Colors.GOLD};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.LARGE_DOUBLE};
 `;
 
 const Tile = styled.div`
   ${TypeStyles.HEADLINE_2}
-  aspect-ratio: 1;
+  background: ${Colors.WHITE};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE};
-  background: ${Colors.WHITE};
+  aspect-ratio: 1;
 `;
 
 const NextTileContainer = styled.div`
+  padding: 12px;
   border: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE_DOUBLE};
-  padding: 12px;
 `;
 
 const NextLabel = styled.div`

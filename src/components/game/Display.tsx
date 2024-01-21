@@ -10,9 +10,9 @@ const Header = styled.div`
 `;
 
 const DisplayContainer = styled.div`
+  background: ${Colors.WHITE};
   border: ${Border.THIN};
   border-radius: 0 0 ${BorderRadius.LARGE} ${BorderRadius.LARGE};
-  background: ${Colors.WHITE};
 `;
 
 const ScoreRow = styled.div`
@@ -27,11 +27,11 @@ const Score = styled.h2`
 
 const TypeLabel = styled.div`
   ${TypeStyles.OVERLINE}
+  display: inline-block;
+  padding: 6px 16px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
   border-radius: ${BorderRadius.SMALL};
-  padding: 6px 16px;
-  display: inline-block;
 `;
 
 const LettersRemainingRow = styled.div`
@@ -40,11 +40,11 @@ const LettersRemainingRow = styled.div`
 
 const LettersRemaining = styled.div`
   display: inline-block;
+  padding: 6px 32px;
   font-style: italic;
   border-top: ${Border.THIN};
   border-left: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE} 0;
-  padding: 6px 32px;
+  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
 `;
 
 function Display() {

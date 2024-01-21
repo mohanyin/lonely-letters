@@ -8,17 +8,17 @@ const COLS = 4;
 
 const GridStyles = styled.div`
   display: grid;
-  grid-template-columns: repeat(${COLS}, 1fr);
   grid-template-rows: repeat(${ROWS}, 1fr);
+  grid-template-columns: repeat(${COLS}, 1fr);
   gap: 12px;
 `;
 
 const GridSpot = styled.div`
-  background: ${Colors.GREEN_600};
-  border: ${Border.THIN};
+
+  background: ${Colors.GREEN_600};  border: ${Border.THIN};
+  border-top-width: 4px;
   border-radius: ${BorderRadius.LARGE};
   aspect-ratio: 1;
-  border-top-width: 4px;
 `;
 
 function Grid() {
