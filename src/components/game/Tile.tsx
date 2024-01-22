@@ -1,11 +1,11 @@
 import { styled } from "@linaria/react";
 
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
-import { SCORES, Letter } from "@/utils/tiles";
+import { Letter, SCORES } from "@/utils/tiles";
 
-const TileStyles = styled.div`
+const TileStyles = styled.div<{ selected: boolean }>`
   position: relative;
-  background: ${Colors.WHITE};
+  background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 3px;
   border-radius: ${BorderRadius.LARGE};
@@ -13,7 +13,7 @@ const TileStyles = styled.div`
   user-select: none;
 `;
 
-const Letter = styled.div`
+const TileLetter = styled.div`
   ${TypeStyles.HEADLINE_2}
   position: absolute;
   top: 4px;
@@ -36,10 +36,18 @@ const Score = styled.div`
   border-radius: 20px;
 `;
 
-function Tile({ letter }: { letter: Letter }) {
+function Tile({
+  letter,
+  selected,
+  onClick,
+}: {
+  letter: Letter;
+  selected: boolean;
+  onClick: () => void;
+}) {
   return (
-    <TileStyles>
-      <Letter>{letter}</Letter>
+    <TileStyles selected={selected} onClick={onClick}>
+      <TileLetter>{letter}</TileLetter>
       <Score>{SCORES[letter]}</Score>
     </TileStyles>
   );

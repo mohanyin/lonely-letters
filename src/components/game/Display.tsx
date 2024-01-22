@@ -49,10 +49,11 @@ const LettersRemaining = styled.div`
 
 function Display() {
   const score = useGameStore((state) => state.score);
+  const id = useGameStore((state) => state.id);
 
   return (
     <div>
-      <Header>Puzzle ### - 01/01/2024</Header>
+      <Header>Puzzle {id} - 01/01/2024</Header>
       <DisplayContainer>
         <ScoreRow>
           <Score>{score}</Score>

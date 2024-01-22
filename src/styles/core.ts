@@ -20,34 +20,34 @@ export const Border = {
   THIN: `1px solid ${Colors.BLACK}`,
 };
 
-const SCORE = `
-  font-family: ${Type.FONT_FAMILY_DISPLAY};
-  font-size: 2.5em;
-  line-height: 1;
-`;
-const HEADLINE_2 = `
-  font-family: ${Type.FONT_FAMILY};
-  font-weight: ${Type.FONT_WEIGHT_BOLD};
-  font-size: 3.5em;
-  line-height: 1;
-`;
-const OVERLINE = `
-  font-family: ${Type.FONT_FAMILY_CONDENSED};
-  font-weight: ${Type.FONT_WEIGHT_SEMI_BOLD};
-  font-size: 1em;
-  letter-spacing: ${1 / 16}em;
-  line-height: 1;
-  text-transform: uppercase;
-`;
-const BODY = `
-  font-family: ${Type.FONT_FAMILY};
-  font-weight: ${Type.FONT_WEIGHT_REGULAR};
-  font-size: 1em;
-`;
-const BODY_BOLD = `
-  ${BODY}
-  font-weight: ${Type.FONT_WEIGHT_BOLD};
-`;
+const SCORE = {
+  fontFamily: Type.FONT_FAMILY_DISPLAY,
+  fontSize: "2.5em",
+  lineHeight: 1,
+};
+const HEADLINE_2 = {
+  fontFamily: Type.FONT_FAMILY,
+  fontWeight: Type.FONT_WEIGHT_BOLD,
+  fontSize: "3.5em",
+  lineHeight: 1,
+};
+const OVERLINE = {
+  fontFamily: Type.FONT_FAMILY_CONDENSED,
+  fontWeight: Type.FONT_WEIGHT_SEMI_BOLD,
+  fontSize: "1em",
+  letterSpacing: `${1 / 16}em`,
+  lineHeight: 1,
+  textTransform: "uppercase",
+};
+const BODY = {
+  fontFamily: Type.FONT_FAMILY,
+  fontWeight: Type.FONT_WEIGHT_REGULAR,
+  fontSize: "1em",
+};
+const BODY_BOLD = {
+  ...BODY,
+  fontWeight: Type.FONT_WEIGHT_BOLD,
+};
 
 export const TypeStyles = {
   SCORE,

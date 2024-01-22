@@ -24,19 +24,25 @@ const GridSpot = styled.button`
 
 function Grid() {
   const placeTile = useGameStore((state) => state.placeTile);
+  const selectTile = useGameStore((state) => state.selectTile);
   const grid = useGameStore((state) => state.grid);
+  const selectedTiles = useGameStore((state) => state.selectedTiles);
 
   const tiles = [];
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const index = r * 4 + c;
       const letter = grid[index];
-      if (letter === null) {
-        tiles.push(
-          <GridSpot onClick={() => placeTile(index)}>{grid[index]}</GridSpot>,
-        );
+      if (!letter) {
+        tiles.push(<GridSpot onClick={() => placeTile(index)} />);
       } else {
-        tiles.push(<Tile letter={letter} />);
+        tiles.push(
+          <Tile
+            letter={letter}
+            selected={selectedTiles.includes(index)}
+            onClick={() => selectTile(index)}
+          />,
+        );
       }
     }
   }

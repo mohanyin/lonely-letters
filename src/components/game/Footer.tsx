@@ -36,12 +36,23 @@ const NextLabel = styled.div`
   margin-bottom: 8px;
 `;
 
+const DoneButton = styled.button`
+  ${TypeStyles.OVERLINE}
+  padding: 12px;
+  background: ${Colors.WHITE};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.LARGE_DOUBLE};
+`;
+
 function Footer() {
   const remainingTiles = useGameStore((store) => store.remainingTiles);
-
+  const isSelecting = useGameStore((store) => store.isSelecting());
+  const finishSelecting = useGameStore((store) => store.finishSelecting);
   return (
     <FooterStyles>
-      <div />
+      {isSelecting ? (
+        <DoneButton onClick={() => finishSelecting()}>Done</DoneButton>
+      ) : null}
       <MainTileContainer>
         <Tile>{remainingTiles[0]}</Tile>
       </MainTileContainer>
