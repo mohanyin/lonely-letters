@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
-import { SCORES } from "@/utils/tiles";
+import { SCORES, Letter } from "@/utils/tiles";
 
 const TileStyles = styled.div`
   position: relative;
@@ -36,7 +36,7 @@ const Score = styled.div`
   border-radius: 20px;
 `;
 
-function Tile({ letter }: { letter: keyof typeof SCORES }) {
+function Tile({ letter }: { letter: Letter }) {
   return (
     <TileStyles>
       <Letter>{letter}</Letter>

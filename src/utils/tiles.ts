@@ -1,3 +1,5 @@
+export type Letter = keyof typeof DISTRUBTION;
+
 export const DISTRUBTION = {
   A: 9,
   B: 2,
@@ -27,11 +29,11 @@ export const DISTRUBTION = {
   Z: 1,
 };
 
-export const tileBag = Object.entries(DISTRUBTION).flatMap(([letter, count]) =>
-  Array(count).fill(letter),
+export const tileBag: Letter[] = Object.entries(DISTRUBTION).flatMap(
+  ([letter, count]) => Array(count).fill(letter),
 );
 
-export const SCORES = {
+export const SCORES: Record<Letter, number> = {
   A: 1,
   B: 3,
   C: 3,

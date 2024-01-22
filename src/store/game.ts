@@ -3,12 +3,12 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { MersenneTwisterGenerator } from "@/utils/random";
-import { tileBag } from "@/utils/tiles";
+import { Letter, tileBag } from "@/utils/tiles";
 
 interface GameStore {
   score: number;
-  remainingTiles: string[];
-  grid: (string | null)[];
+  remainingTiles: Letter[];
+  grid: (Letter | null)[];
   incrementScore: () => void;
   start: () => void;
   placeTile: (index: number) => void;
