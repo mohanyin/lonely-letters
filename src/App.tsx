@@ -13,7 +13,7 @@ import "@/App.css";
 const AppStyles = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  height: 100vh;
+  align-items: center;
   font-family: "${Type.FONT_FAMILY}";
 `;
 
@@ -23,8 +23,8 @@ const MainStyles = styled.main`
   flex-flow: column nowrap;
   gap: 16px;
   justify-content: space-around;
-  max-width: 500px;
-  padding: 12px 20px max(env(safe-area-inset-bottom), 20px);
+  max-width: 38vh;
+  padding: 12px 32px max(env(safe-area-inset-bottom), 20px);
 `;
 
 function App() {

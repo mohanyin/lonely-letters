@@ -10,6 +10,7 @@ const AppBarStyles = styled.header`
   gap: 8px;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 12px 0;
   background: ${Colors.BLACK};
 `;
