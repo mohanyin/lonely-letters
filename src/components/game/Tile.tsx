@@ -9,7 +9,6 @@ const TileStyles = styled.div<{ selected: boolean }>`
   border: ${Border.THIN};
   border-bottom-width: 3px;
   border-radius: ${BorderRadius.LARGE};
-  aspect-ratio: 1;
   user-select: none;
 `;
 
@@ -40,13 +39,22 @@ function Tile({
   letter,
   selected,
   onClick,
+  className,
+  style,
 }: {
   letter: Letter;
-  selected: boolean;
-  onClick: () => void;
+  selected?: boolean;
+  onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <TileStyles selected={selected} onClick={onClick}>
+    <TileStyles
+      selected={selected ?? false}
+      className={className}
+      style={style}
+      onClick={onClick}
+    >
       <TileLetter>{letter}</TileLetter>
       <Score>{SCORES[letter]}</Score>
     </TileStyles>

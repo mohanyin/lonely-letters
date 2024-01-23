@@ -9,6 +9,7 @@ import { Letter, SCORES, tileBag } from "@/utils/tiles";
 interface GameStore {
   score: number;
   remainingTiles: Letter[];
+  totalTilesCount: number;
   grid: (Letter | null)[];
   selectedTiles: number[];
   id: number;
@@ -27,6 +28,7 @@ export const useGameStore = create<GameStore>()(
     immer((set, get) => ({
       score: 0,
       remainingTiles: [],
+      totalTilesCount: 0,
       grid: [],
       selectedTiles: [],
       id: 0,
@@ -47,6 +49,7 @@ export const useGameStore = create<GameStore>()(
           state.score = 0;
           state.selectedTiles = [];
           state.remainingTiles = tiles;
+          state.totalTilesCount = tiles.length;
           state.grid = Array(16).fill(null);
         });
       },

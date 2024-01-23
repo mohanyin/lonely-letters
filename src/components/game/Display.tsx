@@ -50,6 +50,10 @@ const LettersRemaining = styled.div`
 function Display() {
   const score = useGameStore((state) => state.score);
   const id = useGameStore((state) => state.id);
+  const totalTilesCount = useGameStore((state) => state.totalTilesCount);
+  const remainingTilesCount = useGameStore(
+    (state) => state.remainingTiles.length,
+  );
 
   return (
     <div>
@@ -60,7 +64,9 @@ function Display() {
           <TypeLabel>Score</TypeLabel>
         </ScoreRow>
         <LettersRemainingRow>
-          <LettersRemaining>XX / XX letters remaining</LettersRemaining>
+          <LettersRemaining>
+            {remainingTilesCount} / {totalTilesCount} letters remaining
+          </LettersRemaining>
         </LettersRemainingRow>
       </DisplayContainer>
     </div>

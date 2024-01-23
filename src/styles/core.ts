@@ -60,5 +60,5 @@ export const TypeStyles = {
 export const BorderRadius = {
   SMALL: "4px",
   LARGE: "12px",
-  LARGE_DOUBLE: "24px",
+  LARGE_DOUBLE: "36px",
 };
