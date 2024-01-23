@@ -16,20 +16,19 @@ const MainTileContainer = styled.div`
   padding: 16px;
   background: ${Colors.GOLD};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE_DOUBLE};
+  border-radius: ${BorderRadius.LARGE};
   aspect-ratio: 1;
 `;
 
 const MainTile = styled(Tile)`
-  width: 50%;
-  transform: scale(2) translate(25%, 25%);
   aspect-ratio: 1;
+  border-bottom-width: 6px;
 `;
 
 const NextTileContainer = styled.div`
   padding: 12px;
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE_DOUBLE};
+  border-radius: ${BorderRadius.LARGE};
 `;
 
 const NextLabel = styled.div`
@@ -38,7 +37,6 @@ const NextLabel = styled.div`
 `;
 
 const NextTile = styled(Tile)`
-  transform: scale(0.8) translateX(-12.5%);
   aspect-ratio: 1;
 `;
 
@@ -47,7 +45,7 @@ const DoneButton = styled.button`
   padding: 12px;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE_DOUBLE};
+  border-radius: ${BorderRadius.LARGE};
 `;
 
 function Footer() {

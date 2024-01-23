@@ -5,6 +5,7 @@ import { Letter, SCORES } from "@/utils/tiles";
 
 const TileStyles = styled.div<{ selected: boolean }>`
   position: relative;
+  container: tile / size;
   background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 3px;
@@ -15,24 +16,28 @@ const TileStyles = styled.div<{ selected: boolean }>`
 const TileLetter = styled.div`
   ${TypeStyles.HEADLINE_2}
   position: absolute;
-  top: 4px;
-  right: 18px;
-  left: 12px;
+  top: 4cqw;
+  right: 25cqw;
+  left: 10cqw;
+  font-size: 75cqw;
   text-align: center;
 `;
 
+// TODO: Make this light font
+const scoreWidth = 25;
 const Score = styled.div`
   ${TypeStyles.BODY}
   position: absolute;
-  right: 8px;
-  bottom: 8px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
+  right: 12cqw;
+  bottom: 12cqw;
+  width: ${scoreWidth}cqw;
+  height: ${scoreWidth}cqw;
+  font-size: ${scoreWidth * 0.8}cqw;
+  line-height: ${scoreWidth}cqw;
   text-align: center;
   background: ${Colors.GREEN};
   border: ${Border.THIN};
-  border-radius: 20px;
+  border-radius: ${scoreWidth}cqw;
 `;
 
 function Tile({

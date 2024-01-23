@@ -29,7 +29,7 @@ function AppBar() {
 
   return (
     <AppBarStyles>
-      <Title>Letter Today</Title>
+      <Title>Gridle</Title>
       <Details>
         Puzzle #{id} - {format(new Date(), "MM/dd/yyyy")}
       </Details>
