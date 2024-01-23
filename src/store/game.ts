@@ -68,9 +68,33 @@ export const useGameStore = create<GameStore>()(
 
       selectTile(index: number) {
         set((state) => {
+          // If tile is empty, do nothing.
           if (state.grid[index] === null) {
             return;
           }
+          // If tile is already selected, back all the way up to right before
+          // that tile.
+          if (state.selectedTiles.includes(index)) {
+            const tileIndex = state.selectedTiles.indexOf(index);
+            state.selectedTiles = state.selectedTiles.slice(0, tileIndex);
+            return;
+          }
+          // If tile is not adjacent to the last selected tile, do nothing.
+          const lastSelectedTile =
+            state.selectedTiles[state.selectedTiles.length - 1];
+          const lastSelectPos = {
+            x: lastSelectedTile % 4,
+            y: Math.floor(lastSelectedTile / 4),
+          };
+          const selectedPos = { x: index % 4, y: Math.floor(index / 4) };
+          if (
+            Math.abs(lastSelectPos.x - selectedPos.x) +
+              Math.abs(lastSelectPos.y - selectedPos.y) >
+            1
+          ) {
+            return;
+          }
+
           state.selectedTiles.push(index);
         });
       },
