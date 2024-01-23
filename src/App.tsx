@@ -11,9 +11,20 @@ import { Type } from "@/styles/core";
 import "@/App.css";
 
 const AppStyles = styled.div`
-  max-width: 1280px;
-  padding: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
   font-family: "${Type.FONT_FAMILY}";
+`;
+
+const MainStyles = styled.main`
+  display: flex;
+  flex: 1 1 auto;
+  flex-flow: column nowrap;
+  gap: 16px;
+  justify-content: space-around;
+  max-width: 500px;
+  padding: 12px 20px max(env(safe-area-inset-bottom), 20px);
 `;
 
 function App() {
@@ -25,11 +36,11 @@ function App() {
     <AppStyles>
       <AppBar />
 
-      <main>
+      <MainStyles>
         <Display />
         <Grid />
         <Footer />
-      </main>
+      </MainStyles>
     </AppStyles>
   );
 }

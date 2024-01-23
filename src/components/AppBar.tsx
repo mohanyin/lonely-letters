@@ -1,23 +1,38 @@
 import { styled } from "@linaria/react";
+import { format } from "date-fns";
 
-import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { useGameStore } from "@/store/game";
+import { Colors, TypeStyles } from "@/styles/core";
 
 const AppBarStyles = styled.header`
-  ${TypeStyles.BODY_BOLD}
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  height: 54px;
-  margin-bottom: 16px;
-  color: ${Colors.WHITE};
+  padding: 12px 0;
   background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.LARGE};
+`;
+
+const Title = styled.h1`
+  ${TypeStyles.BODY_BOLD}
+  color: ${Colors.WHITE};
+`;
+
+const Details = styled.div`
+  ${TypeStyles.OVERLINE_SMALL}
+  color: ${Colors.GREEN};
 `;
 
 function AppBar() {
+  const id = useGameStore((state) => state.id);
+
   return (
     <AppBarStyles>
-      <h1>Letter Today</h1>
+      <Title>Letter Today</Title>
+      <Details>
+        Puzzle {id} - {format(new Date(), "MM/dd/yyyy")}
+      </Details>
     </AppBarStyles>
   );
 }

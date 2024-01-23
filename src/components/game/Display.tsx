@@ -4,15 +4,10 @@ import { useGameStore } from "@/store/game";
 import { Colors, TypeStyles, BorderRadius, Border } from "@/styles/core";
 import { ROW, ROW_RIGHT } from "@/styles/layout";
 
-const Header = styled.div`
-  ${TypeStyles.OVERLINE}
-  margin-bottom: 6px;
-`;
-
 const DisplayContainer = styled.div`
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-radius: 0 0 ${BorderRadius.LARGE} ${BorderRadius.LARGE};
+  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
 `;
 
 const ScoreRow = styled.div`
@@ -49,7 +44,6 @@ const LettersRemaining = styled.div`
 
 function Display() {
   const score = useGameStore((state) => state.score);
-  const id = useGameStore((state) => state.id);
   const totalTilesCount = useGameStore((state) => state.totalTilesCount);
   const remainingTilesCount = useGameStore(
     (state) => state.remainingTiles.length,
@@ -57,7 +51,6 @@ function Display() {
 
   return (
     <div>
-      <Header>Puzzle {id} - 01/01/2024</Header>
       <DisplayContainer>
         <ScoreRow>
           <Score>{score}</Score>

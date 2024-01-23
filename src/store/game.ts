@@ -1,3 +1,4 @@
+import { differenceInDays } from "date-fns";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -39,7 +40,7 @@ export const useGameStore = create<GameStore>()(
 
       start: () => {
         set((state) => {
-          const seed = Math.floor(Date.now() / 1000 / 60 / 60 / 23);
+          const seed = differenceInDays(new Date(), new Date(2024, 0, 1));
           const generator = new MersenneTwisterGenerator(seed);
           const tiles = Array(30)
             .fill(0)

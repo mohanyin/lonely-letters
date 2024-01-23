@@ -31,6 +31,10 @@ const HEADLINE_2 = {
   fontSize: "3.5em",
   lineHeight: 1,
 };
+const HEADLINE_3 = {
+  ...HEADLINE_2,
+  fontSize: "1.25em",
+};
 const OVERLINE = {
   fontFamily: Type.FONT_FAMILY_CONDENSED,
   fontWeight: Type.FONT_WEIGHT_SEMI_BOLD,
@@ -38,6 +42,10 @@ const OVERLINE = {
   letterSpacing: `${1 / 16}em`,
   lineHeight: 1,
   textTransform: "uppercase",
+};
+const OVERLINE_SMALL = {
+  ...OVERLINE,
+  fontSize: "0.8em",
 };
 const BODY = {
   fontFamily: Type.FONT_FAMILY,
@@ -52,7 +60,9 @@ const BODY_BOLD = {
 export const TypeStyles = {
   SCORE,
   HEADLINE_2,
+  HEADLINE_3,
   OVERLINE,
+  OVERLINE_SMALL,
   BODY,
   BODY_BOLD,
 };

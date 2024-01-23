@@ -14,6 +14,9 @@ dependencies:
   '@wyw-in-js/babel-preset':
     specifier: ^0.2.2
     version: 0.2.2(typescript@5.3.3)
+  date-fns:
+    specifier: ^3.3.1
+    version: 3.3.1
   immer:
     specifier: ^10.0.3
     version: 10.0.3
@@ -1895,6 +1898,10 @@ packages:
     dependencies:
       array-find-index: 1.0.2
     dev: true
+
+  /date-fns@3.3.1:
+    resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
+    dev: false
 
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
