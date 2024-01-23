@@ -60,13 +60,19 @@ function Footer() {
         <DoneButton onClick={() => finishSelecting()}>Done</DoneButton>
       ) : null}
       <MainTileContainer>
-        <MainTile letter={remainingTiles[0]} />
+        {remainingTiles[0] ? (
+          <MainTile letter={remainingTiles[0]} />
+        ) : (
+          <div>You done</div>
+        )}
       </MainTileContainer>
       <div>
-        <NextTileContainer>
-          <NextLabel>Next</NextLabel>
-          <NextTile letter={remainingTiles[1]} />
-        </NextTileContainer>
+        {remainingTiles[1] ? (
+          <NextTileContainer>
+            <NextLabel>Next</NextLabel>
+            <NextTile letter={remainingTiles[1]} />
+          </NextTileContainer>
+        ) : null}
       </div>
     </FooterStyles>
   );
