@@ -8,6 +8,7 @@ const FooterStyles = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+  transform: perspective(600px) rotate3d(1, 0, 0, 30deg);
 `;
 
 const MainTileContainer = styled.div`

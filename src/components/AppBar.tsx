@@ -1,5 +1,4 @@
 import { styled } from "@linaria/react";
-import { useState } from "react";
 
 import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
 
@@ -16,11 +15,9 @@ const AppBarStyles = styled.header`
 `;
 
 function AppBar() {
-  const [count, setCount] = useState(0);
-
   return (
     <AppBarStyles>
-      <h1>Lonely Letters</h1>
+      <h1>Letter Today</h1>
     </AppBarStyles>
   );
 }
