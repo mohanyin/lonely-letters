@@ -28,7 +28,7 @@ const TileLetter = styled.div`
 `;
 
 // TODO: Make this light font
-const scoreWidth = 25;
+const scoreWidth = 30;
 const Score = styled.div`
   ${TypeStyles.BODY}
   position: absolute;
