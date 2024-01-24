@@ -1,4 +1,5 @@
 import { styled } from "@linaria/react";
+import { useThrottle } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 
 import Tile from "@/components/game/Tile";
@@ -36,17 +37,18 @@ function Grid({
   const selectedTiles = useGameStore((state) => state.selectedTiles);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
+  const debouncedHighlight = useThrottle(highlight, 60);
 
   useEffect(() => {
-    if (!highlight) {
+    if (!debouncedHighlight) {
       onHighlight(null);
       setHighlightedSpot(null);
       return;
     }
 
     const possibleHighlights = document.elementsFromPoint(
-      highlight.x,
-      highlight.y,
+      debouncedHighlight.x,
+      debouncedHighlight.y,
     );
     possibleHighlights.forEach((el) => {
       if (el instanceof HTMLElement && el.dataset.gridSpot) {
@@ -56,7 +58,7 @@ function Grid({
         return;
       }
     });
-  }, [highlight, onHighlight]);
+  }, [debouncedHighlight, onHighlight]);
 
   const tiles = [];
   for (let r = 0; r < ROWS; r++) {

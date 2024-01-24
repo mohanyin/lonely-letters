@@ -16,6 +16,7 @@
   "dependencies": {
     "@linaria/core": "^6.0.0",
     "@linaria/react": "^6.0.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "@wyw-in-js/babel-preset": "^0.2.2",
     "date-fns": "^3.3.1",
     "immer": "^10.0.3",
