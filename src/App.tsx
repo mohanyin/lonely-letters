@@ -23,7 +23,8 @@ const MainStyles = styled.main`
   flex-flow: column nowrap;
   gap: 16px;
   justify-content: space-around;
-  max-width: 38vh;
+  width: 100%;
+  max-width: 50vh;
   padding: 12px 32px max(env(safe-area-inset-bottom), 20px);
 `;
 
