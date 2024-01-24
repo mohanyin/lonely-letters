@@ -15,14 +15,40 @@ interface GameStore {
   grid: (Letter | null)[];
   selectedTiles: number[];
   id: number;
+  selectMode: "tap" | "swipe";
 
   isSelecting: () => boolean;
 
   incrementScore: () => void;
   start: () => void;
   placeTile: (index: number) => void;
-  selectTile: (index: number) => void;
+  onTileTap: (index: number) => void;
+  onTileSwipe: (index: number) => void;
   finishSelecting: () => void;
+}
+
+function addSelectedTile(state: GameStore, index: number) {
+  // If tile is not adjacent to the last selected tile, do nothing.
+  const lastSelectedTile = state.selectedTiles[state.selectedTiles.length - 1];
+  if (lastSelectedTile === undefined) {
+    state.selectedTiles = [index];
+    return;
+  }
+
+  const lastSelectPos = {
+    x: lastSelectedTile % 4,
+    y: Math.floor(lastSelectedTile / 4),
+  };
+  const selectedPos = { x: index % 4, y: Math.floor(index / 4) };
+  if (
+    Math.abs(lastSelectPos.x - selectedPos.x) +
+      Math.abs(lastSelectPos.y - selectedPos.y) >
+    1
+  ) {
+    return;
+  }
+
+  state.selectedTiles = [...state.selectedTiles, index];
 }
 
 export const useGameStore = create<GameStore>()(
@@ -34,6 +60,7 @@ export const useGameStore = create<GameStore>()(
       grid: [],
       selectedTiles: [],
       id: 0,
+      selectMode: "tap",
 
       isSelecting: () => !!get().selectedTiles.length,
 
@@ -67,8 +94,10 @@ export const useGameStore = create<GameStore>()(
         });
       },
 
-      selectTile(index: number) {
+      onTileTap(index: number) {
         set((state) => {
+          console.log("start", state.selectedTiles);
+
           // If tile is empty, do nothing.
           if (state.grid[index] === null) {
             return;
@@ -80,23 +109,26 @@ export const useGameStore = create<GameStore>()(
             state.selectedTiles = state.selectedTiles.slice(0, tileIndex);
             return;
           }
-          // If tile is not adjacent to the last selected tile, do nothing.
-          const lastSelectedTile =
-            state.selectedTiles[state.selectedTiles.length - 1];
-          const lastSelectPos = {
-            x: lastSelectedTile % 4,
-            y: Math.floor(lastSelectedTile / 4),
-          };
-          const selectedPos = { x: index % 4, y: Math.floor(index / 4) };
-          if (
-            Math.abs(lastSelectPos.x - selectedPos.x) +
-              Math.abs(lastSelectPos.y - selectedPos.y) >
-            1
-          ) {
+          state.selectMode = "tap";
+          console.log("tap");
+          addSelectedTile(state, index);
+          console.log(state.selectedTiles);
+        });
+      },
+
+      onTileSwipe(index: number) {
+        set((state) => {
+          // If tile is empty, do nothing.
+          if (state.grid[index] === null) {
             return;
           }
-
-          state.selectedTiles.push(index);
+          // If tile is already selected, ignore it.
+          if (state.selectedTiles.includes(index)) {
+            return;
+          }
+          state.selectMode = "swipe";
+          console.log("swipe");
+          addSelectedTile(state, index);
         });
       },
 

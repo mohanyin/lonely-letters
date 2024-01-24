@@ -50,6 +50,7 @@ function Tile({
   onClick,
   className,
   style,
+  dataGridSpot,
   onTouchStart,
   onTouchMove,
   onTouchEnd,
@@ -59,12 +60,14 @@ function Tile({
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
+  dataGridSpot?: number;
   onTouchStart?: (event: React.TouchEvent) => void;
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
   return (
     <TileStyles
+      data-grid-spot={dataGridSpot}
       selected={selected ?? false}
       className={className}
       style={style}

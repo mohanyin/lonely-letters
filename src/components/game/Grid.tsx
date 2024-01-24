@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 import { useThrottle } from "@uidotdev/usehooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Tile from "@/components/game/Tile";
 import { useGameStore } from "@/store/game";
@@ -14,6 +14,8 @@ const GridStyles = styled.div`
   grid-template-rows: repeat(${ROWS}, 1fr);
   grid-template-columns: repeat(${COLS}, 1fr);
   gap: 12px;
+  user-select: none;
+  touch-action: none;
 `;
 
 const GridSpot = styled.button<{ highlight: boolean }>`
@@ -37,12 +39,29 @@ function Grid({
   onHighlight: (index: number | null) => void;
 }) {
   const placeTile = useGameStore((state) => state.placeTile);
-  const selectTile = useGameStore((state) => state.selectTile);
+  const onTileTap = useGameStore((state) => state.onTileTap);
+  const onTileSwipe = useGameStore((state) => state.onTileSwipe);
   const grid = useGameStore((state) => state.grid);
   const selectedTiles = useGameStore((state) => state.selectedTiles);
+  const finishSelecting = useGameStore((state) => state.finishSelecting);
+  const selectMode = useGameStore((state) => state.selectMode);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
+
+  const detectDragTarget = useCallback((position: { x: number; y: number }) => {
+    const possibleHighlights = document.elementsFromPoint(
+      position.x,
+      position.y,
+    );
+    for (const el of possibleHighlights) {
+      if (el instanceof HTMLElement && el.dataset.gridSpot) {
+        const index = parseInt(el.dataset.gridSpot);
+        return index;
+      }
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
     if (!debouncedHighlight) {
@@ -51,22 +70,23 @@ function Grid({
       return;
     }
 
-    const possibleHighlights = document.elementsFromPoint(
-      debouncedHighlight.x,
-      debouncedHighlight.y,
-    );
-    for (const el of possibleHighlights) {
-      if (el instanceof HTMLElement && el.dataset.gridSpot) {
-        const index = parseInt(el.dataset.gridSpot);
-        onHighlight(index);
-        setHighlightedSpot(index);
-        return;
-      }
-    }
+    const index = detectDragTarget(debouncedHighlight);
+    onHighlight(index);
+    setHighlightedSpot(index);
+  }, [debouncedHighlight, detectDragTarget, onHighlight]);
 
-    onHighlight(null);
-    setHighlightedSpot(null);
-  }, [debouncedHighlight, onHighlight]);
+  const addTileOnSwipe = useCallback(
+    (event: React.TouchEvent) => {
+      const index = detectDragTarget({
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      });
+      if (index !== null && grid[index] !== null) {
+        onTileSwipe(index);
+      }
+    },
+    [onTileSwipe, detectDragTarget, grid],
+  );
 
   const tiles = [];
   for (let r = 0; r < ROWS; r++) {
@@ -76,6 +96,7 @@ function Grid({
       if (!letter) {
         tiles.push(
           <GridSpot
+            key={index}
             data-grid-spot={index}
             highlight={highlightedSpot === index}
             onClick={() => placeTile(index)}
@@ -84,16 +105,29 @@ function Grid({
       } else {
         tiles.push(
           <Tile
+            key={index}
             letter={letter}
+            dataGridSpot={index}
             selected={selectedTiles.includes(index)}
-            onClick={() => selectTile(index)}
+            onClick={() => onTileTap(index)}
           />,
         );
       }
     }
   }
 
-  return <GridStyles>{...tiles}</GridStyles>;
+  return (
+    <GridStyles
+      onTouchMove={addTileOnSwipe}
+      onTouchEnd={() => {
+        if (selectMode === "swipe") {
+          finishSelecting();
+        }
+      }}
+    >
+      {...tiles}
+    </GridStyles>
+  );
 }
 
 export default Grid;
