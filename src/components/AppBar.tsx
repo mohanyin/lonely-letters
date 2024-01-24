@@ -30,7 +30,7 @@ function AppBar() {
 
   return (
     <AppBarStyles>
-      <Title>Gridle</Title>
+      <Title>Square Words</Title>
       <Details>
         Puzzle #{id} - {format(new Date(), "MM/dd/yyyy")}
       </Details>
