@@ -3,13 +3,16 @@ import { styled } from "@linaria/react";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Letter, SCORES } from "@/utils/tiles";
 
-const TileStyles = styled.div<{ selected: boolean }>`
+const TileStyles = styled.button<{ selected: boolean }>`
   position: relative;
+  display: block;
+  width: 100%;
   background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 3px;
   border-radius: ${BorderRadius.LARGE};
   user-select: none;
+  touch-action: none;
   container: tile / size;
   aspect-ratio: 1;
 `;
@@ -47,12 +50,18 @@ function Tile({
   onClick,
   className,
   style,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
 }: {
   letter: Letter;
   selected?: boolean;
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
+  onTouchStart?: (event: React.TouchEvent) => void;
+  onTouchMove?: (event: React.TouchEvent) => void;
+  onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
   return (
     <TileStyles
@@ -60,6 +69,9 @@ function Tile({
       className={className}
       style={style}
       onClick={onClick}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       <TileLetter>{letter}</TileLetter>
       <Score>{SCORES[letter]}</Score>

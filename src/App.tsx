@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import AppBar from "@/components/AppBar";
 import Display from "@/components/game/Display";
@@ -30,17 +30,32 @@ const MainStyles = styled.main`
 
 function App() {
   const start = useGameStore((store) => store.start);
+  const placeTile = useGameStore((store) => store.placeTile);
 
   useEffect(() => start(), [start]);
-
+  const [dragLocation, setDragLocation] = useState<null | {
+    x: number;
+    y: number;
+  }>(null);
+  const [activeTile, setActiveTile] = useState<null | number>(null);
   return (
     <AppStyles>
       <AppBar />
 
       <MainStyles>
         <Display />
-        <Grid />
-        <Footer />
+        <Grid highlight={dragLocation} onHighlight={setActiveTile} />
+        <Footer
+          onDragStart={(pos) => setDragLocation(pos)}
+          onDragMove={(pos) => setDragLocation(pos)}
+          onDragEnd={() => {
+            setDragLocation(null);
+            if (activeTile !== null) {
+              setActiveTile(null);
+              placeTile(activeTile);
+            }
+          }}
+        />
       </MainStyles>
     </AppStyles>
   );
