@@ -42,7 +42,6 @@ const NextTile = styled(Tile)`
 
 const DoneButton = styled.button`
   ${TypeStyles.OVERLINE}
-  padding: 12px;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE};
