@@ -42,7 +42,7 @@ function Grid({
   const selectedTiles = useGameStore((state) => state.selectedTiles);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
-  const debouncedHighlight = useThrottle(highlight, 60);
+  const debouncedHighlight = useThrottle(highlight, 30);
 
   useEffect(() => {
     if (!debouncedHighlight) {
@@ -55,14 +55,17 @@ function Grid({
       debouncedHighlight.x,
       debouncedHighlight.y,
     );
-    possibleHighlights.forEach((el) => {
+    for (const el of possibleHighlights) {
       if (el instanceof HTMLElement && el.dataset.gridSpot) {
         const index = parseInt(el.dataset.gridSpot);
         onHighlight(index);
         setHighlightedSpot(index);
         return;
       }
-    });
+    }
+
+    onHighlight(null);
+    setHighlightedSpot(null);
   }, [debouncedHighlight, onHighlight]);
 
   const tiles = [];
