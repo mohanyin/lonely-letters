@@ -7,6 +7,7 @@ import { ROW, ROW_RIGHT } from "@/styles/layout";
 import { formatBonus } from "@/utils/scoring";
 
 const DisplayContainer = styled.div<{ isSelecting?: boolean }>`
+  position: relative;
   background: ${({ isSelecting }) =>
     !isSelecting ? Colors.WHITE : Colors.GOLD};
   border: ${Border.THIN};
@@ -47,14 +48,28 @@ const LettersRemainingRow = styled.div`
   ${ROW_RIGHT}
 `;
 
-const LettersRemaining = styled.div`
+const LettersRemaining = styled.div<{ inverse?: boolean; absolute?: boolean }>`
+  position: ${({ absolute }) => (absolute ? "absolute" : "relative")};
+  right: 0;
+  bottom: 0;
   display: inline-block;
   padding: 6px 32px;
+  color: ${({ inverse }) => (inverse ? Colors.WHITE : Colors.BLACK)};
   font-style: italic;
-  background: ${Colors.WHITE};
+  white-space: nowrap;
+  background: ${({ inverse }) => (inverse ? Colors.BLACK : Colors.WHITE)};
   border-top: ${Border.THIN};
   border-left: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
+`;
+
+const LettersRemainingOverlay = styled.div<{ width?: string }>`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: ${({ width }) => width ?? "100%"};
+  height: 100%;
+  overflow: hidden;
 `;
 
 function Display() {
@@ -93,6 +108,14 @@ function Display() {
         <LettersRemainingRow>
           <LettersRemaining>
             {remainingTilesCount} / {totalTilesCount} letters remaining
+            <LettersRemainingOverlay
+              aria-hidden
+              width={`${(remainingTilesCount / totalTilesCount) * 100}%`}
+            >
+              <LettersRemaining inverse absolute>
+                {remainingTilesCount} / {totalTilesCount} letters remaining
+              </LettersRemaining>
+            </LettersRemainingOverlay>
           </LettersRemaining>
         </LettersRemainingRow>
       </DisplayContainer>

@@ -5,12 +5,13 @@ import { Letter, SCORES } from "@/utils/tiles";
 
 const TileStyles = styled.div<{ selected: boolean }>`
   position: relative;
-  container: tile / size;
   background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 3px;
   border-radius: ${BorderRadius.LARGE};
   user-select: none;
+  container: tile / size;
+  aspect-ratio: 1;
 `;
 
 const TileLetter = styled.div`
