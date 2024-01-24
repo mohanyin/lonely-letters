@@ -22,6 +22,11 @@ const GridSpot = styled.button<{ highlight: boolean }>`
   border-top-width: 4px;
   border-radius: ${BorderRadius.LARGE};
   aspect-ratio: 1;
+  transition: background 0.15s ease-in-out;
+
+  &:active {
+    background: ${Colors.GOLD};
+  }
 `;
 
 function Grid({
