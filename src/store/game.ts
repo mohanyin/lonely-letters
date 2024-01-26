@@ -96,8 +96,6 @@ export const useGameStore = create<GameStore>()(
 
       onTileTap(index: number) {
         set((state) => {
-          console.log("start", state.selectedTiles);
-
           // If tile is empty, do nothing.
           if (state.grid[index] === null) {
             return;
@@ -110,9 +108,7 @@ export const useGameStore = create<GameStore>()(
             return;
           }
           state.selectMode = "tap";
-          console.log("tap");
           addSelectedTile(state, index);
-          console.log(state.selectedTiles);
         });
       },
 
@@ -127,7 +123,6 @@ export const useGameStore = create<GameStore>()(
             return;
           }
           state.selectMode = "swipe";
-          console.log("swipe");
           addSelectedTile(state, index);
         });
       },
