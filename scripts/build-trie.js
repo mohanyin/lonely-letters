@@ -1,14 +1,14 @@
 import fs from "fs";
 
+import pkg from "lzutf8";
+const { compress } = pkg;
+
 const sowpodsPath = new URL("sowpods.txt", import.meta.url);
 const sowpodsData = fs.readFileSync(sowpodsPath, "utf8");
 const words = sowpodsData.split("\n");
 
 class TrieNode {
-  constructor() {
-    this.children = {};
-    this.isEndOfWord = false;
-  }
+  constructor() {}
 }
 
 class Trie {
@@ -19,16 +19,16 @@ class Trie {
   insert(word) {
     let node = this.root;
     for (const char of word) {
-      if (!node.children[char]) {
-        node.children[char] = new TrieNode();
+      if (!node[char]) {
+        node[char] = new TrieNode();
       }
-      node = node.children[char];
+      node = node[char];
     }
-    node.isEndOfWord = true;
+    node._ = 1;
   }
 
-  toJSON() {
-    return JSON.stringify(this.root, null, 2);
+  toJSON(node = this.root) {
+    return JSON.stringify(node).replace(/"\s"/g, "");
   }
 }
 
@@ -37,5 +37,11 @@ words.forEach((word) => {
   trie.insert(word);
 });
 
-const triePath = new URL("../src/assets/trie.json", import.meta.url);
-fs.writeFileSync(triePath, trie.toJSON());
+for (const firstLetter in trie.root) {
+  const triePath = new URL(
+    `../src/assets/tries/${firstLetter}.txt`,
+    import.meta.url,
+  );
+  const trieJSON = trie.toJSON(trie.root[firstLetter]);
+  fs.writeFileSync(triePath, compress(trieJSON));
+}
