@@ -1,4 +1,5 @@
 import { styled } from "@linaria/react";
+import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
 import Tile from "@/components/game/Tile";
@@ -62,13 +63,20 @@ const NextLabel = styled.div`
   text-align: center;
 `;
 
+const ButtonStyles = {
+  ...TypeStyles.HEADLINE_3,
+  padding: "12px 16px",
+  background: Colors.GOLD,
+  border: Border.THIN,
+  "border-bottom-width": "4px",
+  "border-radius": `${BorderRadius.LARGE} 0 ${BorderRadius.LARGE}`,
+};
 const DoneButton = styled.button`
-  ${TypeStyles.HEADLINE_3}
-  padding: 12px 16px;
-  background: ${Colors.GOLD};
-  border: ${Border.THIN};
-  border-bottom-width: 4px;
-  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
+  ${ButtonStyles}
+`;
+
+const DoneLink = styled(Link)`
+  ${ButtonStyles}
 `;
 
 const DoneWithPuzzle = styled.div`
@@ -134,7 +142,7 @@ function Footer({
   ) : !remainingTiles[0] ? (
     <>
       <DoneWithPuzzle>Done with the puzzle?</DoneWithPuzzle>
-      <DoneButton onClick={finishSelecting}>See my results</DoneButton>
+      <DoneLink to="/results">See my results</DoneLink>
     </>
   ) : (
     <FooterStyles dragging={!!dragStart}>

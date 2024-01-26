@@ -132,4 +132,6 @@ button,
 a {
   cursor: pointer;
   color: inherit;
+  text-align: center;
+  text-decoration: none;
 }
