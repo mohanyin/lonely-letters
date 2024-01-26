@@ -80,6 +80,7 @@ function Footer({
   const remainingTiles = useGameStore((store) => store.remainingTiles);
   const isSelecting = useGameStore((store) => store.isSelecting());
   const finishSelecting = useGameStore((store) => store.finishSelecting);
+  const selectMode = useGameStore((store) => store.selectMode);
 
   const [dragStart, setDragStart] = useState<Position | null>(null);
   const [dragLocation, setDragLocation] = useState<Position | null>(null);
@@ -121,7 +122,7 @@ function Footer({
 
   return (
     <FooterStyles>
-      {isSelecting ? (
+      {isSelecting && selectMode === "tap" ? (
         <DoneButton onClick={() => finishSelecting()}>Done</DoneButton>
       ) : null}
 
