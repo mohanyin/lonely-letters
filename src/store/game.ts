@@ -132,7 +132,7 @@ export const useGameStore = create<GameStore>()(
         const selectedWord = state.selectedTiles
           .map((index) => state.grid[index])
           .join("");
-        const isValidWord = await checkWord(selectedWord);
+        const isValidWord = checkWord(selectedWord);
 
         if (isValidWord) {
           const wordScore = selectedWord

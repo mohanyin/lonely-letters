@@ -2,9 +2,9 @@ import { decompressFromUTF16 } from "lz-string";
 
 type TrieNode = { [key: string]: TrieNode } | { _?: 1 };
 
-const rawTrieImports = import.meta.glob<false, string, string>(
+const rawTrieImports = import.meta.glob<true, string, string>(
   "../assets/tries/*",
-  { as: "raw" },
+  { as: "raw", eager: true },
 );
 const trieImports: typeof rawTrieImports = {};
 for (const path in rawTrieImports) {
@@ -12,14 +12,14 @@ for (const path in rawTrieImports) {
   trieImports[normalizedPath] = rawTrieImports[path];
 }
 
-export async function checkWord(word: string): Promise<boolean> {
+export function checkWord(word: string): boolean {
   const [firstLetter, ...rest] = word.toUpperCase();
 
   if (!trieImports[firstLetter]) {
     return false;
   }
 
-  const compressedTrie = await trieImports[firstLetter]();
+  const compressedTrie = trieImports[firstLetter];
   const trie: TrieNode = JSON.parse(decompressFromUTF16(compressedTrie));
   let node = trie;
   for (const letter of rest) {
