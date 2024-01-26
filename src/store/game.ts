@@ -128,11 +128,11 @@ export const useGameStore = create<GameStore>()(
       },
 
       finishSelecting() {
-        set((state) => {
+        set(async (state) => {
           const selectedWord = state.selectedTiles
             .map((index) => state.grid[index])
             .join("");
-          const isValidWord = checkWord(selectedWord);
+          const isValidWord = await checkWord(selectedWord);
 
           if (isValidWord) {
             const wordScore = selectedWord

@@ -1,8 +1,5 @@
 import fs from "fs";
 
-import pkg from "lzutf8";
-const { compress } = pkg;
-
 const sowpodsPath = new URL("sowpods.txt", import.meta.url);
 const sowpodsData = fs.readFileSync(sowpodsPath, "utf8");
 const words = sowpodsData.split("\n");
@@ -39,9 +36,9 @@ words.forEach((word) => {
 
 for (const firstLetter in trie.root) {
   const triePath = new URL(
-    `../src/assets/tries/${firstLetter}.txt`,
+    `../src/assets/tries/${firstLetter}.ts`,
     import.meta.url,
   );
   const trieJSON = trie.toJSON(trie.root[firstLetter]);
-  fs.writeFileSync(triePath, compress(trieJSON));
+  fs.writeFileSync(triePath, `export default ${trieJSON}`);
 }

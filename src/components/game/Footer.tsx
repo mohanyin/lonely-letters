@@ -126,7 +126,7 @@ function Footer({
   return (
     <FooterStyles dragging={!!dragStart}>
       {isSelecting && selectMode === "tap" ? (
-        <DoneButton onClick={() => finishSelecting()}>Done</DoneButton>
+        <DoneButton onClick={finishSelecting}>Done</DoneButton>
       ) : null}
 
       <MainTileContainer>
