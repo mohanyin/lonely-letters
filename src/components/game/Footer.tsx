@@ -10,10 +10,13 @@ interface Position {
   y: number;
 }
 
-const FooterStyles = styled.div`
+const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+  transform: ${({ dragging }) =>
+    !dragging ? "perspective(800px) rotateX(20deg)" : "none"};
+  transition: transform 0.3s ease-in-out;
 `;
 
 const MainTileContainer = styled.div`
@@ -121,7 +124,7 @@ function Footer({
   }, [onDragEnd]);
 
   return (
-    <FooterStyles>
+    <FooterStyles dragging={!!dragStart}>
       {isSelecting && selectMode === "tap" ? (
         <DoneButton onClick={() => finishSelecting()}>Done</DoneButton>
       ) : null}
