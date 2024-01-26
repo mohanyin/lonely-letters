@@ -18,8 +18,8 @@ interface GameStore {
   selectMode: "tap" | "swipe";
 
   isSelecting: () => boolean;
+  selectedWord: () => string;
 
-  incrementScore: () => void;
   start: () => void;
   placeTile: (index: number) => void;
   onTileTap: (index: number) => void;
@@ -63,8 +63,10 @@ export const useGameStore = create<GameStore>()(
       selectMode: "tap",
 
       isSelecting: () => !!get().selectedTiles.length,
-
-      incrementScore: () => set((state) => (state.score += 1)),
+      selectedWord: () => {
+        const state = get();
+        return state.selectedTiles.map((index) => state.grid[index]).join("");
+      },
 
       start: () => {
         set((state) => {

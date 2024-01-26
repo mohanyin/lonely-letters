@@ -56,6 +56,10 @@ const BODY = {
   fontWeight: Type.FONT_WEIGHT_REGULAR,
   fontSize: "1em",
 };
+const BODY_ITALIC = {
+  ...BODY,
+  fontStyle: "italic",
+};
 const BODY_BOLD = {
   ...BODY,
   fontWeight: Type.FONT_WEIGHT_BOLD,
@@ -69,6 +73,7 @@ export const TypeStyles = {
   OVERLINE,
   OVERLINE_SMALL,
   BODY,
+  BODY_ITALIC,
   BODY_BOLD,
 };
 

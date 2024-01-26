@@ -62,13 +62,18 @@ const NextLabel = styled.div`
   text-align: center;
 `;
 
-const NextTile = styled(Tile)``;
-
 const DoneButton = styled.button`
-  ${TypeStyles.OVERLINE}
-  background: ${Colors.WHITE};
+  ${TypeStyles.HEADLINE_3}
+  padding: 12px 16px;
+  background: ${Colors.GOLD};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE};
+  border-bottom-width: 4px;
+  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
+`;
+
+const DoneWithPuzzle = styled.div`
+  ${TypeStyles.BODY_ITALIC}
+  text-align: center;
 `;
 
 function Footer({
@@ -84,6 +89,7 @@ function Footer({
   const isSelecting = useGameStore((store) => store.isSelecting());
   const finishSelecting = useGameStore((store) => store.finishSelecting);
   const selectMode = useGameStore((store) => store.selectMode);
+  const selectedWord = useGameStore((store) => store.selectedWord());
 
   const [dragStart, setDragStart] = useState<Position | null>(null);
   const [dragLocation, setDragLocation] = useState<Position | null>(null);
@@ -123,31 +129,30 @@ function Footer({
     setDragLocation(null);
   }, [onDragEnd]);
 
-  return (
+  return isSelecting && selectMode === "tap" ? (
+    <DoneButton onClick={finishSelecting}>Submit “{selectedWord}”</DoneButton>
+  ) : !remainingTiles[0] ? (
+    <>
+      <DoneWithPuzzle>Done with the puzzle?</DoneWithPuzzle>
+      <DoneButton onClick={finishSelecting}>See my results</DoneButton>
+    </>
+  ) : (
     <FooterStyles dragging={!!dragStart}>
-      {isSelecting && selectMode === "tap" ? (
-        <DoneButton onClick={finishSelecting}>Done</DoneButton>
-      ) : null}
-
       <MainTileContainer>
-        {remainingTiles[0] ? (
-          <MainTile
-            dragging={!!dragStart}
-            letter={remainingTiles[0]}
-            location={dragLocation}
-            onTouchStart={(event) => handleTouchStart(event)}
-            onTouchMove={(event) => handleTouchMove(event)}
-            onTouchEnd={() => handleTouchEnd()}
-          />
-        ) : (
-          <div>You done</div>
-        )}
+        <MainTile
+          dragging={!!dragStart}
+          letter={remainingTiles[0]}
+          location={dragLocation}
+          onTouchStart={(event) => handleTouchStart(event)}
+          onTouchMove={(event) => handleTouchMove(event)}
+          onTouchEnd={() => handleTouchEnd()}
+        />
       </MainTileContainer>
       <div>
         {remainingTiles[1] ? (
           <NextTileContainer>
             <NextLabel>Next</NextLabel>
-            <NextTile letter={remainingTiles[1]} />
+            <Tile letter={remainingTiles[1]} />
           </NextTileContainer>
         ) : null}
       </div>
