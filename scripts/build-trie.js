@@ -1,5 +1,9 @@
 import fs from "fs";
 
+import lzString from "lz-string";
+
+const { compressToUTF16 } = lzString;
+
 const sowpodsPath = new URL("sowpods.txt", import.meta.url);
 const sowpodsData = fs.readFileSync(sowpodsPath, "utf8");
 const words = sowpodsData.split("\n");
@@ -25,7 +29,7 @@ class Trie {
   }
 
   toJSON(node = this.root) {
-    return JSON.stringify(node).replace(/\s/g, "").replace(/"/g, "");
+    return JSON.stringify(node);
   }
 }
 
@@ -36,9 +40,9 @@ words.forEach((word) => {
 
 for (const firstLetter in trie.root) {
   const triePath = new URL(
-    `../src/assets/tries/${firstLetter}.ts`,
+    `../src/assets/tries/${firstLetter}`,
     import.meta.url,
   );
   const trieJSON = trie.toJSON(trie.root[firstLetter]);
-  fs.writeFileSync(triePath, `export default ${trieJSON}`);
+  fs.writeFileSync(triePath, compressToUTF16(trieJSON));
 }

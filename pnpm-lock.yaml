@@ -23,6 +23,9 @@ dependencies:
   immer:
     specifier: ^10.0.3
     version: 10.0.3
+  lz-string:
+    specifier: ^1.5.0
+    version: 1.5.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -3714,6 +3717,11 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
+    dev: false
 
   /map-cache@0.2.2:
     resolution: {integrity: sha512-8y/eV9QQZCiyn1SprXSrCmqJN0yNRATe+PO8ztwqrvrbdRLA3eYJF0yaR0YayLWkMbsQSKWS9N2gPcGEc4UsZg==}
