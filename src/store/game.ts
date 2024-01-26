@@ -5,11 +5,12 @@ import { immer } from "zustand/middleware/immer";
 
 import { checkWord, importTries } from "@/utils/dictionary";
 import { MersenneTwisterGenerator } from "@/utils/random";
-import { calculateBonus } from "@/utils/scoring";
-import { Letter, SCORES, tileBag } from "@/utils/tiles";
+import { getScore } from "@/utils/scoring";
+import { Letter, tileBag } from "@/utils/tiles";
 
 interface GameStore {
   score: number;
+  words: string[];
   remainingTiles: Letter[];
   totalTilesCount: number;
   grid: (Letter | null)[];
@@ -55,6 +56,7 @@ export const useGameStore = create<GameStore>()(
   devtools(
     immer((set, get) => ({
       score: 0,
+      words: [],
       remainingTiles: [],
       totalTilesCount: 0,
       grid: [],
@@ -80,6 +82,7 @@ export const useGameStore = create<GameStore>()(
 
           state.id = seed;
           state.score = 0;
+          state.words = [];
           state.selectedTiles = [];
           state.remainingTiles = tiles;
           state.totalTilesCount = tiles.length;
@@ -139,12 +142,9 @@ export const useGameStore = create<GameStore>()(
         const isValidWord = await checkWord(selectedWord);
 
         if (isValidWord) {
-          const wordScore = selectedWord
-            .split("")
-            .reduce((sum, letter) => sum + SCORES[letter as Letter], 0);
-          const bonus = calculateBonus(selectedWord);
           set((state) => {
-            state.score += Math.round(wordScore * bonus);
+            state.words = [...state.words, selectedWord];
+            state.score += getScore(selectedWord);
             state.selectedTiles.forEach((index) => {
               state.grid[index] = null;
             });

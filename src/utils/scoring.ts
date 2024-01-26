@@ -1,3 +1,15 @@
+import { Letter, SCORES } from "@/utils/tiles";
+
+export function getScore(word: string): number {
+  return Math.round(getBaseScore(word) * calculateBonus(word));
+}
+
+function getBaseScore(word: string): number {
+  return word
+    .split("")
+    .reduce((sum, letter) => sum + SCORES[letter as Letter], 0);
+}
+
 export function calculateBonus(word: string | number[]) {
   return (word.length + 1) / 4;
 }

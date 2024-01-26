@@ -37,19 +37,20 @@ const HEADLINE_2 = {
 };
 const HEADLINE_3 = {
   ...HEADLINE_1,
-  fontSize: "1.25em",
+  fontSize: "1.4em",
 };
 const OVERLINE = {
   fontFamily: Type.FONT_FAMILY_CONDENSED,
   fontWeight: Type.FONT_WEIGHT_SEMI_BOLD,
   fontSize: "1em",
-  letterSpacing: `${1 / 16}em`,
+  letterSpacing: `${2 / 16}em`,
   lineHeight: 1,
   textTransform: "uppercase",
 };
 const OVERLINE_SMALL = {
   ...OVERLINE,
   fontSize: "0.8em",
+  letterSpacing: `${1 / 16}em`,
 };
 const BODY = {
   fontFamily: Type.FONT_FAMILY,
