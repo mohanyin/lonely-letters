@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { checkWord } from "@/utils/dictionary";
+import { checkWord, importTries } from "@/utils/dictionary";
 import { MersenneTwisterGenerator } from "@/utils/random";
 import { calculateBonus } from "@/utils/scoring";
 import { Letter, SCORES, tileBag } from "@/utils/tiles";
@@ -68,6 +68,8 @@ export const useGameStore = create<GameStore>()(
 
       start: () => {
         set((state) => {
+          importTries();
+
           const seed = differenceInDays(new Date(), new Date(2024, 0, 1));
           const generator = new MersenneTwisterGenerator(seed);
           const tiles = Array(30)
@@ -132,7 +134,7 @@ export const useGameStore = create<GameStore>()(
         const selectedWord = state.selectedTiles
           .map((index) => state.grid[index])
           .join("");
-        const isValidWord = checkWord(selectedWord);
+        const isValidWord = await checkWord(selectedWord);
 
         if (isValidWord) {
           const wordScore = selectedWord
