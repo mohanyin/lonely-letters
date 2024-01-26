@@ -25,7 +25,7 @@ class Trie {
   }
 
   toJSON(node = this.root) {
-    return JSON.stringify(node).replace(/"\s"/g, "");
+    return JSON.stringify(node).replace(/\s/g, "").replace(/"/g, "");
   }
 }
 
