@@ -25,14 +25,18 @@ const SCORE = {
   fontSize: "2.5em",
   lineHeight: 1,
 };
-const HEADLINE_2 = {
+const HEADLINE_1 = {
   fontFamily: Type.FONT_FAMILY,
   fontWeight: Type.FONT_WEIGHT_BOLD,
   fontSize: "3.5em",
   lineHeight: 1,
 };
+const HEADLINE_2 = {
+  ...HEADLINE_1,
+  fontSize: "2em",
+};
 const HEADLINE_3 = {
-  ...HEADLINE_2,
+  ...HEADLINE_1,
   fontSize: "1.25em",
 };
 const OVERLINE = {
@@ -59,6 +63,7 @@ const BODY_BOLD = {
 
 export const TypeStyles = {
   SCORE,
+  HEADLINE_1,
   HEADLINE_2,
   HEADLINE_3,
   OVERLINE,
