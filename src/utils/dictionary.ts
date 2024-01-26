@@ -1,8 +1,9 @@
 type TrieNode = { [key: string]: TrieNode } | { _?: 1 };
-type TrieImports = Record<string, () => Promise<{ default: TrieNode }>>;
 
-const rawTrieImports = import.meta.glob("../assets/tries/*.ts") as TrieImports;
-const trieImports: TrieImports = {};
+const rawTrieImports = import.meta.glob<false, string, { default: TrieNode }>(
+  "../assets/tries/*.ts",
+);
+const trieImports: typeof rawTrieImports = {};
 for (const path in rawTrieImports) {
   const normalizedPath = path
     .replace("../assets/tries/", "")
@@ -12,6 +13,11 @@ for (const path in rawTrieImports) {
 
 export async function checkWord(word: string): Promise<boolean> {
   const [firstLetter, ...rest] = word.toUpperCase();
+
+  if (!trieImports[firstLetter]) {
+    return false;
+  }
+
   const trie: TrieNode = (await trieImports[firstLetter]()).default;
   let node = trie;
   for (const letter of rest) {

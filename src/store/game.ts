@@ -24,7 +24,7 @@ interface GameStore {
   placeTile: (index: number) => void;
   onTileTap: (index: number) => void;
   onTileSwipe: (index: number) => void;
-  finishSelecting: () => void;
+  finishSelecting: () => Promise<void>;
 }
 
 function addSelectedTile(state: GameStore, index: number) {
@@ -127,24 +127,27 @@ export const useGameStore = create<GameStore>()(
         });
       },
 
-      finishSelecting() {
-        set(async (state) => {
-          const selectedWord = state.selectedTiles
-            .map((index) => state.grid[index])
-            .join("");
-          const isValidWord = await checkWord(selectedWord);
+      finishSelecting: async (): Promise<void> => {
+        const state = get();
+        const selectedWord = state.selectedTiles
+          .map((index) => state.grid[index])
+          .join("");
+        const isValidWord = await checkWord(selectedWord);
 
-          if (isValidWord) {
-            const wordScore = selectedWord
-              .split("")
-              .reduce((sum, letter) => sum + SCORES[letter as Letter], 0);
-            const bonus = calculateBonus(selectedWord);
+        if (isValidWord) {
+          const wordScore = selectedWord
+            .split("")
+            .reduce((sum, letter) => sum + SCORES[letter as Letter], 0);
+          const bonus = calculateBonus(selectedWord);
+          set((state) => {
             state.score += Math.round(wordScore * bonus);
             state.selectedTiles.forEach((index) => {
               state.grid[index] = null;
             });
-          }
+          });
+        }
 
+        set((state) => {
           state.selectedTiles = [];
         });
       },
