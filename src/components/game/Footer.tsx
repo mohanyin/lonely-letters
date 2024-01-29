@@ -17,14 +17,22 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   gap: 12px;
   transform: ${({ dragging }) =>
     !dragging ? "perspective(800px) rotateX(20deg)" : "none"};
+  transform-origin: top center;
   transition: transform 0.3s ease-in-out;
 `;
 
 const MainTileContainer = styled.div`
   grid-column: 2 / 4;
-  padding: 16px;
+  padding: 6px;
   background: ${Colors.GOLD};
   border: ${Border.THIN};
+  border-radius: ${BorderRadius.LARGE};
+  aspect-ratio: 1;
+`;
+
+const NestedMainTileContainer = styled(MainTileContainer)`
+  padding: 16px;
+  border-top-width: 4px;
   border-radius: ${BorderRadius.MEDIUM};
   aspect-ratio: 1;
 `;
@@ -44,7 +52,7 @@ function calculateDragTransform({
   return `translate(${location.x}px, ${location.y}px) translate(50%, 50%)`;
 }
 const MainTile = styled(Tile)<{ dragging: boolean; location: Position | null }>`
-  width: ${({ dragging }) => (dragging ? "50%" : "100%")};
+  width: ${({ dragging }) => (dragging ? "75%" : "100%")};
   border-bottom-width: 6px;
   transform: ${(props) => calculateDragTransform(props)};
   transition: ${({ dragging }) =>
@@ -147,14 +155,16 @@ function Footer({
   ) : (
     <FooterStyles dragging={!!dragStart}>
       <MainTileContainer>
-        <MainTile
-          dragging={!!dragStart}
-          letter={remainingTiles[0]}
-          location={dragLocation}
-          onTouchStart={(event) => handleTouchStart(event)}
-          onTouchMove={(event) => handleTouchMove(event)}
-          onTouchEnd={() => handleTouchEnd()}
-        />
+        <NestedMainTileContainer>
+          <MainTile
+            dragging={!!dragStart}
+            letter={remainingTiles[0]}
+            location={dragLocation}
+            onTouchStart={(event) => handleTouchStart(event)}
+            onTouchMove={(event) => handleTouchMove(event)}
+            onTouchEnd={() => handleTouchEnd()}
+          />
+        </NestedMainTileContainer>
       </MainTileContainer>
       <div>
         {remainingTiles[1] ? (
