@@ -10,7 +10,7 @@ const TileStyles = styled.button<{ selected: boolean }>`
   background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 3px;
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: ${BorderRadius.MEDIUM};
   user-select: none;
   touch-action: none;
   container: tile / size;

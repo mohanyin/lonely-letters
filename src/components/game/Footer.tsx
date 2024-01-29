@@ -25,7 +25,7 @@ const MainTileContainer = styled.div`
   padding: 16px;
   background: ${Colors.GOLD};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: ${BorderRadius.MEDIUM};
   aspect-ratio: 1;
 `;
 
@@ -54,7 +54,7 @@ const MainTile = styled(Tile)<{ dragging: boolean; location: Position | null }>`
 const NextTileContainer = styled.div`
   padding: 12px;
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: ${BorderRadius.MEDIUM};
 `;
 
 const NextLabel = styled.div`
@@ -69,7 +69,7 @@ const ButtonStyles = {
   background: Colors.GOLD,
   border: Border.THIN,
   "border-bottom-width": "4px",
-  "border-radius": `${BorderRadius.LARGE} 0 ${BorderRadius.LARGE}`,
+  "border-radius": `${BorderRadius.MEDIUM} 0 ${BorderRadius.MEDIUM}`,
 };
 const DoneButton = styled.button`
   ${ButtonStyles}

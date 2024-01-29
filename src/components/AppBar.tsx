@@ -13,7 +13,7 @@ const AppBarStyles = styled.header`
   width: 100%;
   padding: 12px 20px;
   background: ${Colors.BLACK};
-  border-bottom-right-radius: ${BorderRadius.LARGE};
+  border-bottom-right-radius: ${BorderRadius.MEDIUM};
 `;
 
 const Title = styled.h1`

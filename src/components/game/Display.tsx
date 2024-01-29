@@ -1,27 +1,23 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
+import DisplayBase from "@/components/game/DisplayBase";
 import { useGameStore } from "@/store/game";
-import { Colors, TypeStyles, BorderRadius, Border } from "@/styles/core";
-import { ROW, ROW_RIGHT } from "@/styles/layout";
+import { Colors, TypeStyles } from "@/styles/core";
 import { formatBonus } from "@/utils/scoring";
-
-const DisplayContainer = styled.div<{ isSelecting?: boolean }>`
-  position: relative;
-  background: ${({ isSelecting }) =>
-    !isSelecting ? Colors.WHITE : Colors.GOLD};
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
-`;
-
-const ScoreRow = styled.div`
-  ${ROW}
-  height: 72px;
-  padding: 0 16px;
-`;
 
 const Score = styled.h2`
   ${TypeStyles.SCORE}
+  display: flex;
+  gap: 12px;
+  align-items: center;
+`;
+
+const ScoreDot = styled.div`
+  width: 8px;
+  height: 8px;
+  background: ${Colors.BLACK};
+  border-radius: 8px;
 `;
 
 const Bonus = styled.h2`
@@ -35,49 +31,8 @@ const BonusLength = styled.div`
   color: ${Colors.BLACK};
 `;
 
-const TypeLabel = styled.div<{ isSelecting?: boolean }>`
-  ${TypeStyles.OVERLINE}
-  display: inline-block;
-  padding: 6px 16px;
-  color: ${({ isSelecting }) => (!isSelecting ? Colors.WHITE : Colors.GOLD)};
-  background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.SMALL};
-`;
-
-const LettersRemainingRow = styled.div`
-  ${ROW_RIGHT}
-`;
-
-const LettersRemaining = styled.div<{ inverse?: boolean; absolute?: boolean }>`
-  position: ${({ absolute }) => (absolute ? "absolute" : "relative")};
-  right: 0;
-  bottom: 0;
-  display: inline-block;
-  padding: 6px 32px;
-  color: ${({ inverse }) => (inverse ? Colors.WHITE : Colors.BLACK)};
-  font-style: italic;
-  white-space: nowrap;
-  background: ${({ inverse }) => (inverse ? Colors.BLACK : Colors.WHITE)};
-  border-top: ${Border.THIN};
-  border-left: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE} 0 ${BorderRadius.LARGE};
-`;
-
-const LettersRemainingOverlay = styled.div<{ width?: string }>`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: ${({ width }) => width ?? "100%"};
-  height: 100%;
-  overflow: hidden;
-`;
-
 function Display() {
   const score = useGameStore((state) => state.score);
-  const totalTilesCount = useGameStore((state) => state.totalTilesCount);
-  const remainingTilesCount = useGameStore(
-    (state) => state.remainingTiles.length,
-  );
   const selectedTiles = useGameStore((state) => state.selectedTiles);
 
   const isSelecting = useMemo(() => {
@@ -88,38 +43,19 @@ function Display() {
     return formatBonus(selectedTiles);
   }, [selectedTiles]);
 
-  return (
-    <div>
-      <DisplayContainer isSelecting={isSelecting}>
-        {isSelecting ? (
-          <ScoreRow>
-            <div>
-              <BonusLength>{selectedTiles.length} letter word</BonusLength>
-              <Bonus>{bonusPercentage}</Bonus>
-            </div>
-            <TypeLabel isSelecting={isSelecting}>Bonus</TypeLabel>
-          </ScoreRow>
-        ) : (
-          <ScoreRow>
-            <Score>{score}</Score>
-            <TypeLabel>Score</TypeLabel>
-          </ScoreRow>
-        )}
-        <LettersRemainingRow>
-          <LettersRemaining>
-            {remainingTilesCount} / {totalTilesCount} letters remaining
-            <LettersRemainingOverlay
-              aria-hidden
-              width={`${(remainingTilesCount / totalTilesCount) * 100}%`}
-            >
-              <LettersRemaining inverse absolute>
-                {remainingTilesCount} / {totalTilesCount} letters remaining
-              </LettersRemaining>
-            </LettersRemainingOverlay>
-          </LettersRemaining>
-        </LettersRemainingRow>
-      </DisplayContainer>
-    </div>
+  return isSelecting ? (
+    <DisplayBase color={Colors.GOLD} label="Bonus">
+      <div>
+        <BonusLength>{selectedTiles.length} letter word</BonusLength>
+        <Bonus>{bonusPercentage}</Bonus>
+      </div>
+    </DisplayBase>
+  ) : (
+    <DisplayBase color={Colors.WHITE} label="Score">
+      <Score>
+        <ScoreDot /> {score} <ScoreDot />
+      </Score>
+    </DisplayBase>
   );
 }
 

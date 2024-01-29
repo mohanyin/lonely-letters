@@ -19,10 +19,11 @@ const GridStyles = styled.div`
 `;
 
 const GridSpot = styled.button<{ highlight: boolean }>`
-  background: ${({ highlight }) => (highlight ? Colors.GOLD : Colors.GREEN)};
+  background: ${({ highlight }) =>
+    highlight ? Colors.GOLD : Colors.GREEN_600};
   border: ${Border.THIN};
   border-top-width: 4px;
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: ${BorderRadius.MEDIUM};
   aspect-ratio: 1;
   transition: background 0.15s ease-in-out;
 

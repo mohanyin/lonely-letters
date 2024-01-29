@@ -31,7 +31,7 @@ const ScoreContainer = styled.div`
   padding: 24px 20px;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE} 0;
+  border-radius: ${BorderRadius.MEDIUM} 0;
 `;
 
 const ScoreLabel = styled.h2`
@@ -61,7 +61,7 @@ const Card = styled.div<{ row?: boolean }>`
   padding: 24px 20px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.LARGE} 0;
+  border-radius: ${BorderRadius.MEDIUM} 0;
 
   /* stylelint-disable-next-line selector-class-pattern */
   ${CardHeader} {
@@ -91,7 +91,7 @@ const ButtonStyles = {
   width: "100%",
   "margin-top": "32px",
   "border-bottom-width": "4px",
-  "border-radius": `${BorderRadius.LARGE} 0 ${BorderRadius.LARGE}`,
+  "border-radius": `${BorderRadius.MEDIUM} 0 ${BorderRadius.MEDIUM}`,
 };
 const Button = styled.button`
   ${ButtonStyles}
