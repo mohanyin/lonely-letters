@@ -19,6 +19,9 @@ const GridStyles = styled.div`
 `;
 
 const GridSpot = styled.button<{ highlight: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: ${({ highlight }) =>
     highlight ? Colors.GOLD : Colors.GREEN_600};
   border: ${Border.THIN};
@@ -30,6 +33,13 @@ const GridSpot = styled.button<{ highlight: boolean }>`
   &:active {
     background: ${Colors.GOLD};
   }
+`;
+
+const GridSpotDiamond = styled.div`
+  width: 40%;
+  height: 40%;
+  border: ${Border.THIN};
+  transform: rotate(45deg);
 `;
 
 function Grid({
@@ -101,7 +111,9 @@ function Grid({
             data-grid-spot={index}
             highlight={highlightedSpot === index}
             onClick={() => placeTile(index)}
-          />,
+          >
+            <GridSpotDiamond />
+          </GridSpot>,
         );
       } else {
         tiles.push(
