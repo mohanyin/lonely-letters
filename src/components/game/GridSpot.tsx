@@ -40,10 +40,37 @@ const GridSpotBonus = styled.div`
   border-radius: 100%;
 `;
 
+const GridCrossContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const CROSS = {
+  position: "absolute",
+  top: "50%",
+  left: "0",
+  width: "100%",
+  height: "1px",
+  background: Colors.BLACK,
+  "transform-origin": "center center",
+};
+
+const GridCrossLeft = styled.div`
+  ${CROSS}
+  transform: rotate(45deg);
+`;
+
+const GridCrossRight = styled.div`
+  ${CROSS}
+  transform: rotate(-45deg);
+`;
+
 function GridSpot({
   index,
   highlight,
   bonus,
+  blocked,
   onClick,
 }: {
   index: number;
@@ -57,7 +84,7 @@ function GridSpot({
     const bonusLabel = bonus ? " has bonus" : "";
     return `Add tile to row: ${y}, column: ${x}${bonusLabel}`;
   }, [x, y, bonus]);
-  return (
+  return !blocked ? (
     <GridSpotStyle
       data-grid-spot={index}
       highlight={highlight}
@@ -66,6 +93,11 @@ function GridSpot({
     >
       {bonus ? <GridSpotBonus>2x</GridSpotBonus> : <GridSpotDiamond />}
     </GridSpotStyle>
+  ) : (
+    <GridCrossContainer>
+      <GridCrossLeft />
+      <GridCrossRight />
+    </GridCrossContainer>
   );
 }
 

@@ -31,7 +31,7 @@ interface GameStore {
   finishSelecting: () => Promise<void>;
 }
 
-const BASE_TILE_COUNT = 9;
+const BASE_TILE_COUNT = 30;
 
 function addSelectedTile(state: GameStore, index: number) {
   // If tile is not adjacent to the last selected tile, do nothing.
@@ -89,7 +89,7 @@ export const useGameStore = create<GameStore>()(
             tileCount -= 3;
           }
 
-          const hasBlockedTile = generator.nextFloat() < 0.4;
+          const hasBlockedTile = generator.nextFloat() < 0.3;
           const blockedTile = generator.nextRange(0, 16);
           if (hasBlockedTile && blockedTile !== bonusTile) {
             state.blockedTiles = [blockedTile];
