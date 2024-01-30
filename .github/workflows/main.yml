@@ -28,5 +28,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}
+        working-directory: dist
+      - name: Deploy index.html to S3 bucket
+        run: aws s3 sync index.html s3://${{ secrets.S3_BUCKET_NAME }}/index.html --cache-control max-age=0,no-cache,no-store,must-revalidate
         working-directory: dist
