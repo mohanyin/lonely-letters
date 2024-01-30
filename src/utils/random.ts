@@ -1,3 +1,5 @@
+import { Letter, VOWEL, tileBag, vowelBag } from "@/utils/tiles";
+
 export class MersenneTwisterGenerator {
   private m: number;
   private a: number;
@@ -34,4 +36,28 @@ export class MersenneTwisterGenerator {
   choice<T>(array: T[]): T {
     return array[this.nextRange(0, array.length)];
   }
+}
+
+export function pickTiles(
+  count: number,
+  generator: MersenneTwisterGenerator,
+): Letter[] {
+  const pickedTiles = Array(count)
+    .fill(0)
+    .map(() => generator.choice(tileBag));
+  console.log([...pickedTiles]);
+
+  const vowels = Object.keys(VOWEL);
+  for (let i = 0; i < pickedTiles.length; i += 5) {
+    const segment = pickedTiles.slice(i, i + 5);
+
+    const hasVowel = segment.some((letter) => vowels.includes(letter));
+    if (!hasVowel) {
+      const vowel = generator.choice(vowelBag);
+      const replacement = generator.nextRange(i, i + 5);
+      pickedTiles[replacement] = vowel;
+    }
+  }
+
+  return pickedTiles;
 }

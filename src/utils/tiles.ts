@@ -1,27 +1,31 @@
+export type Vowel = keyof typeof VOWEL;
+export type Consonant = keyof typeof CONSONANT;
 export type Letter = keyof typeof DISTRUBTION;
 
-export const DISTRUBTION = {
+export const VOWEL = {
   A: 9,
+  E: 12,
+  I: 9,
+  O: 8,
+  U: 4,
+};
+export const CONSONANT = {
   B: 2,
   C: 2,
   D: 4,
-  E: 12,
   F: 2,
   G: 3,
   H: 2,
-  I: 9,
   J: 1,
   K: 1,
   L: 4,
   M: 2,
   N: 6,
-  O: 8,
   P: 2,
   Q: 1,
   R: 6,
   S: 4,
   T: 6,
-  U: 4,
   V: 2,
   W: 2,
   X: 1,
@@ -29,9 +33,15 @@ export const DISTRUBTION = {
   Z: 1,
 };
 
-export const tileBag: Letter[] = Object.entries(DISTRUBTION).flatMap(
-  ([letter, count]) => Array(count).fill(letter),
-);
+export const DISTRUBTION = { ...VOWEL, ...CONSONANT };
+
+function createBag(distribution: { [key: string]: number }): Letter[] {
+  return Object.entries(distribution).flatMap(([letter, count]) =>
+    Array(count).fill(letter),
+  );
+}
+export const tileBag = createBag(DISTRUBTION);
+export const vowelBag = createBag(VOWEL) as Vowel[];
 
 export const SCORES: Record<Letter, number> = {
   A: 1,

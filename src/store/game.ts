@@ -5,9 +5,9 @@ import { immer } from "zustand/middleware/immer";
 
 import { checkWord, importTries } from "@/utils/dictionary";
 import { isAdjacentTile } from "@/utils/grid";
-import { MersenneTwisterGenerator } from "@/utils/random";
+import { MersenneTwisterGenerator, pickTiles } from "@/utils/random";
 import { getScore } from "@/utils/scoring";
-import { Letter, tileBag } from "@/utils/tiles";
+import { Letter } from "@/utils/tiles";
 
 interface GameStore {
   score: number;
@@ -68,9 +68,7 @@ export const useGameStore = create<GameStore>()(
 
           const seed = differenceInDays(new Date(), new Date(2024, 0, 1));
           const generator = new MersenneTwisterGenerator(seed);
-          const tiles = Array(30)
-            .fill(0)
-            .map(() => generator.choice(tileBag));
+          const tiles = pickTiles(30, generator);
 
           state.id = seed;
           state.score = 0;
