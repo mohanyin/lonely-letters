@@ -11,6 +11,7 @@ export const Type = {
   FONT_FAMILY: "IBM Plex Sans, sans-serif",
   FONT_FAMILY_CONDENSED: "IBM Plex Sans Condensed, sans-serif",
   FONT_FAMILY_DISPLAY: "Zen Dots, sans-serif",
+  FONT_WEIGHT_LIGHT: 300,
   FONT_WEIGHT_REGULAR: 400,
   FONT_WEIGHT_SEMI_BOLD: 600,
   FONT_WEIGHT_BOLD: 700,

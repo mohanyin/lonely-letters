@@ -2,9 +2,9 @@ import { styled } from "@linaria/react";
 import { useThrottle } from "@uidotdev/usehooks";
 import { useCallback, useEffect, useState } from "react";
 
+import GridSpot from "@/components/game/GridSpot";
 import Tile from "@/components/game/Tile";
 import { useGameStore } from "@/store/game";
-import { Border, BorderRadius, Colors } from "@/styles/core";
 
 const ROWS = 4;
 const COLS = 4;
@@ -16,30 +16,6 @@ const GridStyles = styled.div`
   gap: 12px;
   user-select: none;
   touch-action: none;
-`;
-
-const GridSpot = styled.button<{ highlight: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${({ highlight }) =>
-    highlight ? Colors.GOLD : Colors.GREEN_600};
-  border: ${Border.THIN};
-  border-top-width: 4px;
-  border-radius: ${BorderRadius.MEDIUM};
-  aspect-ratio: 1;
-  transition: background 0.15s ease-in-out;
-
-  &:active {
-    background: ${Colors.GOLD};
-  }
-`;
-
-const GridSpotDiamond = styled.div`
-  width: 40%;
-  height: 40%;
-  border: ${Border.THIN};
-  transform: rotate(45deg);
 `;
 
 function Grid({
@@ -108,12 +84,10 @@ function Grid({
         tiles.push(
           <GridSpot
             key={index}
-            data-grid-spot={index}
+            index={index}
             highlight={highlightedSpot === index}
             onClick={() => placeTile(index)}
-          >
-            <GridSpotDiamond />
-          </GridSpot>,
+          />,
         );
       } else {
         tiles.push(

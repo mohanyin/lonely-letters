@@ -1,33 +1,38 @@
 import { styled } from "@linaria/react";
 
-import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { Border, Colors, Type, TypeStyles } from "@/styles/core";
 import { Letter, SCORES } from "@/utils/tiles";
 
-const TileStyles = styled.button<{ selected: boolean }>`
-  position: relative;
+const Container = styled.button`
   display: block;
   width: 100%;
-  background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
-  border: ${Border.THIN};
-  border-bottom-width: 3px;
-  border-radius: ${BorderRadius.MEDIUM};
+  background: transparent;
   user-select: none;
   touch-action: none;
   container: tile / size;
   aspect-ratio: 1;
 `;
 
-const TileLetter = styled.div`
+const TileStyles = styled.div<{ selected: boolean }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
+  border: ${Border.THIN};
+  border-bottom-width: 6cqw;
+  border-radius: 20cqw;
+`;
+
+const LetterStyles = styled.div`
   ${TypeStyles.HEADLINE_2}
   position: absolute;
   top: 4cqw;
-  right: 25cqw;
+  right: 30cqw;
   left: 10cqw;
   font-size: 75cqw;
   text-align: center;
 `;
 
-// TODO: Make this light font
 const scoreWidth = 30;
 const Score = styled.div`
   ${TypeStyles.BODY}
@@ -36,8 +41,9 @@ const Score = styled.div`
   bottom: 12cqw;
   width: ${scoreWidth}cqw;
   height: ${scoreWidth}cqw;
+  font-weight: ${Type.FONT_WEIGHT_LIGHT};
   font-size: ${scoreWidth * 0.8}cqw;
-  line-height: ${scoreWidth}cqw;
+  line-height: ${scoreWidth - 4}cqw;
   text-align: center;
   background: ${Colors.GREEN};
   border: ${Border.THIN};
@@ -66,9 +72,8 @@ function Tile({
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
   return (
-    <TileStyles
+    <Container
       data-grid-spot={dataGridSpot}
-      selected={selected ?? false}
       className={className}
       style={style}
       onClick={onClick}
@@ -76,9 +81,11 @@ function Tile({
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      <TileLetter>{letter}</TileLetter>
-      <Score>{SCORES[letter]}</Score>
-    </TileStyles>
+      <TileStyles selected={selected ?? false}>
+        <LetterStyles>{letter}</LetterStyles>
+        <Score>{SCORES[letter]}</Score>
+      </TileStyles>
+    </Container>
   );
 }
 
