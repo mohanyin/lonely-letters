@@ -34,7 +34,10 @@ const LetterStyles = styled.div`
 `;
 
 const scoreWidth = 30;
-const Score = styled.div`
+const getFontFamily = (narrow?: boolean) => {
+  return narrow ? Type.FONT_FAMILY_CONDENSED : Type.FONT_FAMILY;
+};
+const Score = styled.div<{ narrow?: boolean }>`
   ${TypeStyles.BODY}
   position: absolute;
   right: 12cqw;
@@ -42,8 +45,11 @@ const Score = styled.div`
   width: ${scoreWidth}cqw;
   height: ${scoreWidth}cqw;
   font-weight: ${Type.FONT_WEIGHT_LIGHT};
-  font-size: ${scoreWidth * 0.8}cqw;
-  line-height: ${scoreWidth - 4}cqw;
+  font-size: ${scoreWidth * 0.7}cqw;
+  /* stylelint-disable-next-line font-family-name-quotes */
+  font-family: ${({ narrow }) => getFontFamily(narrow)};
+  line-height: ${scoreWidth - 3}cqw;
+  letter-spacing: -1cqw;
   text-align: center;
   background: ${Colors.GREEN};
   border: ${Border.THIN};
@@ -71,6 +77,7 @@ function Tile({
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
+  const score = SCORES[letter] === 1 ? 10 : SCORES[letter];
   return (
     <Container
       data-grid-spot={dataGridSpot}
@@ -83,7 +90,7 @@ function Tile({
     >
       <TileStyles selected={selected ?? false}>
         <LetterStyles>{letter}</LetterStyles>
-        <Score>{SCORES[letter]}</Score>
+        <Score narrow={score >= 10}>{score}</Score>
       </TileStyles>
     </Container>
   );

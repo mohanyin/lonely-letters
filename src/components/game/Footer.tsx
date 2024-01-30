@@ -31,7 +31,7 @@ const MainTileContainer = styled.div`
 `;
 
 const NestedMainTileContainer = styled(MainTileContainer)`
-  padding: 16px;
+  padding: 12%;
   border-top-width: 4px;
   border-radius: ${BorderRadius.MEDIUM};
   aspect-ratio: 1;
