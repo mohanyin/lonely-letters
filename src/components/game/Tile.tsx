@@ -37,7 +37,7 @@ const scoreWidth = 30;
 const getFontFamily = (narrow?: boolean) => {
   return narrow ? Type.FONT_FAMILY_CONDENSED : Type.FONT_FAMILY;
 };
-const Score = styled.div<{ narrow?: boolean }>`
+const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
   ${TypeStyles.BODY}
   position: absolute;
   right: 12cqw;
@@ -51,7 +51,7 @@ const Score = styled.div<{ narrow?: boolean }>`
   line-height: ${scoreWidth - 3}cqw;
   letter-spacing: -1cqw;
   text-align: center;
-  background: ${Colors.GREEN};
+  background: ${({ highlight }) => (highlight ? Colors.GOLD : Colors.GREEN)};
   border: ${Border.THIN};
   border-radius: ${scoreWidth}cqw;
 `;
@@ -59,6 +59,7 @@ const Score = styled.div<{ narrow?: boolean }>`
 function Tile({
   letter,
   selected,
+  bonus,
   onClick,
   className,
   style,
@@ -69,6 +70,7 @@ function Tile({
 }: {
   letter: Letter;
   selected?: boolean;
+  bonus?: boolean;
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
@@ -77,7 +79,8 @@ function Tile({
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
-  const score = SCORES[letter];
+  const baseScore = SCORES[letter];
+  const score = bonus ? baseScore * 2 : baseScore;
   return (
     <Container
       data-grid-spot={dataGridSpot}
@@ -90,7 +93,9 @@ function Tile({
     >
       <TileStyles selected={selected ?? false}>
         <LetterStyles>{letter}</LetterStyles>
-        <Score narrow={score >= 10}>{score}</Score>
+        <Score narrow={score >= 10} highlight={bonus}>
+          {score}
+        </Score>
       </TileStyles>
     </Container>
   );

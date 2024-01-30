@@ -11,10 +11,12 @@ import { Letter } from "@/utils/tiles";
 
 interface GameStore {
   score: number;
-  words: string[];
+  words: { word: string; score: number }[];
   remainingTiles: Letter[];
   totalTilesCount: number;
   grid: (Letter | null)[];
+  bonusTiles: number[];
+  blockedTiles: number[];
   selectedTiles: number[];
   id: number;
   selectMode: "tap" | "swipe";
@@ -28,6 +30,8 @@ interface GameStore {
   onTileSwipe: (index: number) => void;
   finishSelecting: () => Promise<void>;
 }
+
+const BASE_TILE_COUNT = 9;
 
 function addSelectedTile(state: GameStore, index: number) {
   // If tile is not adjacent to the last selected tile, do nothing.
@@ -50,6 +54,8 @@ export const useGameStore = create<GameStore>()(
       score: 0,
       words: [],
       remainingTiles: [],
+      bonusTiles: [],
+      blockedTiles: [],
       totalTilesCount: 0,
       grid: [],
       selectedTiles: [],
@@ -68,15 +74,31 @@ export const useGameStore = create<GameStore>()(
 
           const seed = differenceInDays(new Date(), new Date(2024, 0, 1));
           const generator = new MersenneTwisterGenerator(seed);
-          const tiles = pickTiles(30, generator);
 
           state.id = seed;
           state.score = 0;
           state.words = [];
           state.selectedTiles = [];
-          state.remainingTiles = tiles;
-          state.totalTilesCount = tiles.length;
           state.grid = Array(16).fill(null);
+
+          let tileCount = BASE_TILE_COUNT;
+          const hasBonusTile = generator.nextFloat() < 0.4;
+          const bonusTile = generator.nextRange(0, 16);
+          if (hasBonusTile) {
+            state.bonusTiles = [bonusTile];
+            tileCount -= 3;
+          }
+
+          const hasBlockedTile = generator.nextFloat() < 0.4;
+          const blockedTile = generator.nextRange(0, 16);
+          if (hasBlockedTile && blockedTile !== bonusTile) {
+            state.blockedTiles = [blockedTile];
+            tileCount += 2;
+          }
+
+          const tiles = pickTiles(tileCount, generator);
+          state.remainingTiles = tiles;
+          state.totalTilesCount = tileCount;
         });
       },
 
@@ -133,8 +155,10 @@ export const useGameStore = create<GameStore>()(
 
         if (isValidWord) {
           set((state) => {
-            state.words = [...state.words, selectedWord];
-            state.score += getScore(selectedWord);
+            const bonus = state.selectedTiles.indexOf(state.bonusTiles[0]);
+            const score = getScore(selectedWord, bonus);
+            state.words = [...state.words, { word: selectedWord, score }];
+            state.score += score;
             state.selectedTiles.forEach((index) => {
               state.grid[index] = null;
             });

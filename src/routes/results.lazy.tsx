@@ -1,14 +1,13 @@
 import { styled } from "@linaria/react";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useGameStore } from "@/store/game";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
-import { getScore } from "@/utils/scoring";
 
 export const Route = createLazyFileRoute("/results")({
-  component: About,
+  component: Results,
 });
 
 const Page = styled.div`
@@ -98,15 +97,16 @@ const Button = styled.button`
   ${ButtonStyles}
 `;
 
-function About() {
+function Results() {
   const score = useGameStore((state) => state.score);
   const id = useGameStore((state) => state.id);
   const words = useGameStore((state) => state.words);
 
-  const bestWords = words
-    .map((word) => ({ word, score: getScore(word) }))
-    .sort((a, b) => b.score - a.score);
-  const bestWordsToShow = bestWords.slice(0, 3);
+  const bestWords = useMemo(
+    () => [...words].sort((a, b) => b.score - a.score),
+    [words],
+  );
+  const bestWordsToShow = useMemo(() => bestWords.slice(0, 3), [bestWords]);
 
   const shareResults = useCallback(() => {
     const bestWordsFormatted = bestWordsToShow

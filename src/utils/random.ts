@@ -45,7 +45,6 @@ export function pickTiles(
   const pickedTiles = Array(count)
     .fill(0)
     .map(() => generator.choice(tileBag));
-  console.log([...pickedTiles]);
 
   const vowels = Object.keys(VOWEL);
   for (let i = 0; i < pickedTiles.length; i += 5) {

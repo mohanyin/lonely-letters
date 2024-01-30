@@ -32,6 +32,8 @@ function Grid({
   const selectedTiles = useGameStore((state) => state.selectedTiles);
   const finishSelecting = useGameStore((state) => state.finishSelecting);
   const selectMode = useGameStore((state) => state.selectMode);
+  const bonusTile = useGameStore((state) => state.bonusTiles[0]);
+  const blockedTile = useGameStore((state) => state.blockedTiles[0]);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
@@ -83,6 +85,8 @@ function Grid({
         <GridSpot
           key={index}
           index={index}
+          bonus={bonusTile === index}
+          blocked={blockedTile === index}
           highlight={highlightedSpot === index}
           onClick={() => placeTile(index)}
         />,
@@ -93,6 +97,7 @@ function Grid({
           key={index}
           letter={letter}
           dataGridSpot={index}
+          bonus={bonusTile === index}
           selected={selectedTiles.includes(index)}
           onClick={() => onTileTap(index)}
         />,

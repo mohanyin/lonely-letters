@@ -1,13 +1,14 @@
 import { Letter, SCORES } from "@/utils/tiles";
 
-export function getScore(word: string): number {
-  return Math.round(getBaseScore(word) * calculateBonus(word));
+export function getScore(word: string, bonus: number): number {
+  return Math.round(getBaseScore(word, bonus) * calculateBonus(word));
 }
 
-function getBaseScore(word: string): number {
-  return word
-    .split("")
-    .reduce((sum, letter) => sum + SCORES[letter as Letter], 0);
+function getBaseScore(word: string, bonus: number): number {
+  return word.split("").reduce((sum, letter, index) => {
+    const bonusMultiplier = bonus === index ? 2 : 1;
+    return sum + bonusMultiplier * SCORES[letter as Letter];
+  }, 0);
 }
 
 export function calculateBonus(word: string | number[]) {
