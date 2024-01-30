@@ -11,7 +11,7 @@ function getBaseScore(word: string): number {
 }
 
 export function calculateBonus(word: string | number[]) {
-  return (word.length + 1) / 4;
+  return Math.max(Math.min((word.length + 1) / 4, 2), 1);
 }
 
 export function formatBonus(word: string | number[]) {

@@ -77,7 +77,7 @@ function Tile({
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
-  const score = SCORES[letter] === 1 ? 10 : SCORES[letter];
+  const score = SCORES[letter];
   return (
     <Container
       data-grid-spot={dataGridSpot}
