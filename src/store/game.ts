@@ -1,8 +1,8 @@
-import { differenceInDays } from "date-fns";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
+import { daysSinceJan1, today } from "@/utils/date";
 import { checkWord, importTries } from "@/utils/dictionary";
 import { isAdjacentTile } from "@/utils/grid";
 import { MersenneTwisterGenerator, pickTiles } from "@/utils/random";
@@ -11,6 +11,7 @@ import { Letter } from "@/utils/tiles";
 
 interface GameStore {
   score: number;
+  today: number;
   words: { word: string; score: number }[];
   remainingTiles: Letter[];
   totalTilesCount: number;
@@ -52,6 +53,7 @@ export const useGameStore = create<GameStore>()(
   devtools(
     immer((set, get) => ({
       score: 0,
+      today: 0,
       words: [],
       remainingTiles: [],
       bonusTiles: [],
@@ -72,9 +74,11 @@ export const useGameStore = create<GameStore>()(
         set((state) => {
           importTries();
 
-          const seed = differenceInDays(new Date(), new Date(2024, 0, 1));
+          const _today = today();
+          const seed = daysSinceJan1(_today);
           const generator = new MersenneTwisterGenerator(seed);
 
+          state.today = _today.valueOf();
           state.id = seed;
           state.score = 0;
           state.words = [];

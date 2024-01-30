@@ -5,6 +5,7 @@ export const ROW = {
   flexFlow: "row nowrap",
   justifyContent: "space-between",
   alignItems: "center",
+  gap: "8px",
 };
 
 export const Row = styled.div`
