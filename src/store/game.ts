@@ -4,6 +4,7 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { checkWord, importTries } from "@/utils/dictionary";
+import { isAdjacentTile } from "@/utils/grid";
 import { MersenneTwisterGenerator } from "@/utils/random";
 import { getScore } from "@/utils/scoring";
 import { Letter, tileBag } from "@/utils/tiles";
@@ -36,16 +37,7 @@ function addSelectedTile(state: GameStore, index: number) {
     return;
   }
 
-  const lastSelectPos = {
-    x: lastSelectedTile % 4,
-    y: Math.floor(lastSelectedTile / 4),
-  };
-  const selectedPos = { x: index % 4, y: Math.floor(index / 4) };
-  if (
-    Math.abs(lastSelectPos.x - selectedPos.x) +
-      Math.abs(lastSelectPos.y - selectedPos.y) >
-    1
-  ) {
+  if (!isAdjacentTile(lastSelectedTile, index)) {
     return;
   }
 
