@@ -76,30 +76,27 @@ function Grid({
   );
 
   const tiles = [];
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      const index = r * 4 + c;
-      const letter = grid[index];
-      if (!letter) {
-        tiles.push(
-          <GridSpot
-            key={index}
-            index={index}
-            highlight={highlightedSpot === index}
-            onClick={() => placeTile(index)}
-          />,
-        );
-      } else {
-        tiles.push(
-          <Tile
-            key={index}
-            letter={letter}
-            dataGridSpot={index}
-            selected={selectedTiles.includes(index)}
-            onClick={() => onTileTap(index)}
-          />,
-        );
-      }
+  for (let index = 0; index < ROWS * COLS; index++) {
+    const letter = grid[index];
+    if (!letter) {
+      tiles.push(
+        <GridSpot
+          key={index}
+          index={index}
+          highlight={highlightedSpot === index}
+          onClick={() => placeTile(index)}
+        />,
+      );
+    } else {
+      tiles.push(
+        <Tile
+          key={index}
+          letter={letter}
+          dataGridSpot={index}
+          selected={selectedTiles.includes(index)}
+          onClick={() => onTileTap(index)}
+        />,
+      );
     }
   }
 
