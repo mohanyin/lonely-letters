@@ -4,6 +4,7 @@ import { useCallback } from "react";
 
 import { useGameStore } from "@/store/game";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 import { getScore } from "@/utils/scoring";
 
 export const Route = createLazyFileRoute("/results")({
@@ -108,21 +109,25 @@ function About() {
   const bestWordsToShow = bestWords.slice(0, 3);
 
   const shareResults = useCallback(() => {
-    const medals = ["🥇", "🥈", "🥉"];
+    const bestWordsFormatted = bestWordsToShow
+      .map(
+        ({ word, score }, index) =>
+          `${MEDALS[index]} ${word.toLowerCase()} - ${score} pts`,
+      )
+      .join("\n");
     const shareDetails = {
       title: `Woggle #${id}`,
-      text: `🤩 ${score} pts 🤩
+      text: `
+Woggle #${id}
+Score: ${numberAsEmojis(score)} pts
 
-Best Words:
-${bestWordsToShow
-  .map(({ word, score }, index) => `${medals[index]} ${word} - (${score} pts)`)
-  .join("\n")}`,
+Best words:
+${bestWordsFormatted}`.trim(),
     };
-    if (!navigator.share) {
-      console.info(shareDetails);
-    } else {
-      navigator.share(shareDetails);
-    }
+
+    navigator.share
+      ? navigator.share(shareDetails)
+      : console.info(shareDetails);
   }, [id, score, bestWordsToShow]);
 
   return (
