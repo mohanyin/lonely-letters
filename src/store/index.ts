@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { CoreSlice, createCoreSlice } from "@/store/core";
@@ -24,11 +24,18 @@ export function useSelectedWord() {
 
 export const useStore = create<Store>()(
   devtools(
-    immer((set, get, store) => ({
-      ...createPuzzleSlice(set, get, store),
-      ...createCoreSlice(set, get, store),
-      ...createGameSlice(set, get, store),
-      ...createResultsSlice(set, get, store),
-    })),
+    persist(
+      immer((set, get, store) => ({
+        ...createPuzzleSlice(set, get, store),
+        ...createCoreSlice(set, get, store),
+        ...createGameSlice(set, get, store),
+        ...createResultsSlice(set, get, store),
+      })),
+      {
+        name: "woggle-store",
+        version: 0,
+        partialize: (state) => ({ game: state.game }),
+      },
+    ),
   ),
 );

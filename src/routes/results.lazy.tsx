@@ -1,13 +1,21 @@
 import { styled } from "@linaria/react";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo } from "react";
 
 import { useStore } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
-export const Route = createLazyFileRoute("/results")({
+export const Route = createFileRoute("/results")({
   component: Results,
+  loader: ({ navigate }) => {
+    const currentPuzzle = useStore.getState().currentPuzzle;
+    const lastPlayedPuzzle = useStore.getState().game.puzzle;
+
+    if (currentPuzzle !== lastPlayedPuzzle) {
+      navigate({ to: "/", replace: true });
+    }
+  },
 });
 
 const Page = styled.div`

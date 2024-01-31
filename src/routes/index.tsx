@@ -24,15 +24,12 @@ const MainStyles = styled.main`
 `;
 
 function Index() {
-  const start = useStore((store) => store.start);
-  const remainingTiles = useStore((store) => store.game.remainingTiles);
+  const startOrResume = useStore((store) => store.startOrResume);
   const placeTile = useStore((store) => store.placeTile);
 
   useEffect(() => {
     importTries();
-    if (remainingTiles.length === 0) {
-      start();
-    }
+    startOrResume();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

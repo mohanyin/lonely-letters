@@ -22,6 +22,7 @@ interface State {
 
 interface Actions {
   start: () => void;
+  startOrResume: () => void;
   placeTile: (index: number) => void;
   onTileTap: (index: number) => void;
   onTileSwipe: (index: number) => void;
@@ -60,15 +61,24 @@ export const createGameSlice: ImmerStateCreator<
   selectMode: "tap",
 
   start: () => {
-    const state = get();
-    state.generate(state.currentPuzzle);
-
     set((state) => {
       state.game = {
         ...BASE_GAME,
         puzzle: state.puzzle.id,
         remainingTiles: [...state.puzzle.tiles],
       };
+    });
+  },
+
+  startOrResume: () => {
+    const state = get();
+    state.generate(state.currentPuzzle);
+
+    if (state.game.puzzle !== state.currentPuzzle) {
+      state.start();
+    }
+
+    set((state) => {
       state.selectedIndices = [];
       state.selectMode = "tap";
     });
