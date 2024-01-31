@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import Tile from "@/components/game/Tile";
 import { useStore, useIsSelecting, useSelectedWord } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { CENTER_COLUMN } from "@/styles/layout";
 
 interface Position {
   x: number;
@@ -60,9 +61,12 @@ const MainTile = styled(Tile)<{ dragging: boolean; location: Position | null }>`
 `;
 
 const NextTileContainer = styled.div`
-  padding: 12px;
+  ${CENTER_COLUMN}
+  height: 100%;
+  padding: 12px 12px 12px 0;
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.MEDIUM};
+  border-left: none;
+  border-radius: ${BorderRadius.MEDIUM_RIGHT};
 `;
 
 const NextLabel = styled.div`
@@ -166,14 +170,12 @@ function Footer({
           />
         </NestedMainTileContainer>
       </MainTileContainer>
-      <div>
-        {remainingTiles[1] ? (
-          <NextTileContainer>
-            <NextLabel>Next</NextLabel>
-            <Tile letter={remainingTiles[1]} />
-          </NextTileContainer>
-        ) : null}
-      </div>
+      {remainingTiles[1] ? (
+        <NextTileContainer>
+          <NextLabel>Next</NextLabel>
+          <Tile letter={remainingTiles[1]} />
+        </NextTileContainer>
+      ) : null}
     </FooterStyles>
   );
 }

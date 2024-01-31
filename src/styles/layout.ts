@@ -26,3 +26,8 @@ export const CENTER = {
   alignItems: "center",
   justifyContent: "center",
 };
+
+export const CENTER_COLUMN = {
+  ...CENTER,
+  flexFlow: "column nowrap",
+};
