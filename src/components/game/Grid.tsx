@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import GridSpot from "@/components/game/GridSpot";
 import Tile from "@/components/game/Tile";
-import { useGameStore } from "@/store/game";
+import { useStore } from "@/store";
 
 const ROWS = 4;
 const COLS = 4;
@@ -25,15 +25,15 @@ function Grid({
   highlight: { x: number; y: number } | null;
   onHighlight: (index: number | null) => void;
 }) {
-  const placeTile = useGameStore((state) => state.placeTile);
-  const onTileTap = useGameStore((state) => state.onTileTap);
-  const onTileSwipe = useGameStore((state) => state.onTileSwipe);
-  const grid = useGameStore((state) => state.grid);
-  const selectedTiles = useGameStore((state) => state.selectedTiles);
-  const finishSelecting = useGameStore((state) => state.finishSelecting);
-  const selectMode = useGameStore((state) => state.selectMode);
-  const bonusTile = useGameStore((state) => state.bonusTiles[0]);
-  const blockedTile = useGameStore((state) => state.blockedTiles[0]);
+  const placeTile = useStore((state) => state.placeTile);
+  const onTileTap = useStore((state) => state.onTileTap);
+  const onTileSwipe = useStore((state) => state.onTileSwipe);
+  const grid = useStore((state) => state.game!.grid);
+  const selectedIndices = useStore((state) => state.selectedIndices);
+  const finishSelecting = useStore((state) => state.finishSelecting);
+  const selectMode = useStore((state) => state.selectMode);
+  const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
+  const blockedTile = useStore((state) => state.puzzle.blockedTiles[0]);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
@@ -98,7 +98,7 @@ function Grid({
           letter={letter}
           dataGridSpot={index}
           bonus={bonusTile === index}
-          selected={selectedTiles.includes(index)}
+          selected={selectedIndices.includes(index)}
           onClick={() => onTileTap(index)}
         />,
       );

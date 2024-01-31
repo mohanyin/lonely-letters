@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import Display from "@/components/game/Display";
 import Footer from "@/components/game/Footer";
 import Grid from "@/components/game/Grid";
-import { useGameStore } from "@/store/game";
+import { useStore } from "@/store";
+import { importTries } from "@/utils/dictionary";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -23,11 +24,12 @@ const MainStyles = styled.main`
 `;
 
 function Index() {
-  const start = useGameStore((store) => store.start);
-  const remainingTiles = useGameStore((store) => store.remainingTiles);
-  const placeTile = useGameStore((store) => store.placeTile);
+  const start = useStore((store) => store.start);
+  const remainingTiles = useStore((store) => store.game.remainingTiles);
+  const placeTile = useStore((store) => store.placeTile);
 
   useEffect(() => {
+    importTries();
     if (remainingTiles.length === 0) {
       start();
     }

@@ -2,7 +2,7 @@ import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
 import DisplayBase from "@/components/game/DisplayBase";
-import { useGameStore, useIsSelecting } from "@/store/game";
+import { useStore, useIsSelecting } from "@/store";
 import { Colors, TypeStyles } from "@/styles/core";
 import { formatBonus } from "@/utils/scoring";
 
@@ -32,18 +32,18 @@ const BonusLength = styled.div`
 `;
 
 function Display() {
-  const score = useGameStore((state) => state.score);
-  const selectedTiles = useGameStore((state) => state.selectedTiles);
+  const score = useStore((state) => state.game.score);
+  const selectedIndices = useStore((state) => state.selectedIndices);
 
   const isSelecting = useIsSelecting();
   const bonusPercentage = useMemo(() => {
-    return formatBonus(selectedTiles);
-  }, [selectedTiles]);
+    return formatBonus(selectedIndices);
+  }, [selectedIndices]);
 
   return isSelecting ? (
     <DisplayBase color={Colors.GOLD} label="Bonus">
       <div>
-        <BonusLength>{selectedTiles.length} letter word</BonusLength>
+        <BonusLength>{selectedIndices.length} letter word</BonusLength>
         <Bonus>{bonusPercentage}</Bonus>
       </div>
     </DisplayBase>

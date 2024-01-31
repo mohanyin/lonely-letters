@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import dayjs from "dayjs";
 
-import { useGameStore } from "@/store/game";
+import { useStore } from "@/store";
 import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Row, ROW } from "@/styles/layout";
 
@@ -32,8 +32,8 @@ const Date = styled.div`
 `;
 
 function AppBar() {
-  const id = useGameStore((state) => state.id);
-  const today = useGameStore((state) => state.today);
+  const id = useStore((state) => state.currentPuzzle);
+  const today = useStore((state) => state.today);
 
   return (
     <AppBarStyles>

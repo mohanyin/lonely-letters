@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
 import Tile from "@/components/game/Tile";
-import { useGameStore, useIsSelecting, useSelectedWord } from "@/store/game";
+import { useStore, useIsSelecting, useSelectedWord } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 
 interface Position {
@@ -101,9 +101,9 @@ function Footer({
   onDragMove: (position: Position) => void;
   onDragEnd: () => void;
 }) {
-  const remainingTiles = useGameStore((store) => store.remainingTiles);
-  const finishSelecting = useGameStore((store) => store.finishSelecting);
-  const selectMode = useGameStore((store) => store.selectMode);
+  const remainingTiles = useStore((store) => store.game.remainingTiles);
+  const finishSelecting = useStore((store) => store.finishSelecting);
+  const selectMode = useStore((store) => store.selectMode);
   const selectedWord = useSelectedWord();
   const isSelecting = useIsSelecting();
 

@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
-import { useGameStore } from "@/store/game";
+import { useStore } from "@/store";
 import { Colors, BorderRadius, Border } from "@/styles/core";
 
 const Base = styled.div`
@@ -57,21 +57,23 @@ const Diamond = styled.div`
 `;
 
 function DisplayLettersRemaining() {
-  const totalTilesCount = useGameStore((state) => state.totalTilesCount);
-  const remainingTilesCount = useGameStore(
-    (state) => state.remainingTiles.length,
+  const totalTilesCount = useStore((state) => state.puzzle?.numTiles ?? 0);
+  const remainingTilesCount = useStore(
+    (state) => state.game.remainingTiles.length,
   );
 
   const label = useMemo(() => {
     return `${remainingTilesCount} / ${totalTilesCount} letters remaining`;
   }, [remainingTilesCount, totalTilesCount]);
 
+  const percentage = remainingTilesCount / totalTilesCount;
+
   return (
     <Main>
       {label}
       <OverlayMask
         aria-hidden
-        width={remainingTilesCount / totalTilesCount || 0}
+        width={!Number.isNaN(percentage) ? percentage : 0}
       >
         <Top>{label}</Top>
       </OverlayMask>

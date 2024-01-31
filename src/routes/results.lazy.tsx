@@ -2,7 +2,7 @@ import { styled } from "@linaria/react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo } from "react";
 
-import { useGameStore } from "@/store/game";
+import { useStore } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
@@ -103,9 +103,9 @@ function censorWord(word: string) {
 }
 
 function Results() {
-  const score = useGameStore((state) => state.score);
-  const id = useGameStore((state) => state.id);
-  const words = useGameStore((state) => state.words);
+  const score = useStore((state) => state.game.score);
+  const words = useStore((state) => state.game.words);
+  const id = useStore((state) => state.puzzle.id);
 
   const bestWords = useMemo(
     () => [...words].sort((a, b) => b.score - a.score),
