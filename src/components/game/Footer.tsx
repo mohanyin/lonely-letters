@@ -54,6 +54,7 @@ const DraggedMainTile = styled(Tile)<{
   width: 20%;
   transform: ${({ location }) => calculateDragTransform(location)};
   opacity: ${({ dragging }) => (dragging ? "1" : "0")};
+  pointer-events: none;
 `;
 
 const NextTileContainer = styled.div`
