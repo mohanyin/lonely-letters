@@ -9,7 +9,7 @@ import { MersenneTwisterGenerator, pickTiles } from "@/utils/random";
 import { getScore } from "@/utils/scoring";
 import { Letter } from "@/utils/tiles";
 
-interface GameStore {
+interface GameState {
   score: number;
   today: number;
   words: { word: string; score: number }[];
@@ -21,32 +21,35 @@ interface GameStore {
   selectedTiles: number[];
   id: number;
   selectMode: "tap" | "swipe";
+}
 
-  isSelecting: () => boolean;
-  selectedWord: () => string;
-
+interface GameActions {
   start: () => void;
   placeTile: (index: number) => void;
   onTileTap: (index: number) => void;
   onTileSwipe: (index: number) => void;
+  addSelectedTile: (index: number) => void;
   finishSelecting: () => Promise<void>;
 }
 
+type GameStore = GameState & GameActions;
+
 const BASE_TILE_COUNT = 30;
 
-function addSelectedTile(state: GameStore, index: number) {
-  // If tile is not adjacent to the last selected tile, do nothing.
-  const lastSelectedTile = state.selectedTiles[state.selectedTiles.length - 1];
-  if (lastSelectedTile === undefined) {
-    state.selectedTiles = [index];
-    return;
-  }
+function isSelecting(state: GameStore) {
+  return state.selectedTiles.length > 0;
+}
 
-  if (!isAdjacentTile(lastSelectedTile, index)) {
-    return;
-  }
+export function useIsSelecting() {
+  return useGameStore(isSelecting);
+}
 
-  state.selectedTiles = [...state.selectedTiles, index];
+function getSelectedWord(state: GameStore) {
+  return state.selectedTiles.map((index) => state.grid[index]).join("");
+}
+
+export function useSelectedWord() {
+  return useGameStore(getSelectedWord);
 }
 
 export const useGameStore = create<GameStore>()(
@@ -64,12 +67,6 @@ export const useGameStore = create<GameStore>()(
       id: 0,
       selectMode: "tap",
 
-      isSelecting: () => !!get().selectedTiles.length,
-      selectedWord: () => {
-        const state = get();
-        return state.selectedTiles.map((index) => state.grid[index]).join("");
-      },
-
       start: () => {
         set((state) => {
           importTries();
@@ -81,7 +78,7 @@ export const useGameStore = create<GameStore>()(
           state.today = _today.valueOf();
           state.id = seed;
           state.score = 0;
-          state.words = [];
+          state.words = [] as { word: string; score: number }[];
           state.selectedTiles = [];
           state.grid = Array(16).fill(null);
 
@@ -108,7 +105,7 @@ export const useGameStore = create<GameStore>()(
 
       placeTile(index: number) {
         set((state) => {
-          if (state.grid[index] !== null || state.isSelecting()) {
+          if (state.grid[index] !== null || isSelecting(state)) {
             return;
           }
 
@@ -118,43 +115,65 @@ export const useGameStore = create<GameStore>()(
       },
 
       onTileTap(index: number) {
-        set((state) => {
-          // If tile is empty, do nothing.
-          if (state.grid[index] === null) {
-            return;
-          }
-          // If tile is already selected, back all the way up to right before
-          // that tile.
-          if (state.selectedTiles.includes(index)) {
+        const state = get();
+        // If tile is empty, do nothing.
+        if (state.grid[index] === null) {
+          return;
+        }
+
+        // If tile is already selected, back all the way up to right before
+        // that tile.
+        if (state.selectedTiles.includes(index)) {
+          set((state) => {
             const tileIndex = state.selectedTiles.indexOf(index);
             state.selectedTiles = state.selectedTiles.slice(0, tileIndex);
-            return;
-          }
+          });
+          return;
+        }
+
+        set((state) => {
           state.selectMode = "tap";
-          addSelectedTile(state, index);
         });
+        state.addSelectedTile(index);
       },
 
       onTileSwipe(index: number) {
+        const state = get();
+        // If tile is empty, do nothing.
+        if (state.grid[index] === null) {
+          return;
+        }
+        // If tile is already selected, ignore it.
+        if (state.selectedTiles.includes(index)) {
+          return;
+        }
         set((state) => {
-          // If tile is empty, do nothing.
-          if (state.grid[index] === null) {
-            return;
-          }
-          // If tile is already selected, ignore it.
-          if (state.selectedTiles.includes(index)) {
-            return;
-          }
           state.selectMode = "swipe";
-          addSelectedTile(state, index);
+        });
+        state.addSelectedTile(index);
+      },
+
+      addSelectedTile(index: number) {
+        set((state) => {
+          // If tile is not adjacent to the last selected tile, do nothing.
+          const lastSelectedTile =
+            state.selectedTiles[state.selectedTiles.length - 1];
+          if (lastSelectedTile === undefined) {
+            state.selectedTiles = [index];
+            return;
+          }
+
+          if (!isAdjacentTile(lastSelectedTile, index)) {
+            return;
+          }
+
+          state.selectedTiles = [...state.selectedTiles, index];
         });
       },
 
       finishSelecting: async (): Promise<void> => {
         const state = get();
-        const selectedWord = state.selectedTiles
-          .map((index) => state.grid[index])
-          .join("");
+        const selectedWord = getSelectedWord(state);
         const isValidWord = await checkWord(selectedWord);
 
         if (isValidWord) {

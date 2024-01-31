@@ -2,7 +2,7 @@ import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
 import DisplayBase from "@/components/game/DisplayBase";
-import { useGameStore } from "@/store/game";
+import { useGameStore, useIsSelecting } from "@/store/game";
 import { Colors, TypeStyles } from "@/styles/core";
 import { formatBonus } from "@/utils/scoring";
 
@@ -35,10 +35,7 @@ function Display() {
   const score = useGameStore((state) => state.score);
   const selectedTiles = useGameStore((state) => state.selectedTiles);
 
-  const isSelecting = useMemo(() => {
-    return selectedTiles.length > 0;
-  }, [selectedTiles]);
-
+  const isSelecting = useIsSelecting();
   const bonusPercentage = useMemo(() => {
     return formatBonus(selectedTiles);
   }, [selectedTiles]);
