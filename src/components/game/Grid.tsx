@@ -96,7 +96,7 @@ function Grid({
         <Tile
           key={index}
           letter={letter}
-          dataGridSpot={index}
+          data-grid-spot={index}
           bonus={bonusTile === index}
           selected={selectedIndices.includes(index)}
           onClick={() => onTileTap(index)}

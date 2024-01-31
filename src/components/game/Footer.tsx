@@ -16,8 +16,7 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  transform: ${({ dragging }) =>
-    !dragging ? "perspective(800px) rotateX(20deg)" : "none"};
+  transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
   transition: transform 0.3s ease-in-out;
 `;
@@ -28,36 +27,33 @@ const MainTileContainer = styled.div`
   background: ${Colors.GOLD};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE};
-  aspect-ratio: 1;
 `;
 
 const NestedMainTileContainer = styled(MainTileContainer)`
   padding: 12%;
   border-top-width: 4px;
   border-radius: ${BorderRadius.MEDIUM};
-  aspect-ratio: 1;
 `;
 
-function calculateDragTransform({
-  dragging,
-  location,
-}: {
+const MainTile = styled(Tile)<{ dragging: boolean }>`
+  transform: ${(props) => (props.dragging ? "scale(75%)" : "none")};
+  opacity: ${(props) => (props.dragging ? "0" : "1")};
+  transition:
+    transform 0.2s ease-in-out,
+    opacity 0.1s ease-in-out;
+`;
+
+function calculateDragTransform(location: Position | null) {
+  return location ? `translate(${location.x}px, ${location.y}px)` : "none";
+}
+const DraggedMainTile = styled(Tile)<{
   dragging: boolean;
   location: Position | null;
-}) {
-  if (!dragging) {
-    return "none";
-  } else if (!location) {
-    return "translate(50%, 50%)";
-  }
-  return `translate(${location.x}px, ${location.y}px) translate(50%, 50%)`;
-}
-const MainTile = styled(Tile)<{ dragging: boolean; location: Position | null }>`
-  width: ${({ dragging }) => (dragging ? "75%" : "100%")};
-  border-bottom-width: 6px;
-  transform: ${(props) => calculateDragTransform(props)};
-  transition: ${({ dragging }) =>
-    dragging ? "width 0.2s ease-in-out" : "none"};
+}>`
+  position: absolute;
+  width: 20%;
+  transform: ${({ location }) => calculateDragTransform(location)};
+  opacity: ${({ dragging }) => (dragging ? "1" : "0")};
 `;
 
 const NextTileContainer = styled.div`
@@ -67,6 +63,12 @@ const NextTileContainer = styled.div`
   border: ${Border.THIN};
   border-left: none;
   border-radius: ${BorderRadius.MEDIUM_RIGHT};
+`;
+
+const NextTile = styled(Tile)<{ dragging: boolean }>`
+  transform: ${({ dragging }) =>
+    dragging ? "translateX(-25%) scale(110%)" : "none"};
+  transition: transform 0.2s ease-in-out;
 `;
 
 const NextLabel = styled.div`
@@ -111,6 +113,8 @@ function Footer({
   const selectedWord = useSelectedWord();
   const isSelecting = useIsSelecting();
 
+  const [draggableBasePosition, setDraggableBasePosition] =
+    useState<Position | null>(null);
   const [dragStart, setDragStart] = useState<Position | null>(null);
   const [dragLocation, setDragLocation] = useState<Position | null>(null);
 
@@ -121,32 +125,50 @@ function Footer({
         y: event.touches[0].clientY,
       };
       onDragStart(position);
-      setDragStart(position);
+
+      const draggable = document.querySelector(
+        "[data-draggable=main-tile]",
+      ) as HTMLElement;
+      const draggableBounds = draggable.getBoundingClientRect();
+      const draggableBasePosition = {
+        x: draggableBounds.left + draggableBounds.width / 2,
+        y: draggableBounds.top + draggableBounds.height / 2,
+      };
+      setDraggableBasePosition(draggableBasePosition);
+
+      const dragStart = {
+        x: position.x - draggableBasePosition.x,
+        y: position.y - draggableBasePosition.y,
+      };
+      setDragLocation(dragStart);
+      setDragStart(dragStart);
     },
     [onDragStart],
   );
 
   const handleTouchMove = useCallback(
     (event: React.TouchEvent) => {
-      if (!dragStart) {
+      if (!draggableBasePosition) {
         return;
       }
 
-      onDragMove({
+      const dragLocation = {
         x: event.touches[0].clientX,
         y: event.touches[0].clientY,
-      });
+      };
+      onDragMove(dragLocation);
       setDragLocation({
-        x: event.touches[0].clientX - dragStart.x,
-        y: event.touches[0].clientY - dragStart.y,
+        x: dragLocation.x - draggableBasePosition.x,
+        y: dragLocation.y - draggableBasePosition.y,
       });
     },
-    [dragStart, onDragMove],
+    [onDragMove, draggableBasePosition],
   );
   const handleTouchEnd = useCallback(() => {
     onDragEnd();
-    setDragStart(null);
     setDragLocation(null);
+    setDraggableBasePosition(null);
+    setDragStart(null);
   }, [onDragEnd]);
 
   return isSelecting && selectMode === "tap" ? (
@@ -157,26 +179,41 @@ function Footer({
       <DoneLink to="/results">See my results</DoneLink>
     </>
   ) : (
-    <FooterStyles dragging={!!dragStart}>
-      <MainTileContainer>
-        <NestedMainTileContainer>
-          <MainTile
-            dragging={!!dragStart}
-            letter={remainingTiles[0]}
-            location={dragLocation}
-            onTouchStart={(event) => handleTouchStart(event)}
-            onTouchMove={(event) => handleTouchMove(event)}
-            onTouchEnd={() => handleTouchEnd()}
-          />
-        </NestedMainTileContainer>
-      </MainTileContainer>
-      {remainingTiles[1] ? (
-        <NextTileContainer>
-          <NextLabel>Next</NextLabel>
-          <Tile letter={remainingTiles[1]} />
-        </NextTileContainer>
-      ) : null}
-    </FooterStyles>
+    <>
+      <FooterStyles dragging={!!dragStart}>
+        <MainTileContainer>
+          <NestedMainTileContainer>
+            <MainTile
+              dragging={!!dragStart}
+              letter={remainingTiles[0]}
+              onTouchStart={(event) => handleTouchStart(event)}
+              onTouchMove={(event) => handleTouchMove(event)}
+              onTouchEnd={() => handleTouchEnd()}
+            />
+          </NestedMainTileContainer>
+        </MainTileContainer>
+        {remainingTiles[1] ? (
+          <NextTileContainer>
+            <NextLabel>Next</NextLabel>
+            <NextTile
+              key={remainingTiles.length}
+              dragging={!!dragStart}
+              letter={remainingTiles[1]}
+            />
+          </NextTileContainer>
+        ) : null}
+      </FooterStyles>
+      <DraggedMainTile
+        data-draggable="main-tile"
+        key={remainingTiles.length}
+        dragging={!!dragStart}
+        letter={remainingTiles[0]}
+        location={dragLocation}
+        onTouchStart={(event) => handleTouchStart(event)}
+        onTouchMove={(event) => handleTouchMove(event)}
+        onTouchEnd={() => handleTouchEnd()}
+      />
+    </>
   );
 }
 

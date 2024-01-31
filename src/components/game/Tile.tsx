@@ -56,34 +56,34 @@ const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
   border-radius: ${scoreWidth}cqw;
 `;
 
-function Tile({
-  letter,
-  selected,
-  bonus,
-  onClick,
-  className,
-  style,
-  dataGridSpot,
-  onTouchStart,
-  onTouchMove,
-  onTouchEnd,
-}: {
+function Tile(props: {
   letter: Letter;
   selected?: boolean;
   bonus?: boolean;
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
-  dataGridSpot?: number;
   onTouchStart?: (event: React.TouchEvent) => void;
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
 }) {
+  const {
+    letter,
+    selected,
+    bonus,
+    onClick,
+    className,
+    style,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    ...attributes
+  } = props;
   const baseScore = SCORES[letter];
   const score = bonus ? baseScore * 2 : baseScore;
   return (
     <Container
-      data-grid-spot={dataGridSpot}
+      {...attributes}
       className={className}
       style={style}
       onClick={onClick}
