@@ -97,6 +97,11 @@ const Button = styled.button`
   ${ButtonStyles}
 `;
 
+function censorWord(word: string) {
+  const censoredWord = word.charAt(0) + word.slice(1).replace(/./g, "_");
+  return censoredWord.split("").join(" ");
+}
+
 function Results() {
   const score = useGameStore((state) => state.score);
   const id = useGameStore((state) => state.id);
@@ -107,14 +112,15 @@ function Results() {
     [words],
   );
   const bestWordsToShow = useMemo(() => bestWords.slice(0, 3), [bestWords]);
+  const bestWordsFormatted = useMemo(() => {
+    return bestWordsToShow
+      .map(({ word, score }, index) => {
+        return `${MEDALS[index]} ${censorWord(word)} (${score} pts)`;
+      })
+      .join("\n");
+  }, [bestWordsToShow]);
 
   const shareResults = useCallback(() => {
-    const bestWordsFormatted = bestWordsToShow
-      .map(
-        ({ word, score }, index) =>
-          `${MEDALS[index]} ${word.toLowerCase()} - ${score} pts`,
-      )
-      .join("\n");
     const shareDetails = {
       title: `Woggle #${id}`,
       text: `
@@ -128,7 +134,7 @@ ${bestWordsFormatted}`.trim(),
     navigator.share
       ? navigator.share(shareDetails)
       : console.info(shareDetails);
-  }, [id, score, bestWordsToShow]);
+  }, [id, score, bestWordsFormatted]);
 
   return (
     <Page>
@@ -153,7 +159,7 @@ ${bestWordsFormatted}`.trim(),
         </Card>
       </DetailsContainer>
 
-      <Button onClick={shareResults}>Share</Button>
+      <Button onClick={shareResults}>Share results</Button>
     </Page>
   );
 }

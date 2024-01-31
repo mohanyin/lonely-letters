@@ -71,7 +71,7 @@ function DisplayLettersRemaining() {
       {label}
       <OverlayMask
         aria-hidden
-        width={remainingTilesCount / totalTilesCount || 1}
+        width={remainingTilesCount / totalTilesCount || 0}
       >
         <Top>{label}</Top>
       </OverlayMask>
