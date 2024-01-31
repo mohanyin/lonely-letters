@@ -11,6 +11,7 @@ const Score = styled.h2`
   display: flex;
   gap: 12px;
   align-items: center;
+  white-space: nowrap;
 `;
 
 const ScoreDot = styled.div`
@@ -23,12 +24,14 @@ const ScoreDot = styled.div`
 const Bonus = styled.h2`
   ${TypeStyles.SCORE}
   font-size: 2em;
+  white-space: nowrap;
 `;
 
 const BonusLength = styled.div`
   ${TypeStyles.OVERLINE}
   margin-bottom: 4px;
   color: ${Colors.BLACK};
+  white-space: nowrap;
 `;
 
 function Display() {
@@ -43,7 +46,7 @@ function Display() {
   return isSelecting ? (
     <DisplayBase color={Colors.GOLD} label="Bonus">
       <div>
-        <BonusLength>{selectedIndices.length} letter word</BonusLength>
+        <BonusLength>{selectedIndices.length} letters</BonusLength>
         <Bonus>{bonusPercentage}</Bonus>
       </div>
     </DisplayBase>
