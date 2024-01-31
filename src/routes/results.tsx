@@ -113,7 +113,7 @@ function censorWord(word: string) {
 function Results() {
   const score = useStore((state) => state.game.score);
   const words = useStore((state) => state.game.words);
-  const id = useStore((state) => state.puzzle.id);
+  const id = useStore((state) => state.game.puzzle);
 
   const bestWords = useMemo(
     () => [...words].sort((a, b) => b.score - a.score),
