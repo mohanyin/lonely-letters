@@ -59,6 +59,7 @@ const DraggedMainTile = styled(Tile)<{
 
 const NextTileContainer = styled.div`
   ${CENTER_COLUMN}
+  margin: 16px 0 8px;
   padding: 12px 12px 12px 0;
   border: ${Border.THIN};
   border-left: none;

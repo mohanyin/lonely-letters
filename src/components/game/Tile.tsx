@@ -21,6 +21,7 @@ const TileStyles = styled.div<{ selected: boolean }>`
   border: ${Border.THIN};
   border-bottom-width: 6cqw;
   border-radius: 20cqw;
+  transition: background 0.2s ease-in-out;
 `;
 
 const LetterStyles = styled.div`
