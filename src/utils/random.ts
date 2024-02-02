@@ -38,13 +38,28 @@ export class MersenneTwisterGenerator {
   }
 }
 
+function chooseAndRemove<T>(
+  array: T[],
+  generator: MersenneTwisterGenerator,
+): { choice: T; remaining: T[] } {
+  const index = generator.nextRange(0, array.length);
+  const choice = array[index];
+  const remaining = [...array];
+  remaining.splice(index, 1);
+  return { choice, remaining };
+}
+
 export function pickTiles(
   count: number,
   generator: MersenneTwisterGenerator,
 ): Letter[] {
-  const pickedTiles = Array(count)
-    .fill(0)
-    .map(() => generator.choice(tileBag));
+  const pickedTiles: Letter[] = [];
+  let tiles = [...tileBag];
+  for (let i = 0; i < count; i++) {
+    const { choice, remaining } = chooseAndRemove(tiles, generator);
+    tiles = remaining;
+    pickedTiles.push(choice);
+  }
 
   const vowels = Object.keys(VOWEL);
   for (let i = 0; i < pickedTiles.length; i += 5) {
