@@ -1,3 +1,5 @@
+import mixpanel from "mixpanel-browser";
+
 import { CoreSlice } from "@/store/core";
 import { PuzzleSlice } from "@/store/puzzle";
 import { ImmerStateCreator } from "@/store/utils";
@@ -77,6 +79,7 @@ export const createGameSlice: ImmerStateCreator<
 
     if (state.game.puzzle !== state.currentPuzzle) {
       state.start();
+      mixpanel.track("Game started", { puzzle: state.currentPuzzle });
     }
 
     set((state) => {
@@ -175,6 +178,12 @@ export const createGameSlice: ImmerStateCreator<
         state.game!.score += score;
         state.selectedIndices.forEach((index) => {
           state.game!.grid[index] = null;
+        });
+
+        mixpanel.track("Word cleared", {
+          puzzle: state.currentPuzzle,
+          score,
+          word: selectedWord,
         });
       });
     }

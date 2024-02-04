@@ -35,6 +35,9 @@ dependencies:
   lz-string:
     specifier: ^1.5.0
     version: 1.5.0
+  mixpanel-browser:
+    specifier: ^2.48.1
+    version: 2.48.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -55,6 +58,9 @@ devDependencies:
   '@types/lodash':
     specifier: ^4.14.202
     version: 4.14.202
+  '@types/mixpanel-browser':
+    specifier: ^2.48.1
+    version: 2.48.1
   '@types/react':
     specifier: ^18.2.43
     version: 18.2.48
@@ -1099,6 +1105,10 @@ packages:
 
   /@types/minimist@1.2.5:
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
+    dev: true
+
+  /@types/mixpanel-browser@2.48.1:
+    resolution: {integrity: sha512-qcckCw9znV98KUkvImglkiVd303Fnn1NTpbKkboQS0bB1SbkNc0Qzz6M9AsS6MaKSzINN4e5z28qUBsK9Wzm5g==}
     dev: true
 
   /@types/node@20.11.5:
@@ -4004,6 +4014,10 @@ packages:
       for-in: 1.0.2
       is-extendable: 1.0.1
     dev: true
+
+  /mixpanel-browser@2.48.1:
+    resolution: {integrity: sha512-vXTuUzZMg+ht7sRqyjtc3dUDy/81Z/H6FLFgFkUZJqKFaAqcx1JSXmOdY/2kmsxCkUdy5JN5zW9m9TMCk+rxGQ==}
+    dev: false
 
   /mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
