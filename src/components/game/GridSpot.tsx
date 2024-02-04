@@ -1,20 +1,25 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
-import { Border, BorderRadius, Colors, TypeStyles, Type } from "@/styles/core";
+import { Border, Colors, TypeStyles, Type } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
 import { parseIndex } from "@/utils/grid";
 
+const Container = styled.div`
+  container: spot / size;
+  aspect-ratio: 1;
+`;
+
 const GridSpotStyle = styled.button<{ highlight: boolean }>`
   ${CENTER}
+  width: 100%;
+  height: 100%;
   background: ${({ highlight }) =>
     highlight ? Colors.GOLD : Colors.GREEN_600};
   border: ${Border.THIN};
-  border-top-width: 4px;
-  border-radius: ${BorderRadius.MEDIUM};
-  aspect-ratio: 1;
-  transition: background 0.15s ease-in-out;
-  container: spot / size;
+  border-top-width: 4cqw;
+  border-radius: 20cqw;
+  transition: background 0.2s ease-in-out;
 
   &:active {
     background: ${Colors.GOLD};
@@ -84,20 +89,24 @@ function GridSpot({
     const bonusLabel = bonus ? " has bonus" : "";
     return `Add tile to row: ${y}, column: ${x}${bonusLabel}`;
   }, [x, y, bonus]);
-  return !blocked ? (
-    <GridSpotStyle
-      data-grid-spot={index}
-      highlight={highlight}
-      onClick={onClick}
-      aria-label={ariaLabel}
-    >
-      {bonus ? <GridSpotBonus>2x</GridSpotBonus> : <GridSpotDiamond />}
-    </GridSpotStyle>
-  ) : (
-    <GridCrossContainer>
-      <GridCrossLeft />
-      <GridCrossRight />
-    </GridCrossContainer>
+  return (
+    <Container>
+      {!blocked ? (
+        <GridSpotStyle
+          data-grid-spot={index}
+          highlight={highlight}
+          onClick={onClick}
+          aria-label={ariaLabel}
+        >
+          {bonus ? <GridSpotBonus>2x</GridSpotBonus> : <GridSpotDiamond />}
+        </GridSpotStyle>
+      ) : (
+        <GridCrossContainer>
+          <GridCrossLeft />
+          <GridCrossRight />
+        </GridCrossContainer>
+      )}
+    </Container>
   );
 }
 
