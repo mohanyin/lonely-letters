@@ -11,7 +11,6 @@ const AppBarStyles = styled.header`
   padding: 12px 20px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
-  border-bottom-right-radius: ${BorderRadius.MEDIUM};
 `;
 
 const Title = styled.h1`

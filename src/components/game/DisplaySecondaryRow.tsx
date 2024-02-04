@@ -7,7 +7,6 @@ const Base = styled.div`
   overflow: hidden;
   font-style: italic;
   text-align: center;
-  border-top-left-radius: ${BorderRadius.LARGE};
 `;
 
 const Main = styled(Base)`
@@ -30,7 +29,7 @@ const OverlayMask = styled.div<{ width?: number }>`
   width: ${(props) => getOverlayWidth(props.width)};
   overflow: hidden;
   border-top: ${Border.THIN};
-  border-bottom-right-radius: ${BorderRadius.LARGE};
+  border-bottom-right-radius: ${BorderRadius.MEDIUM};
   transition: width 0.2s ease-in-out;
 `;
 

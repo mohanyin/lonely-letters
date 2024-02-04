@@ -9,7 +9,7 @@ const DisplayContainer = styled.div<{ color?: string }>`
   overflow: hidden;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE_LEAF};
+  border-radius: ${BorderRadius.MEDIUM};
 `;
 
 const MainRow = styled(Row)`

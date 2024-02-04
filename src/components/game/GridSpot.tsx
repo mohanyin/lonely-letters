@@ -27,8 +27,8 @@ const GridSpotStyle = styled.button<{ highlight: boolean }>`
 `;
 
 const GridSpotDiamond = styled.div`
-  width: 40cqw;
-  height: 40cqw;
+  width: 35cqw;
+  height: 35cqw;
   border: ${Border.THIN};
   transform: rotate(45deg);
 `;
