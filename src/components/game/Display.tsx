@@ -2,9 +2,16 @@ import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
 import DisplayBase from "@/components/game/DisplayBase";
-import { useStore, useIsSelecting } from "@/store";
-import { Colors, TypeStyles } from "@/styles/core";
-import { formatBonus } from "@/utils/scoring";
+import DisplaySecondaryRow from "@/components/game/DisplaySecondaryRow";
+import { useStore, useIsSelecting, useSelectedWord } from "@/store";
+import { Border, Colors, TypeStyles } from "@/styles/core";
+import {
+  formatBonus,
+  getScore,
+  calculateBonus,
+  MAX_BONUS,
+  MIN_BONUS,
+} from "@/utils/scoring";
 
 const Score = styled.h2`
   ${TypeStyles.SCORE}
@@ -21,15 +28,16 @@ const ScoreDot = styled.div`
   border-radius: 8px;
 `;
 
-const Bonus = styled.h2`
-  ${TypeStyles.SCORE}
-  font-size: 2em;
+const Word = styled.h2`
+  ${TypeStyles.HEADLINE_3}
+  margin-bottom: 6px;
+  padding-bottom: 6px;
   white-space: nowrap;
+  border-bottom: ${Border.THIN};
 `;
 
-const BonusLength = styled.div`
-  ${TypeStyles.OVERLINE}
-  margin-bottom: 4px;
+const WordScore = styled.div`
+  ${TypeStyles.SCORE_SMALL}
   color: ${Colors.BLACK};
   white-space: nowrap;
 `;
@@ -37,21 +45,58 @@ const BonusLength = styled.div`
 function Display() {
   const score = useStore((state) => state.game.score);
   const selectedIndices = useStore((state) => state.selectedIndices);
+  const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
+  const selectedWord = useSelectedWord();
+  const selectedPoints = useMemo(() => {
+    const bonusIndex = selectedIndices.indexOf(bonusTile);
+    return getScore(selectedWord, bonusIndex);
+  }, [selectedWord, selectedIndices, bonusTile]);
 
   const isSelecting = useIsSelecting();
-  const bonusPercentage = useMemo(() => {
-    return formatBonus(selectedIndices);
-  }, [selectedIndices]);
+
+  const totalTilesCount = useStore((state) => state.puzzle?.numTiles ?? 0);
+  const remainingTilesCount = useStore(
+    (state) => state.game.remainingTiles.length,
+  );
+
+  const remainingLabel = useMemo(() => {
+    return `${remainingTilesCount} / ${totalTilesCount} letters remaining`;
+  }, [remainingTilesCount, totalTilesCount]);
+  const remainingRatio = remainingTilesCount / totalTilesCount;
+
+  const bonusLabel = `${formatBonus(selectedWord)} bonus`;
+  const bonusRatio = useMemo(() => {
+    const bonus = calculateBonus(selectedWord);
+    return (bonus - MIN_BONUS) / (MAX_BONUS - MIN_BONUS);
+  }, [selectedWord]);
 
   return isSelecting ? (
-    <DisplayBase color={Colors.GOLD} label="Bonus">
+    <DisplayBase
+      color={Colors.GOLD}
+      label="Word"
+      secondary={
+        <DisplaySecondaryRow
+          color={Colors.GOLD}
+          label={bonusLabel}
+          ratio={bonusRatio}
+        />
+      }
+    >
       <div>
-        <BonusLength>{selectedIndices.length} letters</BonusLength>
-        <Bonus>{bonusPercentage}</Bonus>
+        <Word>{selectedWord}</Word>
+        <WordScore>{selectedPoints} pts</WordScore>
       </div>
     </DisplayBase>
   ) : (
-    <DisplayBase color={Colors.WHITE} label="Score">
+    <DisplayBase
+      label="Score"
+      secondary={
+        <DisplaySecondaryRow
+          label={remainingLabel}
+          ratio={1 - remainingRatio}
+        />
+      }
+    >
       <Score>
         <ScoreDot /> {score} <ScoreDot />
       </Score>

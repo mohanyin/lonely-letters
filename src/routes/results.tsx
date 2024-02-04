@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo } from "react";
 
 import { useStore } from "@/store";
+import { Button } from "@/styles/buttons";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
@@ -35,7 +36,7 @@ const ScoreContainer = styled.div`
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   padding: 24px 20px;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
@@ -77,8 +78,13 @@ const Card = styled.div<{ row?: boolean }>`
   }
 `;
 
-const ResultValue = styled.div`
+const ResultLabel = styled.div`
   ${TypeStyles.HEADLINE_3}
+  color: ${Colors.WHITE};
+`;
+
+const ResultValue = styled.div`
+  ${TypeStyles.SCORE_SMALL}
   color: ${Colors.WHITE};
 `;
 
@@ -91,18 +97,9 @@ const ResultValueRow = styled(ResultValue)`
   margin: 4px 0;
 `;
 
-const ButtonStyles = {
-  ...TypeStyles.HEADLINE_3,
-  padding: "12px 16px",
-  background: Colors.GOLD,
-  border: Border.THIN,
-  width: "100%",
-  "margin-top": "32px",
-  "border-bottom-width": "4px",
-  "border-radius": `${BorderRadius.MEDIUM} 0 ${BorderRadius.MEDIUM}`,
-};
-const Button = styled.button`
-  ${ButtonStyles}
+const ShareButton = styled(Button)`
+  width: 100%;
+  margin-top: 12px;
 `;
 
 function censorWord(word: string) {
@@ -160,14 +157,14 @@ ${bestWordsFormatted}`.trim(),
           <CardHeader>Best Words</CardHeader>
           {bestWordsToShow.map(({ word, score }) => (
             <ResultValueRow key={word}>
-              <span>“{word.toLowerCase()}”</span>
+              <ResultLabel>{word.toLowerCase()}</ResultLabel>
               <span>{score} pts</span>
             </ResultValueRow>
           ))}
         </Card>
       </DetailsContainer>
 
-      <Button onClick={shareResults}>Share results</Button>
+      <ShareButton onClick={shareResults}>Share results</ShareButton>
     </Page>
   );
 }

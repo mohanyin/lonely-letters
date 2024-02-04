@@ -1,9 +1,10 @@
 import { styled } from "@linaria/react";
-import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
+import DoneFooter from "@/components/game/DoneFooter";
+import SelectedFooter from "@/components/game/SelectedFooter";
 import Tile from "@/components/game/Tile";
-import { useStore, useIsSelecting, useSelectedWord } from "@/store";
+import { useStore, useIsSelecting } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { CENTER_COLUMN } from "@/styles/layout";
 
@@ -18,7 +19,6 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   gap: 12px;
   transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
-  transition: transform 0.3s ease-in-out;
 `;
 
 const MainTileContainer = styled.div`
@@ -59,11 +59,8 @@ const DraggedMainTile = styled(Tile)<{
 
 const NextTileContainer = styled.div`
   ${CENTER_COLUMN}
-  margin: 16px 0 8px;
-  padding: 12px 12px 12px 0;
-  border: ${Border.THIN};
-  border-left: none;
-  border-radius: ${BorderRadius.MEDIUM_RIGHT};
+  margin: 8px;
+  border-top: ${Border.THIN};
 `;
 
 const NextTile = styled(Tile)<{ dragging: boolean }>`
@@ -78,27 +75,6 @@ const NextLabel = styled.div`
   text-align: center;
 `;
 
-const ButtonStyles = {
-  ...TypeStyles.HEADLINE_3,
-  padding: "12px 16px",
-  background: Colors.GOLD,
-  border: Border.THIN,
-  "border-bottom-width": "4px",
-  "border-radius": `${BorderRadius.MEDIUM} 0 ${BorderRadius.MEDIUM}`,
-};
-const DoneButton = styled.button`
-  ${ButtonStyles}
-`;
-
-const DoneLink = styled(Link)`
-  ${ButtonStyles}
-`;
-
-const DoneWithPuzzle = styled.div`
-  ${TypeStyles.BODY_ITALIC}
-  text-align: center;
-`;
-
 function Footer({
   onDragStart,
   onDragMove,
@@ -109,9 +85,6 @@ function Footer({
   onDragEnd: () => void;
 }) {
   const remainingTiles = useStore((store) => store.game.remainingTiles);
-  const finishSelecting = useStore((store) => store.finishSelecting);
-  const selectMode = useStore((store) => store.selectMode);
-  const selectedWord = useSelectedWord();
   const isSelecting = useIsSelecting();
 
   const [draggableBasePosition, setDraggableBasePosition] =
@@ -172,13 +145,10 @@ function Footer({
     setDragStart(null);
   }, [onDragEnd]);
 
-  return isSelecting && selectMode === "tap" ? (
-    <DoneButton onClick={finishSelecting}>Submit “{selectedWord}”</DoneButton>
+  return isSelecting ? (
+    <SelectedFooter />
   ) : !remainingTiles[0] ? (
-    <>
-      <DoneWithPuzzle>Done with the puzzle?</DoneWithPuzzle>
-      <DoneLink to="/results">See my results</DoneLink>
-    </>
+    <DoneFooter />
   ) : (
     <>
       <FooterStyles dragging={!!dragStart}>

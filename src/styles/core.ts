@@ -26,6 +26,9 @@ const SCORE = {
   fontSize: "2.5em",
   lineHeight: 1,
 };
+
+const SCORE_SMALL = { ...SCORE, fontSize: "0.85em" };
+
 const HEADLINE_1 = {
   fontFamily: Type.FONT_FAMILY,
   fontWeight: Type.FONT_WEIGHT_BOLD,
@@ -69,6 +72,7 @@ const BODY_BOLD = {
 
 export const TypeStyles = {
   SCORE,
+  SCORE_SMALL,
   HEADLINE_1,
   HEADLINE_2,
   HEADLINE_3,

@@ -1,7 +1,7 @@
 import { Letter, SCORES } from "@/utils/tiles";
 
-const MIN_BONUS = 0;
-const MAX_BONUS = 2;
+export const MIN_BONUS = 1;
+export const MAX_BONUS = 2;
 
 export function getScore(word: string, bonus: number): number {
   return Math.round(getBaseScore(word, bonus) * calculateBonus(word));

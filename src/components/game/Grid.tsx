@@ -72,8 +72,6 @@ function Grid({
   const onTileSwipe = useStore((state) => state.onTileSwipe);
   const grid = useStore((state) => state.game!.grid);
   const selectedIndices = useStore((state) => state.selectedIndices);
-  const finishSelecting = useStore((state) => state.finishSelecting);
-  const selectMode = useStore((state) => state.selectMode);
   const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
   const blockedTile = useStore((state) => state.puzzle.blockedTiles[0]);
 
@@ -193,16 +191,7 @@ function Grid({
           />
         ))}
       </HorizontalGridStripes>
-      <GridStyles
-        onTouchMove={addTileOnSwipe}
-        onTouchEnd={() => {
-          if (selectMode === "swipe") {
-            finishSelecting();
-          }
-        }}
-      >
-        {...tiles}
-      </GridStyles>
+      <GridStyles onTouchMove={addTileOnSwipe}>{...tiles}</GridStyles>
     </Container>
   );
 }

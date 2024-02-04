@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react";
 
-import DisplayLettersRemaining from "@/components/game/DisplayLettersRemaining";
 import { Colors, TypeStyles, BorderRadius, Border } from "@/styles/core";
 import { Row } from "@/styles/layout";
 
@@ -8,7 +7,7 @@ const DisplayContainer = styled.div<{ color?: string }>`
   position: relative;
   box-sizing: content-box;
   overflow: hidden;
-  background: ${({ color }) => color ?? Colors.WHITE};
+  background: ${Colors.WHITE};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.LARGE_LEAF};
 `;
@@ -21,28 +20,30 @@ const MainRow = styled(Row)`
 const Label = styled.div<{ color?: string }>`
   ${TypeStyles.OVERLINE}
   display: inline-block;
-  padding: 6px 24px 6px 16px;
+  padding: 6px 16px;
   color: ${({ color }) => color ?? Colors.WHITE};
   background: ${Colors.BLACK};
   border-radius: ${BorderRadius.ROUNDED_LEFT};
 `;
 
 function DisplayBase({
-  color = Colors.WHITE,
+  color,
   children,
   label,
+  secondary,
 }: {
-  color: string;
+  color?: string;
   children?: React.ReactNode;
+  secondary?: React.ReactNode;
   label: string;
 }) {
   return (
-    <DisplayContainer color={color}>
+    <DisplayContainer>
       <MainRow>
         {children}
         <Label color={color}>{label}</Label>
       </MainRow>
-      <DisplayLettersRemaining />
+      {secondary}
     </DisplayContainer>
   );
 }

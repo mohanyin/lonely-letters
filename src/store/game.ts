@@ -27,6 +27,7 @@ interface Actions {
   onTileTap: (index: number) => void;
   onTileSwipe: (index: number) => void;
   addSelectedTile: (index: number) => void;
+  cancelSelecting: () => void;
   finishSelecting: () => Promise<void>;
 }
 
@@ -149,6 +150,12 @@ export const createGameSlice: ImmerStateCreator<
       }
 
       state.selectedIndices = [...state.selectedIndices, index];
+    });
+  },
+
+  cancelSelecting: () => {
+    set((state) => {
+      state.selectedIndices = [];
     });
   },
 
