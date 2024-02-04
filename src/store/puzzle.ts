@@ -21,8 +21,8 @@ interface Actions {
 export type PuzzleSlice = State & Actions;
 
 export const BASE_TILE_COUNT = 30;
-const BLOCKED_TILE_CHANCE = 0.3;
-const BONUS_TILE_CHANCE = 0.4;
+const BLOCKED_TILE_CHANCE = 0.5;
+const BONUS_TILE_CHANCE = 0.5;
 
 const BASE_PUZZLE = {
   id: 0,
