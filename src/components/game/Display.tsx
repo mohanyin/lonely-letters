@@ -21,13 +21,6 @@ const Score = styled.h2`
   white-space: nowrap;
 `;
 
-const ScoreDot = styled.div`
-  width: 8px;
-  height: 8px;
-  background: ${Colors.BLACK};
-  border-radius: 8px;
-`;
-
 const Word = styled.h2`
   ${TypeStyles.HEADLINE_3}
   margin-bottom: 6px;
@@ -97,9 +90,7 @@ function Display() {
         />
       }
     >
-      <Score>
-        <ScoreDot /> {score} <ScoreDot />
-      </Score>
+      <Score>{score}</Score>
     </DisplayBase>
   );
 }
