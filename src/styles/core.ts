@@ -20,6 +20,9 @@ export const Type = {
 export const Border = {
   THIN: `1px solid ${Colors.BLACK}`,
   THIN_WHITE: `1px solid ${Colors.WHITE}`,
+  THIN_RED: `1px solid ${Colors.RED}`,
+  THIN_GOLD: `1px solid ${Colors.GOLD}`,
+  THIN_GREEN: `1px solid ${Colors.GREEN}`,
 };
 
 const SCORE = {
@@ -87,6 +90,7 @@ export const TypeStyles = {
 
 export const BorderRadius = {
   SMALL: "8px",
+  SMALL_LEAF: "8px 0 8px",
   MEDIUM: "16px",
   MEDIUM_RIGHT: "0 16px 16px 0",
   LARGE: "24px",

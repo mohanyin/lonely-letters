@@ -12,11 +12,12 @@ import { Row, Center } from "@/styles/layout";
 
 const IconButton = styled(Center)`
   ${TypeStyles.BODY}
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   color: ${Colors.WHITE};
   border: ${Border.THIN_WHITE};
-  border-radius: ${BorderRadius.SMALL};
+  border-bottom-width: 2px;
+  border-radius: ${BorderRadius.ROUNDED};
 `;
 
 const DrawerContent = styled(Drawer.Content)`

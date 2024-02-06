@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 import BottomDrawer from "@/components/BottomDrawer";
 import { useStore } from "@/store";
-import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Row, ROW } from "@/styles/layout";
 
 const AppBarStyles = styled.header`
@@ -20,15 +20,22 @@ const Title = styled.h1`
 
 const Puzzle = styled.div`
   ${TypeStyles.OVERLINE_SMALL}
-  padding: 4px 8px;
-  color: ${Colors.BLACK};
+  display: flex;
+  overflow: hidden;
   line-height: 1;
-  background: ${Colors.GREEN};
+  border: ${Border.THIN_GREEN};
   border-radius: ${BorderRadius.SMALL} 0 ${BorderRadius.SMALL};
 `;
 
+const PuzzleNumber = styled.div`
+  padding: 6px 10px;
+  color: ${Colors.BLACK};
+  background: ${Colors.GREEN};
+  border-bottom-right-radius: ${BorderRadius.SMALL};
+`;
+
 const Date = styled.div`
-  ${TypeStyles.OVERLINE_SMALL}
+  padding: 6px 10px;
 `;
 
 function AppBar() {
@@ -39,10 +46,12 @@ function AppBar() {
     <AppBarStyles>
       <Row>
         <Title>Woggle</Title>
-        <Puzzle>#{id}</Puzzle>
+        <Puzzle>
+          <PuzzleNumber>#{id}</PuzzleNumber>
+          <Date>{dayjs(today).format("MMM D, YYYY")}</Date>
+        </Puzzle>
       </Row>
       <Row>
-        <Date>{dayjs(today).format("MMMM D, YYYY")}</Date>
         <BottomDrawer />
       </Row>
     </AppBarStyles>
