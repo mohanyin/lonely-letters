@@ -27,6 +27,8 @@
     "mixpanel-browser": "^2.48.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "swiper": "^11.0.6",
+    "vaul": "^0.9.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {

@@ -12,7 +12,22 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const MainStyles = styled.main`
+const Main = function ({
+  className,
+  children,
+  styles,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+  styles?: React.CSSProperties;
+}) {
+  return (
+    <main className={className} style={styles}>
+      {children}
+    </main>
+  );
+};
+const MainStyles = styled(Main)`
   display: flex;
   flex: 1 1 auto;
   flex-flow: column nowrap;

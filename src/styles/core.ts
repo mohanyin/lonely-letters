@@ -19,6 +19,7 @@ export const Type = {
 
 export const Border = {
   THIN: `1px solid ${Colors.BLACK}`,
+  THIN_WHITE: `1px solid ${Colors.WHITE}`,
 };
 
 const SCORE = {
@@ -60,6 +61,7 @@ const BODY = {
   fontFamily: Type.FONT_FAMILY,
   fontWeight: Type.FONT_WEIGHT_REGULAR,
   fontSize: "1em",
+  lineHeight: 1.375,
 };
 const BODY_ITALIC = {
   ...BODY,
@@ -89,5 +91,6 @@ export const BorderRadius = {
   MEDIUM_RIGHT: "0 16px 16px 0",
   LARGE: "24px",
   LARGE_LEAF: "24px 0 24px",
+  ROUNDED: "1000px",
   ROUNDED_LEFT: "1000px 0 0 1000px",
 };

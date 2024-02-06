@@ -4,6 +4,7 @@ import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 
 export const BUTTON = {
   ...TypeStyles.OVERLINE,
+  color: Colors.BLACK,
   padding: "12px 16px",
   background: Colors.GOLD,
   border: Border.THIN,

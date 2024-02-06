@@ -1,6 +1,7 @@
 import { styled } from "@linaria/react";
 import dayjs from "dayjs";
 
+import BottomDrawer from "@/components/BottomDrawer";
 import { useStore } from "@/store";
 import { BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Row, ROW } from "@/styles/layout";
@@ -8,7 +9,7 @@ import { Row, ROW } from "@/styles/layout";
 const AppBarStyles = styled.header`
   ${ROW}
   width: 100%;
-  padding: 12px 20px;
+  padding: 8px 20px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
 `;
@@ -40,7 +41,10 @@ function AppBar() {
         <Title>Woggle</Title>
         <Puzzle>#{id}</Puzzle>
       </Row>
-      <Date>{dayjs(today).format("MMMM D, YYYY")}</Date>
+      <Row>
+        <Date>{dayjs(today).format("MMMM D, YYYY")}</Date>
+        <BottomDrawer />
+      </Row>
     </AppBarStyles>
   );
 }

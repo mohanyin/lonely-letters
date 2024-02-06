@@ -3,13 +3,14 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import AppBar from "@/components/AppBar";
-import { Type } from "@/styles/core";
+import { Colors, Type } from "@/styles/core";
 
 const AppStyles = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   font-family: "${Type.FONT_FAMILY}";
+  background: ${Colors.GREEN};
 `;
 
 export const Route = createRootRoute({
@@ -18,10 +19,12 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <AppStyles>
-      <AppBar />
-      <Outlet />
-      {import.meta.env.DEV && <TanStackRouterDevtools />}
-    </AppStyles>
+    <div vaul-drawer-wrapper="true">
+      <AppStyles>
+        <AppBar />
+        <Outlet />
+        {import.meta.env.DEV && <TanStackRouterDevtools />}
+      </AppStyles>
+    </div>
   );
 }

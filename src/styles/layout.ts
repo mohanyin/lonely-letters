@@ -27,6 +27,10 @@ export const CENTER = {
   justifyContent: "center",
 };
 
+export const Center = styled.div`
+  ${CENTER}
+`;
+
 export const CENTER_COLUMN = {
   ...CENTER,
   flexFlow: "column nowrap",
