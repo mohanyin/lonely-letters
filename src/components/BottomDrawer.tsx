@@ -109,15 +109,15 @@ function InstructionsCarousel({
         <div className="swiper-slide">
           <InstructionsImage image={instructions2} data-vaul-no-drag />
           <Instruction data-vaul-no-drag>
-            Tap tiles to spell words. You can go any direction and even change
-            directions. But no diagonals!{" "}
+            Tap tiles to spell words. You can go in any direction and even
+            change directions. But no diagonals!
           </Instruction>
         </div>
         <div className="swiper-slide">
           <InstructionsImage image={instructions3} data-vaul-no-drag />
           <Instruction data-vaul-no-drag>
             Earn a bonus for spelling longer words. You only get so many tiles
-            everyday, so try to make the most of them!
+            every day, so try to make the most of them!
           </Instruction>
         </div>
       </div>
