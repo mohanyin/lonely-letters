@@ -7,7 +7,7 @@ import AppBar from "@/components/AppBar";
 import { Colors, Type } from "@/styles/core";
 
 const Container = css`
-  height: 100vh;
+  height: 100svh;
   background: ${Colors.GREEN};
 `;
 
