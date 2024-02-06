@@ -1,3 +1,4 @@
+import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
@@ -5,12 +6,16 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import AppBar from "@/components/AppBar";
 import { Colors, Type } from "@/styles/core";
 
+const Container = css`
+  height: 100vh;
+  background: ${Colors.GREEN};
+`;
+
 const AppStyles = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   font-family: "${Type.FONT_FAMILY}";
-  background: ${Colors.GREEN};
 `;
 
 export const Route = createRootRoute({
@@ -19,7 +24,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <div vaul-drawer-wrapper="true">
+    <div vaul-drawer-wrapper="true" className={Container}>
       <AppStyles>
         <AppBar />
         <Outlet />

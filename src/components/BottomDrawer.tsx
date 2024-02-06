@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper } from "swiper";
 import { Drawer } from "vaul";
 
@@ -22,12 +22,17 @@ const IconButton = styled(Center)`
 const DrawerContent = styled(Drawer.Content)`
   position: fixed;
   bottom: 0;
+  left: max(calc(50% - 250px), 0px);
   width: 100%;
   max-width: 500px;
   padding: 16px 24px max(env(safe-area-inset-bottom), 12px);
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
   border-radius: ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0 0;
+
+  :focus {
+    outline: none;
+  }
 `;
 
 const DragHandle = styled.div`
@@ -52,15 +57,15 @@ const TitleAppend = styled.div`
 
 const getBackgroundImage = (image: string) => `url(${image})`;
 const InstructionsImage = styled.div<{ image: string }>`
-  width: 100%;
   height: 200px;
-  margin-bottom: 24px;
+  margin: 0 32px 24px;
   background: ${(props) => getBackgroundImage(props.image)} no-repeat center;
   background-size: contain;
 `;
 
 const Instruction = styled.div`
   ${TypeStyles.BODY}
+  margin: 0 12px;
 `;
 
 const NextButton = styled(Button)`
@@ -68,33 +73,64 @@ const NextButton = styled(Button)`
   margin-top: 12px;
 `;
 
+function InstructionsCarousel({
+  slide,
+  onSlideChange,
+}: {
+  slide: number;
+  onSlideChange: (index: number) => void;
+}) {
+  const [swiper, setSwiper] = useState<Swiper | null>(null);
+
+  useEffect(() => {
+    const swiper = new Swiper(".swiper");
+    swiper.on("slideChange", () => onSlideChange(swiper.activeIndex));
+    setSwiper(swiper);
+
+    return () => {
+      swiper?.destroy();
+    };
+  }, [onSlideChange]);
+
+  useEffect(() => {
+    swiper?.slideTo(slide);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slide]);
+
+  return (
+    <div className="swiper">
+      <div className="swiper-wrapper">
+        <div className="swiper-slide">
+          <InstructionsImage image={instructions1} data-vaul-no-drag />
+          <Instruction data-vaul-no-drag>
+            Add tiles to the grid by tapping on an empty space.
+          </Instruction>
+        </div>
+        <div className="swiper-slide">
+          <InstructionsImage image={instructions2} data-vaul-no-drag />
+          <Instruction data-vaul-no-drag>
+            Tap tiles to spell words. You can go any direction and even change
+            directions. But no diagonals!{" "}
+          </Instruction>
+        </div>
+        <div className="swiper-slide">
+          <InstructionsImage image={instructions3} data-vaul-no-drag />
+          <Instruction data-vaul-no-drag>
+            Earn a bonus for spelling longer words. You only get so many tiles
+            everyday, so try to make the most of them!
+          </Instruction>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BottomDrawer() {
   const [open, setOpen] = useState(false);
-  const [swiper, setSwiper] = useState<Swiper | null>(null);
-  const [slideIndex, setSlideIndex] = useState(0);
-
-  const onSlideChange = useCallback((swiper: Swiper) => {
-    setSlideIndex(swiper.activeIndex);
-  }, []);
+  const [slide, setSlide] = useState(0);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        const swiper = new Swiper(".swiper");
-        swiper.on("slideChange", onSlideChange);
-
-        setSwiper(swiper);
-        setSlideIndex(swiper.activeIndex);
-      }, 0);
-    }
-  }, [open, onSlideChange]);
-
-  useEffect(() => {
-    if (!open) {
-      swiper?.destroy();
-      setSwiper(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setSlide(0);
   }, [open]);
 
   return (
@@ -109,38 +145,15 @@ function BottomDrawer() {
           </Center>
           <TitleRow>
             <Title>How to Woggle</Title>
-            <TitleAppend>{slideIndex + 1} / 3</TitleAppend>
+            <TitleAppend>{slide + 1} / 3</TitleAppend>
           </TitleRow>
 
-          <div className="swiper" data-vaul-no-drag>
-            <div className="swiper-wrapper">
-              <div className="swiper-slide">
-                <InstructionsImage image={instructions1} />
-                <Instruction>
-                  Add tiles to the grid by tapping on an empty space.
-                </Instruction>
-              </div>
-              <div className="swiper-slide">
-                <InstructionsImage image={instructions2} />
-                <Instruction>
-                  Tap tiles to spell words. You can go any direction and even
-                  change directions. But no diagonals!{" "}
-                </Instruction>
-              </div>
-              <div className="swiper-slide">
-                <InstructionsImage image={instructions3} />
-                <Instruction>
-                  Earn a bonus for spelling longer words. You only get so many
-                  tiles everyday, so try to make the most of them!
-                </Instruction>
-              </div>
-            </div>
-          </div>
+          <InstructionsCarousel slide={slide} onSlideChange={setSlide} />
 
-          {slideIndex === 2 ? (
+          {slide === 2 ? (
             <NextButton onClick={() => setOpen(false)}>Done</NextButton>
           ) : (
-            <NextButton onClick={() => swiper?.slideNext()}>Next</NextButton>
+            <NextButton onClick={() => setSlide(slide + 1)}>Next</NextButton>
           )}
         </DrawerContent>
         <Drawer.Overlay />
