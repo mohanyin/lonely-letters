@@ -34,7 +34,7 @@ const MainStyles = styled(Main)`
   gap: 16px;
   justify-content: space-around;
   width: 100%;
-  max-width: 50vh;
+  max-width: 49vh;
   padding: 12px 32px max(env(safe-area-inset-bottom), 20px);
 `;
 
