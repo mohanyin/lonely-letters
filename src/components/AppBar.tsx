@@ -4,14 +4,19 @@ import dayjs from "dayjs";
 import BottomDrawer from "@/components/BottomDrawer";
 import { useStore } from "@/store";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
-import { Row, ROW } from "@/styles/layout";
+import { CENTER, Row } from "@/styles/layout";
 
 const AppBarStyles = styled.header`
-  ${ROW}
+  ${CENTER}
   width: 100%;
-  padding: 8px 20px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
+`;
+
+const AppBarRow = styled(Row)`
+  width: 100%;
+  max-width: 500px;
+  padding: 8px 32px;
 `;
 
 const Title = styled.h1`
@@ -44,16 +49,18 @@ function AppBar() {
 
   return (
     <AppBarStyles>
-      <Row>
-        <Title>Woggle</Title>
-        <Puzzle>
-          <PuzzleNumber>#{id}</PuzzleNumber>
-          <Date>{dayjs(today).format("MMM D, YYYY")}</Date>
-        </Puzzle>
-      </Row>
-      <Row>
-        <BottomDrawer />
-      </Row>
+      <AppBarRow>
+        <Row>
+          <Title>Woggle</Title>
+          <Puzzle>
+            <PuzzleNumber>#{id}</PuzzleNumber>
+            <Date>{dayjs(today).format("MMM D, YYYY")}</Date>
+          </Puzzle>
+        </Row>
+        <Row>
+          <BottomDrawer />
+        </Row>
+      </AppBarRow>
     </AppBarStyles>
   );
 }
