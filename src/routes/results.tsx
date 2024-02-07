@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useStore } from "@/store";
 import { Button } from "@/styles/buttons";
@@ -108,6 +108,8 @@ function censorWord(word: string) {
 }
 
 function Results() {
+  const [copied, setCopied] = useState(false);
+
   const score = useStore((state) => state.game.score);
   const words = useStore((state) => state.game.words);
   const id = useStore((state) => state.game.puzzle);
@@ -136,9 +138,13 @@ Best words:
 ${bestWordsFormatted}`.trim(),
     };
 
-    navigator.share
-      ? navigator.share(shareDetails)
-      : console.info(shareDetails);
+    if (navigator.share) {
+      navigator.share(shareDetails);
+    } else {
+      navigator.clipboard.writeText(shareDetails.text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    }
   }, [id, score, bestWordsFormatted]);
 
   return (
@@ -164,7 +170,9 @@ ${bestWordsFormatted}`.trim(),
         </Card>
       </DetailsContainer>
 
-      <ShareButton onClick={shareResults}>Share results</ShareButton>
+      <ShareButton onClick={shareResults}>
+        {copied ? "Copied!" : "Share results"}
+      </ShareButton>
     </Page>
   );
 }
