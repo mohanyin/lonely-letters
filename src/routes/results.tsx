@@ -161,7 +161,7 @@ ${bestWordsFormatted}`.trim(),
         </Card>
         <Card>
           <CardHeader>Best Words</CardHeader>
-          {bestWordsToShow.map(({ word, score }) => (
+          {bestWords.map(({ word, score }) => (
             <ResultValueRow key={word}>
               <ResultLabel>{word.toLowerCase()}</ResultLabel>
               <span>{score} pts</span>
