@@ -1,4 +1,4 @@
-import { Letter, VOWEL, tileBag, vowelBag } from "@/utils/tiles";
+import { Letter, consonantBag, vowelBag } from "@/utils/tiles";
 
 export class MersenneTwisterGenerator {
   private m: number;
@@ -49,29 +49,54 @@ function chooseAndRemove<T>(
   return { choice, remaining };
 }
 
+function shuffleArray(
+  array: Letter[],
+  generator: MersenneTwisterGenerator,
+): Letter[] {
+  const arrayToShuffle = [...array];
+  for (let i = arrayToShuffle.length - 1; i > 0; i--) {
+    const j = Math.floor(generator.nextFloat() * (i + 1));
+    const temp = arrayToShuffle[i];
+    arrayToShuffle[i] = arrayToShuffle[j];
+    arrayToShuffle[j] = temp;
+  }
+  return arrayToShuffle;
+}
+
 export function pickTiles(
   count: number,
   generator: MersenneTwisterGenerator,
 ): Letter[] {
   const pickedTiles: Letter[] = [];
-  let tiles = [...tileBag];
-  for (let i = 0; i < count; i++) {
-    const { choice, remaining } = chooseAndRemove(tiles, generator);
-    tiles = remaining;
+  let vowelTiles = [...vowelBag];
+  let consonantTiles = [...consonantBag];
+
+  // pick .6 * 30 consonant tiles
+  const totalConsonants = Math.floor(0.6 * count);
+  for (let i = 0; i < totalConsonants; i++) {
+    const { choice, remaining } = chooseAndRemove(consonantTiles, generator);
+    consonantTiles = remaining;
     pickedTiles.push(choice);
   }
 
-  const vowels = Object.keys(VOWEL);
-  for (let i = 0; i < pickedTiles.length; i += 5) {
-    const segment = pickedTiles.slice(i, i + 5);
+  // pick .4 * 30 vowel tiles
+  const totalVowels = count - totalConsonants;
+  for (let i = 0; i < totalVowels; i++) {
+    const { choice, remaining } = chooseAndRemove(vowelTiles, generator);
+    vowelTiles = remaining;
+    pickedTiles.push(choice);
+  }
 
-    const hasVowel = segment.some((letter) => vowels.includes(letter));
-    if (!hasVowel) {
-      const vowel = generator.choice(vowelBag);
-      const replacement = generator.nextRange(i, i + 5);
-      pickedTiles[replacement] = vowel;
+  // count Qs and Us, if less Us than Qs, add Us until they're equal
+  const qTiles = pickedTiles.filter((tile) => tile === "Q");
+  const uTiles = pickedTiles.filter((tile) => tile === "U");
+  if (qTiles.length < uTiles.length) {
+    for (let i = 0; i < qTiles.length - uTiles.length; i++) {
+      pickedTiles[i] = "U";
     }
   }
 
-  return pickedTiles;
+  // shuffle tiles
+  const shuffledTiles = shuffleArray(pickedTiles, generator);
+  return shuffledTiles;
 }

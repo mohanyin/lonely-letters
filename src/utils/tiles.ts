@@ -1,6 +1,6 @@
 export type Vowel = keyof typeof VOWEL;
 export type Consonant = keyof typeof CONSONANT;
-export type Letter = keyof typeof DISTRUBTION;
+export type Letter = keyof typeof DISTRIBUTION;
 
 export const VOWEL = {
   A: 9,
@@ -33,15 +33,16 @@ export const CONSONANT = {
   Z: 1,
 };
 
-export const DISTRUBTION = { ...VOWEL, ...CONSONANT };
+export const DISTRIBUTION = { ...VOWEL, ...CONSONANT };
 
 function createBag(distribution: { [key: string]: number }): Letter[] {
   return Object.entries(distribution).flatMap(([letter, count]) =>
     Array(count).fill(letter),
   );
 }
-export const tileBag = createBag(DISTRUBTION);
+export const tileBag = createBag(DISTRIBUTION);
 export const vowelBag = createBag(VOWEL) as Vowel[];
+export const consonantBag = createBag(CONSONANT) as Consonant[];
 
 export const SCORES: Record<Letter, number> = {
   A: 1,
