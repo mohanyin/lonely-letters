@@ -64,6 +64,9 @@ export const createGameSlice: ImmerStateCreator<
   selectMode: "tap",
 
   start: () => {
+    const { currentPuzzle } = get();
+    mixpanel.track("Game started", { puzzle: currentPuzzle });
+
     set((state) => {
       state.game = {
         ...BASE_GAME,
@@ -79,7 +82,6 @@ export const createGameSlice: ImmerStateCreator<
 
     if (state.game.puzzle !== state.currentPuzzle) {
       state.start();
-      mixpanel.track("Game started", { puzzle: state.currentPuzzle });
     }
 
     set((state) => {

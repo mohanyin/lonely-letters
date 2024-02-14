@@ -1,4 +1,10 @@
-import { Letter, consonantBag, vowelBag } from "@/utils/tiles";
+import {
+  Consonant,
+  Letter,
+  Vowel,
+  consonantBag,
+  vowelBag,
+} from "@/utils/tiles";
 
 export class MersenneTwisterGenerator {
   private m: number;
@@ -67,36 +73,31 @@ export function pickTiles(
   count: number,
   generator: MersenneTwisterGenerator,
 ): Letter[] {
-  const pickedTiles: Letter[] = [];
-  let vowelTiles = [...vowelBag];
+  const pickedConsonants: Consonant[] = [];
   let consonantTiles = [...consonantBag];
-
-  // pick .6 * 30 consonant tiles
   const totalConsonants = Math.floor(0.6 * count);
   for (let i = 0; i < totalConsonants; i++) {
     const { choice, remaining } = chooseAndRemove(consonantTiles, generator);
     consonantTiles = remaining;
-    pickedTiles.push(choice);
+    pickedConsonants.push(choice);
   }
 
-  // pick .4 * 30 vowel tiles
+  const pickedVowels: Vowel[] = [];
+  let vowelTiles = [...vowelBag];
   const totalVowels = count - totalConsonants;
   for (let i = 0; i < totalVowels; i++) {
     const { choice, remaining } = chooseAndRemove(vowelTiles, generator);
     vowelTiles = remaining;
-    pickedTiles.push(choice);
+    pickedVowels.push(choice);
   }
 
-  // count Qs and Us, if less Us than Qs, add Us until they're equal
-  const qTiles = pickedTiles.filter((tile) => tile === "Q");
-  const uTiles = pickedTiles.filter((tile) => tile === "U");
-  if (qTiles.length < uTiles.length) {
+  const qTiles = pickedConsonants.filter((tile) => tile === "Q");
+  const uTiles = pickedVowels.filter((tile) => tile === "U");
+  if (qTiles.length > uTiles.length) {
     for (let i = 0; i < qTiles.length - uTiles.length; i++) {
-      pickedTiles[i] = "U";
+      pickedVowels[i] = "U";
     }
   }
 
-  // shuffle tiles
-  const shuffledTiles = shuffleArray(pickedTiles, generator);
-  return shuffledTiles;
+  return shuffleArray([...pickedConsonants, ...pickedVowels], generator);
 }
