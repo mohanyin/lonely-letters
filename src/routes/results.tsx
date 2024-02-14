@@ -131,11 +131,15 @@ function Results() {
     const shareDetails = {
       title: `Woggle #${id}`,
       text: `
-Woggle #${id}
+==  Woggle #${id}  ==
+= playwoggle.com =
+
 Score: ${numberAsEmojis(score)} pts
 
 Best words:
-${bestWordsFormatted}`.trim(),
+${bestWordsFormatted}
+
+`.trim(),
     };
 
     if (navigator.share) {
