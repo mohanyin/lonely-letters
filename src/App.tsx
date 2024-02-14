@@ -29,6 +29,7 @@ mixpanel.init(MIXPANEL_TOKEN, {
   debug: import.meta.env.DEV,
   track_pageview: true,
   persistence: "localStorage",
+  ignore_dnt: true,
 });
 
 createRoot(document.getElementById("root")!).render(
