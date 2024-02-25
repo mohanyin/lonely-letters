@@ -1,10 +1,11 @@
 import { styled } from "@linaria/react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import DisplayBase from "@/components/game/DisplayBase";
 import DisplaySecondaryRow from "@/components/game/DisplaySecondaryRow";
 import { useStore, useIsSelecting, useSelectedWord } from "@/store";
 import { Border, Colors, TypeStyles } from "@/styles/core";
+import { checkWord } from "@/utils/dictionary";
 import {
   formatBonus,
   getScore,
@@ -36,6 +37,8 @@ const WordScore = styled.div`
 `;
 
 function Display() {
+  const [isSelectedValid, setIsSelectedValid] = useState(false);
+
   const score = useStore((state) => state.game.score);
   const selectedIndices = useStore((state) => state.selectedIndices);
   const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
@@ -44,6 +47,10 @@ function Display() {
     const bonusIndex = selectedIndices.indexOf(bonusTile);
     return getScore(selectedWord, bonusIndex);
   }, [selectedWord, selectedIndices, bonusTile]);
+
+  useEffect(() => {
+    checkWord(selectedWord).then((isValid) => setIsSelectedValid(isValid));
+  }, [selectedWord]);
 
   const isSelecting = useIsSelecting();
 
@@ -65,8 +72,8 @@ function Display() {
 
   return isSelecting ? (
     <DisplayBase
-      color={Colors.GOLD}
-      label="Word"
+      color={isSelectedValid ? Colors.GOLD : Colors.RED}
+      label={isSelectedValid ? "Valid" : "Invalid"}
       secondary={
         <DisplaySecondaryRow
           color={Colors.GOLD}
