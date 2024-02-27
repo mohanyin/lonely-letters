@@ -15,7 +15,8 @@ const AppStyles = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-family: "${Type.FONT_FAMILY}";
+  /* stylelint-disable-next-line font-family-name-quotes */
+  font-family: ${Type.FONT_FAMILY};
 `;
 
 export const Route = createRootRoute({

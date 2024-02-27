@@ -9,7 +9,6 @@ import { CENTER } from "@/styles/layout";
 const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
   margin-top: 12px;
   padding-top: 24px;
   border-top: ${Border.THIN};
@@ -20,6 +19,7 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 const CancelButton = styled(Button)`
   ${CENTER}
   background: ${Colors.RED};
+  border-right: none;
   border-radius: ${BorderRadius.MEDIUM} 0 0;
 `;
 const DoneButton = styled(Button)`

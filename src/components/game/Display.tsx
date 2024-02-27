@@ -10,8 +10,8 @@ import {
   formatBonus,
   getScore,
   calculateBonus,
-  MAX_BONUS,
-  MIN_BONUS,
+  MAX_LETTER_BONUS,
+  MIN_LETTER_BONUS,
 } from "@/utils/scoring";
 
 const Score = styled.h2`
@@ -67,7 +67,7 @@ function Display() {
   const bonusLabel = `${formatBonus(selectedWord)} bonus`;
   const bonusRatio = useMemo(() => {
     const bonus = calculateBonus(selectedWord);
-    return (bonus - MIN_BONUS) / (MAX_BONUS - MIN_BONUS);
+    return (bonus - MIN_LETTER_BONUS) / (MAX_LETTER_BONUS - MIN_LETTER_BONUS);
   }, [selectedWord]);
 
   return isSelecting ? (

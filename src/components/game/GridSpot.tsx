@@ -1,8 +1,7 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
-import { Border, Colors, TypeStyles, Type } from "@/styles/core";
-import { CENTER } from "@/styles/layout";
+import { Border, Colors, TypeStyles } from "@/styles/core";
 import { parseIndex } from "@/utils/grid";
 
 const Container = styled.div`
@@ -11,9 +10,10 @@ const Container = styled.div`
 `;
 
 const GridSpotStyle = styled.button<{ highlight: boolean }>`
-  ${CENTER}
+  position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background: ${({ highlight }) =>
     highlight ? Colors.GOLD : Colors.GREEN_600};
   border: ${Border.THIN};
@@ -27,22 +27,25 @@ const GridSpotStyle = styled.button<{ highlight: boolean }>`
 `;
 
 const GridSpotDiamond = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 35cqw;
   height: 35cqw;
   border: ${Border.THIN};
-  transform: rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 `;
 
 const GridSpotBonus = styled.div`
-  ${TypeStyles.HEADLINE_3}
-  width: 55cqw;
-  height: 55cqw;
-  font-weight: ${Type.FONT_WEIGHT_LIGHT};
-  font-size: 30cqw;
-  line-height: 55cqw;
+  ${TypeStyles.OVERLINE}
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 4cqw 0;
+  font-size: 20cqw;
   background: ${Colors.GOLD};
-  border: ${Border.THIN};
-  border-radius: 100%;
+  border-top: ${Border.THIN};
 `;
 
 const GridCrossContainer = styled.div`
@@ -98,7 +101,8 @@ function GridSpot({
           onClick={onClick}
           aria-label={ariaLabel}
         >
-          {bonus ? <GridSpotBonus>2x</GridSpotBonus> : <GridSpotDiamond />}
+          <GridSpotDiamond />
+          {bonus ? <GridSpotBonus>Bonus</GridSpotBonus> : null}
         </GridSpotStyle>
       ) : (
         <GridCrossContainer>

@@ -1,21 +1,31 @@
 import { Letter, SCORES } from "@/utils/tiles";
 
-export const MIN_BONUS = 1;
-export const MAX_BONUS = 2;
+export const MIN_LETTER_BONUS = 1;
+export const MAX_LETTER_BONUS = 2;
+export const GRID_SPOT_BONUS = 1.5;
 
 export function getScore(word: string, bonus: number): number {
   return Math.round(getBaseScore(word, bonus) * calculateBonus(word));
 }
 
-function getBaseScore(word: string, bonus: number): number {
+export function getGridSpotBonusScore(letterScore: number): number {
+  return Math.round(letterScore * GRID_SPOT_BONUS);
+}
+
+function getBaseScore(word: string, bonusLetter: number): number {
   return word.split("").reduce((sum, letter, index) => {
-    const bonusMultiplier = bonus === index ? 2 : 1;
-    return sum + bonusMultiplier * SCORES[letter as Letter];
+    const letterScore = SCORES[letter as Letter];
+    const withBonus =
+      bonusLetter === index ? getGridSpotBonusScore(letterScore) : letterScore;
+    return sum + withBonus;
   }, 0);
 }
 
 export function calculateBonus(word: string | number[]) {
-  return Math.max(Math.min((word.length + 1) / 4, MAX_BONUS), MIN_BONUS);
+  return Math.max(
+    Math.min((word.length + 1) / 4, MAX_LETTER_BONUS),
+    MIN_LETTER_BONUS,
+  );
 }
 
 export function formatBonus(word: string | number[]) {

@@ -1,6 +1,7 @@
 import { styled } from "@linaria/react";
 
 import { Border, Colors, Type, TypeStyles } from "@/styles/core";
+import { getGridSpotBonusScore } from "@/utils/scoring";
 import { Letter, SCORES } from "@/utils/tiles";
 
 const Container = styled.button`
@@ -81,7 +82,7 @@ function Tile(props: {
     ...attributes
   } = props;
   const baseScore = SCORES[letter];
-  const score = bonus ? baseScore * 2 : baseScore;
+  const score = bonus ? getGridSpotBonusScore(baseScore) : baseScore;
   return (
     <Container
       {...attributes}
