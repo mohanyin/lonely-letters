@@ -26,7 +26,7 @@ const GridStyles = styled.div`
 
 const VerticalGridStripes = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   display: grid;
   grid-template-rows: repeat(${ROWS - 1}, 1fr);
   grid-template-columns: repeat(${COLS}, 1fr);
@@ -44,7 +44,7 @@ const VerticalGridStripe = styled.div<{ active: boolean }>`
 
 const HorizontalGridStripes = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   display: grid;
   grid-template-rows: repeat(${ROWS}, 1fr);
   grid-template-columns: repeat(${COLS - 1}, 1fr);
