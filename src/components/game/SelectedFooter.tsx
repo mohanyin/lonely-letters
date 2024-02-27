@@ -20,11 +20,11 @@ const CancelButton = styled(Button)`
   ${CENTER}
   background: ${Colors.RED};
   border-right: none;
-  border-radius: ${BorderRadius.MEDIUM} 0 0;
+  border-radius: ${BorderRadius.MEDIUM} 0 0 ${BorderRadius.MEDIUM};
 `;
 const DoneButton = styled(Button)`
   grid-column: 2 / 5;
-  border-radius: 0 0 ${BorderRadius.MEDIUM};
+  border-radius: 0 ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0;
 `;
 
 function SelectedFooter() {

@@ -89,10 +89,10 @@ export const TypeStyles = {
 };
 
 export const BorderRadius = {
-  SMALL: "8px",
-  SMALL_LEAF: "8px 0 8px",
-  MEDIUM: "16px",
-  MEDIUM_RIGHT: "0 16px 16px 0",
+  SMALL: "4px",
+  SMALL_LEAF: "4px 0 4px",
+  MEDIUM: "12px",
+  MEDIUM_RIGHT: "0 12px 12px 0",
   LARGE: "24px",
   LARGE_LEAF: "24px 0 24px",
   ROUNDED: "1000px",

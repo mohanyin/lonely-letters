@@ -9,14 +9,13 @@ import { CENTER, Row } from "@/styles/layout";
 const AppBarStyles = styled.header`
   ${CENTER}
   width: 100%;
-  color: ${Colors.WHITE};
-  background: ${Colors.BLACK};
+  color: ${Colors.BLACK};
 `;
 
 const AppBarRow = styled(Row)`
   width: 100%;
   max-width: 500px;
-  padding: 8px 32px;
+  padding: 8px 20px;
 `;
 
 const Title = styled.h1`
@@ -28,15 +27,14 @@ const Puzzle = styled.div`
   display: flex;
   overflow: hidden;
   line-height: 1;
-  border: ${Border.THIN_GREEN};
-  border-radius: ${BorderRadius.SMALL} 0 ${BorderRadius.SMALL};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.SMALL};
 `;
 
 const PuzzleNumber = styled.div`
   padding: 6px 10px;
-  color: ${Colors.BLACK};
-  background: ${Colors.GREEN};
-  border-bottom-right-radius: ${BorderRadius.SMALL};
+  color: ${Colors.GREEN};
+  background: ${Colors.BLACK};
 `;
 
 const Date = styled.div`

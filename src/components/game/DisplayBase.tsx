@@ -9,21 +9,23 @@ const DisplayContainer = styled.div<{ color?: string }>`
   overflow: hidden;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
+  border-top-width: 2px;
   border-radius: ${BorderRadius.MEDIUM};
 `;
 
 const MainRow = styled(Row)`
   height: 72px;
-  padding-left: 16px;
+  padding: 0 8px 0 16px;
 `;
 
 const Label = styled.div<{ color?: string }>`
   ${TypeStyles.OVERLINE}
   display: inline-block;
-  padding: 6px 16px;
-  color: ${({ color }) => color ?? Colors.WHITE};
-  background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.ROUNDED_LEFT};
+  padding: 6px 8px;
+  color: ${Colors.BLACK};
+  background: ${({ color }) => color ?? Colors.WHITE};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.SMALL};
 `;
 
 function DisplayBase({

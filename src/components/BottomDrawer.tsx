@@ -14,8 +14,9 @@ const IconButton = styled(Center)`
   ${TypeStyles.BODY}
   width: 36px;
   height: 36px;
-  color: ${Colors.WHITE};
-  border: ${Border.THIN_WHITE};
+  color: ${Colors.BLACK};
+  background: ${Colors.WHITE};
+  border: ${Border.THIN};
   border-bottom-width: 2px;
   border-radius: ${BorderRadius.ROUNDED};
 `;

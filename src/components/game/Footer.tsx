@@ -26,13 +26,13 @@ const MainTileContainer = styled.div`
   padding: 6px;
   background: ${Colors.GOLD};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: 0 0 30px 30px;
 `;
 
 const NestedMainTileContainer = styled(MainTileContainer)`
   padding: 12%;
   border-top-width: 4px;
-  border-radius: ${BorderRadius.MEDIUM};
+  border-radius: ${BorderRadius.LARGE};
 `;
 
 const MainTile = styled(Tile)<{ dragging: boolean }>`
@@ -59,7 +59,6 @@ const DraggedMainTile = styled(Tile)<{
 
 const NextTileContainer = styled.div`
   ${CENTER_COLUMN}
-  margin-top: 8px;
   padding: 0 4px;
   border-top: ${Border.THIN};
 `;

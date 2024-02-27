@@ -9,7 +9,7 @@ export const BUTTON = {
   background: Colors.GOLD,
   border: Border.THIN,
   "border-bottom-width": "4px",
-  "border-radius": `${BorderRadius.MEDIUM} 0 ${BorderRadius.MEDIUM}`,
+  "border-radius": BorderRadius.MEDIUM,
 };
 
 export const Button = styled.button`

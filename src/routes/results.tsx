@@ -23,7 +23,7 @@ const Page = styled.div`
   width: 100%;
   max-width: 500px;
   height: 100%;
-  padding: 20px;
+  padding: 12px 20px;
 `;
 
 const Title = styled.h1`

@@ -60,8 +60,8 @@ function Display() {
   );
 
   const remainingLabel = useMemo(() => {
-    return `${remainingTilesCount} / ${totalTilesCount} letters remaining`;
-  }, [remainingTilesCount, totalTilesCount]);
+    return `${remainingTilesCount} letters remaining`;
+  }, [remainingTilesCount]);
   const remainingRatio = remainingTilesCount / totalTilesCount;
 
   const bonusLabel = `${formatBonus(selectedWord)} bonus`;
@@ -72,7 +72,7 @@ function Display() {
 
   return isSelecting ? (
     <DisplayBase
-      color={isSelectedValid ? Colors.GOLD : Colors.RED}
+      color={isSelectedValid ? Colors.GREEN : Colors.RED}
       label={isSelectedValid ? "Valid" : "Invalid"}
       secondary={
         <DisplaySecondaryRow

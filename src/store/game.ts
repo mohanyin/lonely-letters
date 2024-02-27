@@ -181,6 +181,7 @@ export const createGameSlice: ImmerStateCreator<
         state.selectedIndices.forEach((index) => {
           state.game!.grid[index] = null;
         });
+        state.selectedIndices = [];
 
         mixpanel.track("Word cleared", {
           puzzle: state.currentPuzzle,
@@ -189,9 +190,5 @@ export const createGameSlice: ImmerStateCreator<
         });
       });
     }
-
-    set((state) => {
-      state.selectedIndices = [];
-    });
   },
 });
