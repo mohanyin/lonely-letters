@@ -2,7 +2,7 @@ import { Letter, SCORES } from "@/utils/tiles";
 
 export const MIN_LETTER_BONUS = 1;
 export const MAX_LETTER_BONUS = 3;
-export const GRID_SPOT_BONUS = 1.5;
+export const GRID_SPOT_BONUS = 2;
 
 export function getScore(word: string, bonus: number): number {
   return Math.round(getBaseScore(word, bonus) * calculateBonus(word));
