@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 
-import { Colors, TypeStyles, BorderRadius, Border } from "@/styles/core";
+import { Colors, BorderRadius, Border } from "@/styles/core";
 import { Row } from "@/styles/layout";
 
 const DisplayContainer = styled.div<{ color?: string }>`
@@ -9,43 +9,31 @@ const DisplayContainer = styled.div<{ color?: string }>`
   overflow: hidden;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-top-width: 2px;
+  border-bottom-width: 3px;
   border-radius: ${BorderRadius.MEDIUM};
 `;
 
 const MainRow = styled(Row)`
-  height: 72px;
-  padding: 0 8px 0 16px;
+  height: 64px;
+  padding: 0 16px;
 `;
 
-const Label = styled.div<{ color?: string }>`
-  ${TypeStyles.OVERLINE}
-  display: inline-block;
-  padding: 6px 8px;
-  color: ${Colors.BLACK};
-  background: ${({ color }) => color ?? Colors.WHITE};
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.SMALL};
+const SecondaryRow = styled(Row)`
+  gap: 0;
+  align-items: stretch;
 `;
 
 function DisplayBase({
-  color,
-  children,
-  label,
+  main,
   secondary,
 }: {
-  color?: string;
-  children?: React.ReactNode;
-  secondary?: React.ReactNode;
-  label: string;
+  main: React.ReactNode[];
+  secondary: React.ReactNode[];
 }) {
   return (
     <DisplayContainer>
-      <MainRow>
-        {children}
-        <Label color={color}>{label}</Label>
-      </MainRow>
-      {secondary}
+      <MainRow>{main}</MainRow>
+      <SecondaryRow>{secondary}</SecondaryRow>
     </DisplayContainer>
   );
 }

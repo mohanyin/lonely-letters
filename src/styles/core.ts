@@ -1,3 +1,5 @@
+import { styled } from "@linaria/react";
+
 export const Colors = {
   GREEN: "#00ECA5",
   GREEN_600: "#07D194",
@@ -98,3 +100,7 @@ export const BorderRadius = {
   ROUNDED: "1000px",
   ROUNDED_LEFT: "1000px 0 0 1000px",
 };
+
+export const Overline = styled.div`
+  ${TypeStyles.OVERLINE}
+`;

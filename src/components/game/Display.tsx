@@ -1,10 +1,17 @@
 import { styled } from "@linaria/react";
 import { useEffect, useMemo, useState } from "react";
 
+import DisplayBarGraph from "@/components/game/DisplayBarGraph";
 import DisplayBase from "@/components/game/DisplayBase";
-import DisplaySecondaryRow from "@/components/game/DisplaySecondaryRow";
 import { useStore, useIsSelecting, useSelectedWord } from "@/store";
-import { Border, Colors, TypeStyles } from "@/styles/core";
+import {
+  Border,
+  BorderRadius,
+  Colors,
+  Overline,
+  TypeStyles,
+} from "@/styles/core";
+import { Center } from "@/styles/layout";
 import { checkWord } from "@/utils/dictionary";
 import {
   formatBonus,
@@ -24,16 +31,34 @@ const Score = styled.h2`
 
 const Word = styled.h2`
   ${TypeStyles.HEADLINE_3}
-  margin-bottom: 6px;
-  padding-bottom: 6px;
   white-space: nowrap;
-  border-bottom: ${Border.THIN};
 `;
 
-const WordScore = styled.div`
-  ${TypeStyles.SCORE_SMALL}
-  color: ${Colors.BLACK};
+const SecondaryRowItem = styled(Center)<{
+  color?: string;
+}>`
+  ${TypeStyles.OVERLINE}
+  flex: 0 0 35%;
+  padding: 0 6px;
   white-space: nowrap;
+  background-color: ${({ color }) => color ?? Colors.WHITE};
+  border-top: ${Border.THIN};
+  border-right: ${Border.THIN};
+  transition: background-color 0.2s;
+`;
+
+const SecondaryRowItemScore = styled(SecondaryRowItem)`
+  ${TypeStyles.SCORE_SMALL}
+`;
+
+const Label = styled.div<{ color: string }>`
+  ${TypeStyles.OVERLINE}
+  display: inline-block;
+  padding: 6px;
+  color: ${Colors.BLACK};
+  background-color: ${({ color }) => color};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.SMALL};
 `;
 
 function Display() {
@@ -60,7 +85,7 @@ function Display() {
   );
 
   const remainingLabel = useMemo(() => {
-    return `${remainingTilesCount} letters remaining`;
+    return `${remainingTilesCount} tiles left`;
   }, [remainingTilesCount]);
   const remainingRatio = remainingTilesCount / totalTilesCount;
 
@@ -72,33 +97,39 @@ function Display() {
 
   return isSelecting ? (
     <DisplayBase
-      color={isSelectedValid ? Colors.GREEN : Colors.RED}
-      label={isSelectedValid ? "Valid" : "Invalid"}
-      secondary={
-        <DisplaySecondaryRow
+      main={[
+        <Word key="word">{selectedWord}</Word>,
+        <Label key="valid" color={isSelectedValid ? Colors.GREEN : Colors.RED}>
+          {isSelectedValid ? "Valid" : "Invalid"}
+        </Label>,
+      ]}
+      secondary={[
+        <SecondaryRowItemScore key="score" color={Colors.GOLD}>
+          {selectedPoints} pts
+        </SecondaryRowItemScore>,
+        <DisplayBarGraph
+          key="bar"
           color={Colors.GOLD}
           label={bonusLabel}
           ratio={bonusRatio}
-        />
-      }
-    >
-      <div>
-        <Word>{selectedWord}</Word>
-        <WordScore>{selectedPoints} pts</WordScore>
-      </div>
-    </DisplayBase>
+        />,
+      ]}
+    />
   ) : (
     <DisplayBase
-      label="Score"
-      secondary={
-        <DisplaySecondaryRow
+      main={[
+        <Score key="score">{score}</Score>,
+        <Overline key="label">score</Overline>,
+      ]}
+      secondary={[
+        <SecondaryRowItem key="placeholder" color={Colors.GREEN} />,
+        <DisplayBarGraph
+          key="bar"
           label={remainingLabel}
           ratio={1 - remainingRatio}
-        />
-      }
-    >
-      <Score>{score}</Score>
-    </DisplayBase>
+        />,
+      ]}
+    />
   );
 }
 

@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 
-import { Colors, BorderRadius, Border } from "@/styles/core";
+import { Colors, Border } from "@/styles/core";
 
 const Base = styled.div`
   padding: 6px 0;
@@ -11,8 +11,8 @@ const Base = styled.div`
 
 const Main = styled(Base)`
   position: relative;
+  flex: 0 0 65%;
   height: 29px;
-  margin: 0 -1px;
   color: ${Colors.WHITE};
   background: ${Colors.BLACK};
   container: display / size;
@@ -27,9 +27,9 @@ const OverlayMask = styled.div<{ width?: number }>`
   bottom: 0;
   left: 0;
   width: ${(props) => getOverlayWidth(props.width)};
+  min-width: 2px;
   overflow: hidden;
   border-top: ${Border.THIN};
-  border-bottom-right-radius: ${BorderRadius.MEDIUM};
   transition: width 0.2s ease-in-out;
 `;
 
@@ -43,7 +43,7 @@ const Top = styled(Base)<{ color?: string }>`
   transition: width 0.2s ease-in-out;
 `;
 
-function DisplaySecondaryRow({
+function DisplayBarGraph({
   color,
   label,
   ratio,
@@ -62,4 +62,4 @@ function DisplaySecondaryRow({
   );
 }
 
-export default DisplaySecondaryRow;
+export default DisplayBarGraph;
