@@ -4,11 +4,19 @@ import { useCallback, useMemo, useState } from "react";
 
 import { useStore } from "@/store";
 import { Button } from "@/styles/buttons";
-import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import {
+  Border,
+  BorderRadius,
+  Colors,
+  Headline3,
+  Page,
+  TypeStyles,
+} from "@/styles/core";
+import { COLUMN, Row } from "@/styles/layout";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
 export const Route = createFileRoute("/results")({
-  component: Results,
+  component: Component,
   loader: ({ navigate }) => {
     const currentPuzzle = useStore.getState().currentPuzzle;
     const lastPlayedPuzzle = useStore.getState().game.puzzle;
@@ -19,11 +27,20 @@ export const Route = createFileRoute("/results")({
   },
 });
 
-const Page = styled.div`
+const Results = styled.div`
+  ${COLUMN}
+  gap: 0;
   width: 100%;
-  max-width: 500px;
   height: 100%;
+  overflow: hidden;
+`;
+
+const PageBody = styled.div`
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: ${Page.MAX_WIDTH};
   padding: 12px 20px;
+  overflow-y: auto;
 `;
 
 const Title = styled.h1`
@@ -31,16 +48,16 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-const ScoreContainer = styled.div`
+const ScoreContainer = styled(Row)`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-  padding: 24px 20px;
+  padding: 16px;
   background: ${Colors.WHITE};
   border: ${Border.THIN};
-  border-radius: ${BorderRadius.MEDIUM} 0;
+  border-radius: ${BorderRadius.MEDIUM};
 `;
 
 const ScoreLabel = styled.h2`
@@ -50,11 +67,6 @@ const ScoreLabel = styled.h2`
 
 const Score = styled.div`
   ${TypeStyles.SCORE}
-`;
-
-const DetailsContainer = styled.div`
-  padding-left: 16px;
-  border-left: ${Border.THIN};
 `;
 
 const CardHeader = styled.h2`
@@ -67,10 +79,10 @@ const Card = styled.div<{ row?: boolean }>`
   align-items: ${({ row }) => (row ? "center" : "flex-start")};
   justify-content: ${({ row }) => (row ? "space-between" : "flex-start")};
   margin-bottom: 8px;
-  padding: 24px 20px;
-  color: ${Colors.WHITE};
-  background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.MEDIUM} 0;
+  padding: 24px 16px;
+  color: ${Colors.BLACK};
+  border: ${Border.THIN};
+  border-radius: ${BorderRadius.MEDIUM};
 
   /* stylelint-disable-next-line selector-class-pattern */
   ${CardHeader} {
@@ -80,12 +92,10 @@ const Card = styled.div<{ row?: boolean }>`
 
 const ResultLabel = styled.div`
   ${TypeStyles.HEADLINE_3}
-  color: ${Colors.WHITE};
 `;
 
 const ResultValue = styled.div`
   ${TypeStyles.SCORE_SMALL}
-  color: ${Colors.WHITE};
 `;
 
 const ResultValueRow = styled(ResultValue)`
@@ -94,12 +104,24 @@ const ResultValueRow = styled(ResultValue)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 4px 0;
+  padding-top: 12px;
+
+  & + & {
+    margin-top: 12px;
+    border-top: ${Border.THIN};
+  }
+`;
+
+const PageFooter = styled.footer`
+  flex: none;
+  width: 100%;
+  max-width: ${Page.MAX_WIDTH};
+  padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
+  border-top: ${Border.THIN};
 `;
 
 const ShareButton = styled(Button)`
   width: 100%;
-  margin-top: 12px;
 `;
 
 function censorWord(word: string) {
@@ -107,7 +129,7 @@ function censorWord(word: string) {
   return censoredWord.split("").join(" ");
 }
 
-function Results() {
+function Component() {
   const [copied, setCopied] = useState(false);
 
   const score = useStore((state) => state.game.score);
@@ -152,16 +174,16 @@ ${bestWordsFormatted}
   }, [id, score, bestWordsFormatted]);
 
   return (
-    <Page>
-      <Title>Results</Title>
-      <ScoreContainer>
-        <ScoreLabel>Score</ScoreLabel>
-        <Score>{score} pts</Score>
-      </ScoreContainer>
-      <DetailsContainer>
+    <Results>
+      <PageBody>
+        <Title>Results</Title>
+        <ScoreContainer>
+          <Score>{score}</Score>
+          <ScoreLabel>Score</ScoreLabel>
+        </ScoreContainer>
         <Card row>
+          <Headline3>{words.length}</Headline3>
           <CardHeader>Words Swiped</CardHeader>
-          <ResultValue>{words.length}</ResultValue>
         </Card>
         <Card>
           <CardHeader>Best Words</CardHeader>
@@ -172,11 +194,13 @@ ${bestWordsFormatted}
             </ResultValueRow>
           ))}
         </Card>
-      </DetailsContainer>
+      </PageBody>
 
-      <ShareButton onClick={shareResults}>
-        {copied ? "Copied!" : "Share results"}
-      </ShareButton>
-    </Page>
+      <PageFooter>
+        <ShareButton onClick={shareResults}>
+          {copied ? "Copied!" : "Share results"}
+        </ShareButton>
+      </PageFooter>
+    </Results>
   );
 }

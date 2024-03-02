@@ -39,3 +39,10 @@ export const CENTER_COLUMN = {
 export const CenterColumn = styled.div`
   ${CENTER_COLUMN}
 `;
+
+export const COLUMN = {
+  display: "flex",
+  flexFlow: "column nowrap",
+  alignItems: "center",
+  gap: "8px",
+};

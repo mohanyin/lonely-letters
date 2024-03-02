@@ -106,6 +106,12 @@ export const BorderRadius = {
   ROUNDED_LEFT: "1000px 0 0 1000px",
 };
 
+export const Headline2 = styled.div`
+  ${TypeStyles.HEADLINE_2}
+`;
+export const Headline3 = styled.div`
+  ${TypeStyles.HEADLINE_3}
+`;
 export const Overline = styled.div`
   ${TypeStyles.OVERLINE}
 `;
