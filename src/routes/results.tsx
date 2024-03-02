@@ -1,6 +1,9 @@
 import { styled } from "@linaria/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
+import { type Container, type ISourceOptions } from "@tsparticles/engine";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { useCallback, useMemo, useState, useEffect } from "react";
+import { loadFull } from "tsparticles";
 
 import { useStore } from "@/store";
 import { Button } from "@/styles/buttons";
@@ -36,7 +39,8 @@ const Results = styled.div`
 `;
 
 const PageBody = styled.div`
-  flex: 0 1 auto;
+
+  z-index: 1;  flex: 0 1 auto;
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 12px 20px;
@@ -81,6 +85,7 @@ const Card = styled.div<{ row?: boolean }>`
   margin-bottom: 8px;
   padding: 24px 16px;
   color: ${Colors.BLACK};
+  background: ${Colors.GREEN};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.MEDIUM};
 
@@ -113,7 +118,8 @@ const ResultValueRow = styled(ResultValue)`
 `;
 
 const PageFooter = styled.footer`
-  flex: none;
+
+  z-index: 1;  flex: none;
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
@@ -173,8 +179,147 @@ ${bestWordsFormatted}
     }
   }, [id, score, bestWordsFormatted]);
 
+  const [init, setInit] = useState(false);
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadFull(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
+
+  const particlesLoaded = async (container?: Container): Promise<void> => {
+    console.log(container);
+  };
+
+  const options: ISourceOptions = useMemo(
+    () => ({
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: {
+            enable: false,
+            mode: "push",
+          },
+          onHover: {
+            enable: false,
+            mode: "repulse",
+          },
+        },
+        modes: {
+          push: {
+            quantity: 4,
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4,
+          },
+        },
+      },
+      particles: {
+        color: {
+          value: [Colors.RED, Colors.GOLD, Colors.WHITE],
+        },
+        move: {
+          direction: "bottom",
+          enable: true,
+          outModes: {
+            default: "out",
+          },
+          size: true,
+          speed: {
+            min: 1,
+            max: 3,
+          },
+        },
+        number: {
+          value: 500,
+          density: {
+            enable: true,
+            area: 800,
+          },
+        },
+        rotate: {
+          value: {
+            min: 0,
+            max: 360,
+          },
+          direction: "random",
+          move: true,
+          animation: {
+            enable: true,
+            speed: 60,
+          },
+        },
+        tilt: {
+          direction: "random",
+          enable: true,
+          move: true,
+          value: {
+            min: 0,
+            max: 360,
+          },
+          animation: {
+            enable: true,
+            speed: 60,
+          },
+        },
+        roll: {
+          darken: {
+            enable: true,
+            value: 30,
+          },
+          enlighten: {
+            enable: true,
+            value: 30,
+          },
+          enable: true,
+          speed: {
+            min: 15,
+            max: 25,
+          },
+        },
+        wobble: {
+          distance: 30,
+          enable: true,
+          move: true,
+          speed: {
+            min: -15,
+            max: 15,
+          },
+        },
+        opacity: {
+          value: 1,
+          animation: {
+            enable: false,
+            startValue: "max",
+            destroy: "min",
+            speed: 0.3,
+            sync: true,
+          },
+        },
+        shape: {
+          type: "square",
+        },
+        size: {
+          value: { min: 4, max: 7 },
+        },
+      },
+      detectRetina: true,
+      duration: 0,
+    }),
+    [],
+  );
+
   return (
     <Results>
+      {init ? (
+        <Particles
+          id="tsparticles"
+          particlesLoaded={particlesLoaded}
+          options={options}
+        />
+      ) : null}
       <PageBody>
         <Title>Results</Title>
         <ScoreContainer>

@@ -8,7 +8,7 @@ export const Page = {
 export const Colors = {
   GREEN: "#00ECA5",
   GREEN_600: "#07D194",
-  WHITE: "white",
+  WHITE: "#FFFFFF",
   GOLD: "#FFBE15",
   BLACK: "#050505",
   RED: "#EF536D",
