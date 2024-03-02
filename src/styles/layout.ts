@@ -35,3 +35,7 @@ export const CENTER_COLUMN = {
   ...CENTER,
   flexFlow: "column nowrap",
 };
+
+export const CenterColumn = styled.div`
+  ${CENTER_COLUMN}
+`;

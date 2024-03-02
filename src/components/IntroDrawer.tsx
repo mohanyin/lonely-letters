@@ -21,22 +21,6 @@ const IconButton = styled(Center)`
   border-radius: ${BorderRadius.ROUNDED};
 `;
 
-const DrawerContent = styled(Drawer.Content)`
-  position: fixed;
-  bottom: 0;
-  left: max(calc(50% - 250px), 0px);
-  width: 100%;
-  max-width: 500px;
-  padding: 16px 24px max(env(safe-area-inset-bottom), 12px);
-  color: ${Colors.WHITE};
-  background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0 0;
-
-  :focus {
-    outline: none;
-  }
-`;
-
 const DragHandle = styled.div`
   width: 125px;
   height: 9px;
@@ -127,6 +111,29 @@ function InstructionsCarousel({
   );
 }
 
+const DrawerContent = styled(Drawer.Content)`
+  position: fixed;
+  bottom: 0;
+  left: max(calc(50% - 250px), 0px);
+  width: 100%;
+  max-width: 500px;
+  padding: 16px 24px max(env(safe-area-inset-bottom), 12px);
+  color: ${Colors.WHITE};
+  background: ${Colors.BLACK};
+  border-radius: ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0 0;
+
+  :focus {
+    outline: none;
+  }
+`;
+
+const drawerOverlayColor = `${Colors.BLACK}A0`;
+const DrawerOverlay = styled(Drawer.Overlay)`
+  position: fixed;
+  background: ${drawerOverlayColor};
+  inset: 0;
+`;
+
 function BottomDrawer() {
   const [open, setOpen] = useState(false);
   const [slide, setSlide] = useState(0);
@@ -141,6 +148,8 @@ function BottomDrawer() {
         <IconButton>?</IconButton>
       </Drawer.Trigger>
       <Drawer.Portal>
+        <DrawerOverlay />
+
         <DrawerContent>
           <Center>
             <DragHandle />
@@ -158,7 +167,6 @@ function BottomDrawer() {
             <NextButton onClick={() => setSlide(slide + 1)}>Next</NextButton>
           )}
         </DrawerContent>
-        <Drawer.Overlay />
       </Drawer.Portal>
     </Drawer.Root>
   );

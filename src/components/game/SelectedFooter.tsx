@@ -9,6 +9,7 @@ import { CENTER } from "@/styles/layout";
 const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  width: 100%;
   margin-top: 12px;
   padding-top: 24px;
   border-top: ${Border.THIN};

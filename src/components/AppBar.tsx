@@ -1,20 +1,20 @@
 import { styled } from "@linaria/react";
 import dayjs from "dayjs";
 
-import BottomDrawer from "@/components/BottomDrawer";
 import { useStore } from "@/store";
-import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { Border, BorderRadius, Colors, Page, TypeStyles } from "@/styles/core";
 import { CENTER, Row } from "@/styles/layout";
 
 const AppBarStyles = styled.header`
   ${CENTER}
+  flex: none;
   width: 100%;
   color: ${Colors.BLACK};
 `;
 
 const AppBarRow = styled(Row)`
   width: 100%;
-  max-width: 500px;
+  max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px;
 `;
 
@@ -55,9 +55,7 @@ function AppBar() {
             <Date>{dayjs(today).format("MMM D, YYYY")}</Date>
           </Puzzle>
         </Row>
-        <Row>
-          <BottomDrawer />
-        </Row>
+        <div data-app-bar-right />
       </AppBarRow>
     </AppBarStyles>
   );

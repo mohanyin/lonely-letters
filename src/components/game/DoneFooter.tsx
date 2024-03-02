@@ -7,6 +7,7 @@ import { BUTTON } from "@/styles/buttons";
 import { Border, TypeStyles } from "@/styles/core";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
+  width: 100%;
   margin-top: 12px;
   padding-top: 12px;
   border-top: ${Border.THIN};
@@ -29,6 +30,7 @@ function DoneFooter() {
   const puzzleId = useStore((state) => state.currentPuzzle);
   const score = useStore((state) => state.game.score);
   function logFinish(): void {
+    // eslint-disable-next-line import/no-named-as-default-member
     mixpanel.track("Game finished", {
       puzzle: puzzleId,
       score,

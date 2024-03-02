@@ -17,6 +17,7 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+  width: 100%;
   transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
 `;

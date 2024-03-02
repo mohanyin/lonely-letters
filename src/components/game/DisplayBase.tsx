@@ -1,9 +1,15 @@
 import { styled } from "@linaria/react";
 
-import { Colors, BorderRadius, Border } from "@/styles/core";
+import { Colors, BorderRadius, Border, Page } from "@/styles/core";
 import { Row } from "@/styles/layout";
 
-const DisplayContainer = styled.div<{ color?: string }>`
+const DisplayContainer = styled.div`
+  width: 100%;
+  max-width: ${Page.MAX_WIDTH};
+  padding: 0 ${Page.PADDING_HORIZONTAL};
+`;
+
+const Display = styled.div<{ color?: string }>`
   position: relative;
   box-sizing: content-box;
   overflow: hidden;
@@ -32,8 +38,10 @@ function DisplayBase({
 }) {
   return (
     <DisplayContainer>
-      <MainRow>{main}</MainRow>
-      <SecondaryRow>{secondary}</SecondaryRow>
+      <Display>
+        <MainRow>{main}</MainRow>
+        <SecondaryRow>{secondary}</SecondaryRow>
+      </Display>
     </DisplayContainer>
   );
 }

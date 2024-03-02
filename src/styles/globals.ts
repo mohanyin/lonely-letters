@@ -6,6 +6,8 @@ export default css`
   :global() {
     html,
     body {
+      height: 100svh;
+      overflow: hidden;
       background: ${Colors.GREEN};
     }
   }

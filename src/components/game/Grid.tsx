@@ -10,8 +10,9 @@ import { Colors } from "@/styles/core";
 const ROWS = 4;
 const COLS = 4;
 
-const Container = styled.div`
+const GridContainer = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 const GridStyles = styled.div`
@@ -174,7 +175,7 @@ function Grid({
   }
 
   return (
-    <Container>
+    <GridContainer>
       <VerticalGridStripes>
         {[...Array((ROWS - 1) * COLS)].map((_, i) => (
           <VerticalGridStripe
@@ -192,7 +193,7 @@ function Grid({
         ))}
       </HorizontalGridStripes>
       <GridStyles onTouchMove={addTileOnSwipe}>{...tiles}</GridStyles>
-    </Container>
+    </GridContainer>
   );
 }
 

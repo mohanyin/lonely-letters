@@ -1,5 +1,10 @@
 import { styled } from "@linaria/react";
 
+export const Page = {
+  MAX_WIDTH: "500px",
+  PADDING_HORIZONTAL: "20px",
+};
+
 export const Colors = {
   GREEN: "#00ECA5",
   GREEN_600: "#07D194",
