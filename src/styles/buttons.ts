@@ -10,6 +10,9 @@ export const BUTTON = {
   border: Border.THIN,
   "border-bottom-width": "4px",
   "border-radius": BorderRadius.MEDIUM,
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
 };
 
 export const Button = styled.button`
