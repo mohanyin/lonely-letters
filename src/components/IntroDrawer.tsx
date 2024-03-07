@@ -52,6 +52,7 @@ const InstructionsImage = styled.div<{ image: string }>`
 const Instruction = styled.div`
   ${TypeStyles.BODY}
   margin: 0 12px;
+  text-align: center;
 `;
 
 const NextButton = styled(Button)`
@@ -86,24 +87,24 @@ function InstructionsCarousel({
   return (
     <div className="swiper">
       <div className="swiper-wrapper">
-        <div className="swiper-slide">
+        <div className="swiper-slide" data-vaul-no-drag>
           <InstructionsImage image={instructions1} data-vaul-no-drag />
           <Instruction data-vaul-no-drag>
             Add tiles to the grid by tapping on an empty space.
           </Instruction>
         </div>
-        <div className="swiper-slide">
+        <div className="swiper-slide" data-vaul-no-drag>
           <InstructionsImage image={instructions2} data-vaul-no-drag />
           <Instruction data-vaul-no-drag>
-            Tap tiles to spell words. You can go in any direction and even
-            change directions. But no diagonals!
+            Tap tiles to spell words. You can go any direction and even change
+            directions. Diagonals are not allowed.
           </Instruction>
         </div>
-        <div className="swiper-slide">
+        <div className="swiper-slide" data-vaul-no-drag>
           <InstructionsImage image={instructions3} data-vaul-no-drag />
           <Instruction data-vaul-no-drag>
-            Earn a bonus for spelling longer words. You only get so many tiles
-            every day, so try to make the most of them!
+            Once you spell a word, the tiles will disappear. You get a bonus for
+            spelling longer words, so try to make the most of your tiles!
           </Instruction>
         </div>
       </div>
