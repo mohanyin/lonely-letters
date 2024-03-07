@@ -32,6 +32,7 @@ const MainTileContainer = styled.div`
 
 const NestedMainTileContainer = styled(MainTileContainer)`
   padding: 12%;
+  background: ${Colors.GOLD_600};
   border-top-width: 4px;
   border-radius: ${BorderRadius.LARGE};
 `;

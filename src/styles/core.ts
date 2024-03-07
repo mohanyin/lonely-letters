@@ -10,6 +10,7 @@ export const Colors = {
   GREEN_600: "#07D194",
   WHITE: "#FFFFFF",
   GOLD: "#FFBE15",
+  GOLD_600: "#EEB011",
   BLACK: "#050505",
   RED: "#EF536D",
 };
