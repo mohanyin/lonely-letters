@@ -1,8 +1,8 @@
 import { styled } from "@linaria/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { type Container, type ISourceOptions } from "@tsparticles/engine";
+import { type ISourceOptions } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { useCallback, useMemo, useState, useEffect } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { loadFull } from "tsparticles";
 
 import { useStore } from "@/store";
@@ -20,13 +20,17 @@ import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
 export const Route = createFileRoute("/results")({
   component: Component,
-  loader: ({ navigate }) => {
+  loader: async ({ navigate }) => {
     const currentPuzzle = useStore.getState().currentPuzzle;
     const lastPlayedPuzzle = useStore.getState().game.puzzle;
 
     if (currentPuzzle !== lastPlayedPuzzle) {
       navigate({ to: "/", replace: true });
     }
+
+    await initParticlesEngine(async (engine) => {
+      await loadFull(engine);
+    });
   },
 });
 
@@ -39,8 +43,8 @@ const Results = styled.div`
 `;
 
 const PageBody = styled.div`
-
-  z-index: 1;  flex: 0 1 auto;
+  z-index: 1;
+  flex: 0 1 auto;
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 12px 20px;
@@ -118,8 +122,8 @@ const ResultValueRow = styled(ResultValue)`
 `;
 
 const PageFooter = styled.footer`
-
-  z-index: 1;  flex: none;
+  z-index: 1;
+  flex: none;
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
@@ -178,19 +182,6 @@ ${bestWordsFormatted}
       setTimeout(() => setCopied(false), 3000);
     }
   }, [id, score, bestWordsFormatted]);
-
-  const [init, setInit] = useState(false);
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadFull(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
-
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
-  };
 
   const options: ISourceOptions = useMemo(
     () => ({
@@ -313,13 +304,7 @@ ${bestWordsFormatted}
 
   return (
     <Results>
-      {init ? (
-        <Particles
-          id="tsparticles"
-          particlesLoaded={particlesLoaded}
-          options={options}
-        />
-      ) : null}
+      <Particles options={options} />
       <PageBody>
         <Title>Results</Title>
         <ScoreContainer>
