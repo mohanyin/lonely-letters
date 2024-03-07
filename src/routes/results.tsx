@@ -44,7 +44,7 @@ const Results = styled.div`
 
 const PageBody = styled.div`
   z-index: 1;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 12px 20px;
@@ -127,6 +127,7 @@ const PageFooter = styled.footer`
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
+  background: ${Colors.GREEN};
   border-top: ${Border.THIN};
 `;
 
