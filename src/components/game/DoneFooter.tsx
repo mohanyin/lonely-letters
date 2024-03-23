@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import mixpanel from "mixpanel-browser";
 
 import { useStore } from "@/store";
-import { BUTTON } from "@/styles/buttons";
+import { BUTTON, BUTTON_ACTIVE } from "@/styles/buttons";
 import { Border, TypeStyles } from "@/styles/core";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
@@ -18,11 +18,15 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 const DoneLink = styled(Link)`
   ${BUTTON}
   display: block;
+
+  &:active {
+    ${BUTTON_ACTIVE}
+  }
 `;
 
 const DoneWithPuzzle = styled.div`
   ${TypeStyles.BODY_ITALIC}
-  margin-bottom: 12px;
+  padding-bottom: 12px;
   text-align: center;
 `;
 

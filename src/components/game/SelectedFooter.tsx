@@ -22,6 +22,10 @@ const CancelButton = styled(Button)`
   background: ${Colors.RED};
   border-right: none;
   border-radius: ${BorderRadius.MEDIUM} 0 0 ${BorderRadius.MEDIUM};
+
+  &:active {
+    background: ${Colors.RED_600};
+  }
 `;
 const DoneButton = styled(Button)`
   grid-column: 2 / 5;

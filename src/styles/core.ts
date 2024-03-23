@@ -9,10 +9,12 @@ export const Colors = {
   GREEN: "#00ECA5",
   GREEN_600: "#07D194",
   WHITE: "#FFFFFF",
+  GRAY_100: "#F5F5F5",
   GOLD: "#FFBE15",
   GOLD_600: "#EEB011",
   BLACK: "#050505",
   RED: "#EF536D",
+  RED_600: "#E03B5D",
 };
 
 export const Type = {

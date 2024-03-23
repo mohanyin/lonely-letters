@@ -10,8 +10,9 @@ import { Button } from "@/styles/buttons";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Row, Center } from "@/styles/layout";
 
-const IconButton = styled(Center)`
+const IconButton = styled(Drawer.Trigger)`
   ${TypeStyles.BODY}
+  position: relative;
   width: 36px;
   height: 36px;
   color: ${Colors.BLACK};
@@ -19,6 +20,14 @@ const IconButton = styled(Center)`
   border: ${Border.THIN};
   border-bottom-width: 2px;
   border-radius: ${BorderRadius.ROUNDED};
+  transition: "all 0.05s ease-in-out";
+
+  &:active {
+    height: 35px;
+    margin-top: 1px;
+    background: ${Colors.GRAY_100};
+    border-bottom-width: 1px;
+  }
 `;
 
 const DragHandle = styled.div`
@@ -55,9 +64,12 @@ const Instruction = styled.div`
   text-align: center;
 `;
 
+const NextButtonContainer = styled.div`
+  margin-top: 12px;
+`;
+
 const NextButton = styled(Button)`
   width: 100%;
-  margin-top: 12px;
 `;
 
 function InstructionsCarousel({
@@ -145,9 +157,7 @@ function BottomDrawer() {
 
   return (
     <Drawer.Root shouldScaleBackground open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger aria-label="Instructions">
-        <IconButton>?</IconButton>
-      </Drawer.Trigger>
+      <IconButton aria-label="Instructions">?</IconButton>
       <Drawer.Portal>
         <DrawerOverlay />
 
@@ -162,11 +172,13 @@ function BottomDrawer() {
 
           <InstructionsCarousel slide={slide} onSlideChange={setSlide} />
 
-          {slide === 2 ? (
-            <NextButton onClick={() => setOpen(false)}>Done</NextButton>
-          ) : (
-            <NextButton onClick={() => setSlide(slide + 1)}>Next</NextButton>
-          )}
+          <NextButtonContainer>
+            {slide === 2 ? (
+              <NextButton onClick={() => setOpen(false)}>Done</NextButton>
+            ) : (
+              <NextButton onClick={() => setSlide(slide + 1)}>Next</NextButton>
+            )}
+          </NextButtonContainer>
         </DrawerContent>
       </Drawer.Portal>
     </Drawer.Root>

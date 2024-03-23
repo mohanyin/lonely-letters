@@ -13,8 +13,19 @@ export const BUTTON = {
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
   overflow: "hidden",
+  transition: "all 0.05s ease-in-out",
+};
+
+export const BUTTON_ACTIVE = {
+  background: Colors.GOLD_600,
+  "border-bottom-width": "1px",
+  "margin-top": "3px",
 };
 
 export const Button = styled.button`
   ${BUTTON}
+
+  &:active {
+    ${BUTTON_ACTIVE}
+  }
 `;
