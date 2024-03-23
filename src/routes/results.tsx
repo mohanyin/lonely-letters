@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { type ISourceOptions } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useCallback, useMemo, useState } from "react";
 import { loadFull } from "tsparticles";
@@ -16,6 +15,7 @@ import {
   TypeStyles,
 } from "@/styles/core";
 import { COLUMN, Row } from "@/styles/layout";
+import { useConfettiConfig } from "@/utils/confetti";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
 export const Route = createFileRoute("/results")({
@@ -135,6 +135,12 @@ const ShareButton = styled(Button)`
   width: 100%;
 `;
 
+// Position absolute prevents layout glitch while particles library is starting
+// up.
+const ConfettiBackground = styled(Particles)`
+  position: absolute;
+`;
+
 function censorWord(word: string) {
   const censoredWord = word.charAt(0) + word.slice(1).replace(/./g, "_");
   return censoredWord.split("").join(" ");
@@ -184,128 +190,11 @@ ${bestWordsFormatted}
     }
   }, [id, score, bestWordsFormatted]);
 
-  const options: ISourceOptions = useMemo(
-    () => ({
-      fpsLimit: 120,
-      interactivity: {
-        events: {
-          onClick: {
-            enable: false,
-            mode: "push",
-          },
-          onHover: {
-            enable: false,
-            mode: "repulse",
-          },
-        },
-        modes: {
-          push: {
-            quantity: 4,
-          },
-          repulse: {
-            distance: 200,
-            duration: 0.4,
-          },
-        },
-      },
-      particles: {
-        color: {
-          value: [Colors.RED, Colors.GOLD, Colors.WHITE],
-        },
-        move: {
-          direction: "bottom",
-          enable: true,
-          outModes: {
-            default: "out",
-          },
-          size: true,
-          speed: {
-            min: 1,
-            max: 3,
-          },
-        },
-        number: {
-          value: 500,
-          density: {
-            enable: true,
-            area: 800,
-          },
-        },
-        rotate: {
-          value: {
-            min: 0,
-            max: 360,
-          },
-          direction: "random",
-          move: true,
-          animation: {
-            enable: true,
-            speed: 60,
-          },
-        },
-        tilt: {
-          direction: "random",
-          enable: true,
-          move: true,
-          value: {
-            min: 0,
-            max: 360,
-          },
-          animation: {
-            enable: true,
-            speed: 60,
-          },
-        },
-        roll: {
-          darken: {
-            enable: true,
-            value: 30,
-          },
-          enlighten: {
-            enable: true,
-            value: 30,
-          },
-          enable: true,
-          speed: {
-            min: 15,
-            max: 25,
-          },
-        },
-        wobble: {
-          distance: 30,
-          enable: true,
-          move: true,
-          speed: {
-            min: -15,
-            max: 15,
-          },
-        },
-        opacity: {
-          value: 1,
-          animation: {
-            enable: false,
-            startValue: "max",
-            destroy: "min",
-            speed: 0.3,
-            sync: true,
-          },
-        },
-        shape: {
-          type: "square",
-        },
-        size: {
-          value: { min: 4, max: 7 },
-        },
-      },
-      detectRetina: true,
-      duration: 0,
-    }),
-    [],
-  );
+  const options = useConfettiConfig();
 
   return (
     <Results>
-      <Particles options={options} />
+      <ConfettiBackground options={options} />
       <PageBody>
         <Title>Results</Title>
         <ScoreContainer>
