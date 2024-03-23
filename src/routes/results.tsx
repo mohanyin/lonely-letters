@@ -141,6 +141,7 @@ const ShareButton = styled(Button)`
     position: absolute;
     z-index: -1;
     border-radius: ${BorderRadius.MEDIUM};
+    opacity: 0;
     animation: rotate 4s linear infinite;
     content: " ";
     pointer-events: none;
@@ -149,6 +150,11 @@ const ShareButton = styled(Button)`
 
   @keyframes rotate {
     0% {
+      outline: none;
+      opacity: 0;
+    }
+
+    5% {
       outline: 0 solid ${Colors.GOLD};
       opacity: 1;
     }
@@ -159,7 +165,7 @@ const ShareButton = styled(Button)`
     }
 
     100% {
-      outline: 100px solid ${Colors.WHITE};
+      outline: 100px solid ${Colors.GOLD};
       opacity: 0;
     }
   }
