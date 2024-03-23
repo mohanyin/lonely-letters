@@ -127,12 +127,42 @@ const PageFooter = styled.footer`
   width: 100%;
   max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
+  overflow: hidden;
   background: ${Colors.GREEN};
   border-top: ${Border.THIN};
 `;
 
 const ShareButton = styled(Button)`
+  position: relative;
   width: 100%;
+  overflow: visible;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    border-radius: ${BorderRadius.MEDIUM};
+    animation: rotate 4s linear infinite;
+    content: " ";
+    pointer-events: none;
+    inset: 0;
+  }
+
+  @keyframes rotate {
+    0% {
+      outline: 0 solid ${Colors.GOLD};
+      opacity: 1;
+    }
+
+    40% {
+      outline: 100px solid ${Colors.WHITE};
+      opacity: 0;
+    }
+
+    100% {
+      outline: 100px solid ${Colors.WHITE};
+      opacity: 0;
+    }
+  }
 `;
 
 // Position absolute prevents layout glitch while particles library is starting
