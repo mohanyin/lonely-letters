@@ -10,22 +10,24 @@ import { Button } from "@/styles/buttons";
 import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
 import { Row, Center } from "@/styles/layout";
 
+const ICON_SIZE = 36;
+
 const IconButton = styled(Drawer.Trigger)`
   ${TypeStyles.BODY}
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: ${ICON_SIZE}px;
+  height: ${ICON_SIZE}px;
   color: ${Colors.BLACK};
-  background: ${Colors.WHITE};
+  background: ${Colors.GOLD_500};
   border: ${Border.THIN};
   border-bottom-width: 2px;
-  border-radius: ${BorderRadius.ROUNDED};
-  transition: "all 0.05s ease-in-out";
+  border-radius: ${BorderRadius.MEDIUM};
+  transition: all 0.1s ease-in-out;
 
   &:active {
-    height: 35px;
+    height: ${ICON_SIZE - 1}px;
     margin-top: 1px;
-    background: ${Colors.GRAY_100};
+    background: ${Colors.GOLD_600};
     border-bottom-width: 1px;
   }
 `;

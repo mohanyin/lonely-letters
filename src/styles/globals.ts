@@ -8,7 +8,7 @@ export default css`
     body {
       height: 100svh;
       overflow: hidden;
-      background: ${Colors.GREEN};
+      background: ${Colors.GREEN_500};
     }
   }
 `;

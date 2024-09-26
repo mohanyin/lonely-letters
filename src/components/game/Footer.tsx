@@ -25,7 +25,7 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 const MainTileContainer = styled.div`
   grid-column: 2 / 4;
   padding: 6px;
-  background: ${Colors.GOLD};
+  background: ${Colors.GOLD_500};
   border: ${Border.THIN};
   border-radius: 0 0 30px 30px;
 `;

@@ -19,7 +19,7 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 
 const CancelButton = styled(Button)`
   ${CENTER}
-  background: ${Colors.RED};
+  background: ${Colors.RED_500};
   border-right: none;
   border-radius: ${BorderRadius.MEDIUM} 0 0 ${BorderRadius.MEDIUM};
 

@@ -89,7 +89,7 @@ const Card = styled.div<{ row?: boolean }>`
   margin-bottom: 8px;
   padding: 24px 16px;
   color: ${Colors.BLACK};
-  background: ${Colors.GREEN};
+  background: ${Colors.GREEN_500};
   border: ${Border.THIN};
   border-radius: ${BorderRadius.MEDIUM};
 
@@ -128,7 +128,7 @@ const PageFooter = styled.footer`
   max-width: ${Page.MAX_WIDTH};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
   overflow: hidden;
-  background: ${Colors.GREEN};
+  background: ${Colors.GREEN_500};
   border-top: ${Border.THIN};
 `;
 
@@ -155,7 +155,7 @@ const ShareButton = styled(Button)`
     }
 
     5% {
-      outline: 0 solid ${Colors.GOLD};
+      outline: 0 solid ${Colors.GOLD_500};
       opacity: 1;
     }
 
@@ -165,7 +165,7 @@ const ShareButton = styled(Button)`
     }
 
     100% {
-      outline: 100px solid ${Colors.GOLD};
+      outline: 100px solid ${Colors.GOLD_500};
       opacity: 0;
     }
   }
