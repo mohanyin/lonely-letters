@@ -11,7 +11,7 @@ const AppContainerStyles = css`
   height: 100svh;
   /* stylelint-disable-next-line font-family-name-quotes */
   font-family: ${Type.FONT_FAMILY};
-  background: ${Colors.GREEN};
+  background: ${Colors.GREEN_500};
 `;
 
 function AppContainer({ children }: { children: React.ReactNode }) {

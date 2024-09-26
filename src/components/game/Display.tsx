@@ -99,17 +99,20 @@ function Display() {
     <DisplayBase
       main={[
         <Word key="word">{selectedWord}</Word>,
-        <Label key="valid" color={isSelectedValid ? Colors.GREEN : Colors.RED}>
+        <Label
+          key="valid"
+          color={isSelectedValid ? Colors.GREEN_500 : Colors.RED_500}
+        >
           {isSelectedValid ? "Valid" : "Invalid"}
         </Label>,
       ]}
       secondary={[
-        <SecondaryRowItemScore key="score" color={Colors.GOLD}>
+        <SecondaryRowItemScore key="score" color={Colors.GOLD_500}>
           {selectedPoints} pts
         </SecondaryRowItemScore>,
         <DisplayBarGraph
           key="bar"
-          color={Colors.GOLD}
+          color={Colors.GOLD_500}
           label={bonusLabel}
           ratio={bonusRatio}
         />,
@@ -122,7 +125,7 @@ function Display() {
         <Overline key="label">score</Overline>,
       ]}
       secondary={[
-        <SecondaryRowItem key="placeholder" color={Colors.GREEN} />,
+        <SecondaryRowItem key="placeholder" color={Colors.GREEN_500} />,
         <DisplayBarGraph
           key="bar"
           label={remainingLabel}

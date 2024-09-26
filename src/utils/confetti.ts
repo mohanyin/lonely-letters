@@ -30,7 +30,7 @@ export const useConfettiConfig = (): ISourceOptions => {
       },
       particles: {
         color: {
-          value: [Colors.RED, Colors.GOLD, Colors.WHITE],
+          value: [Colors.RED_500, Colors.GOLD_500, Colors.WHITE],
         },
         move: {
           direction: "bottom",

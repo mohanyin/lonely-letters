@@ -39,7 +39,7 @@ const Top = styled(Base)<{ color?: string }>`
   left: 0;
   width: 100cqw;
   color: ${Colors.BLACK};
-  background: ${({ color }) => color ?? Colors.GREEN};
+  background: ${({ color }) => color ?? Colors.GREEN_500};
   transition: width 0.2s ease-in-out;
 `;
 

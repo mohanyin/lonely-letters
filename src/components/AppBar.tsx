@@ -18,27 +18,32 @@ const AppBarRow = styled(Row)`
   padding: 8px 20px;
 `;
 
+const TitleContainer = styled.div`
+  text-align: center;
+`;
+
 const Title = styled.h1`
   ${TypeStyles.HEADLINE_3}
 `;
 
 const Puzzle = styled.div`
   ${TypeStyles.OVERLINE_SMALL}
-  display: flex;
-  overflow: hidden;
-  line-height: 1;
   border: ${Border.THIN};
   border-radius: ${BorderRadius.SMALL};
 `;
 
 const PuzzleNumber = styled.div`
-  padding: 6px 10px;
-  color: ${Colors.GREEN};
+  padding: 2px 4px;
+  color: ${Colors.GREEN_500};
   background: ${Colors.BLACK};
 `;
 
 const Date = styled.div`
-  padding: 6px 10px;
+  ${TypeStyles.CAPTION_ITALIC}
+`;
+
+const AppBarSlot = styled.div`
+  width: 36px;
 `;
 
 function AppBar() {
@@ -48,14 +53,17 @@ function AppBar() {
   return (
     <AppBarStyles>
       <AppBarRow>
-        <Row>
-          <Title>Woggle</Title>
-          <Puzzle>
-            <PuzzleNumber>#{id}</PuzzleNumber>
-            <Date>{dayjs(today).format("MMM D, YYYY")}</Date>
-          </Puzzle>
-        </Row>
-        <div data-app-bar-right />
+        <AppBarSlot data-app-bar-left />
+        <TitleContainer>
+          <Row>
+            <Title>Woggle</Title>
+            <Puzzle>
+              <PuzzleNumber>#{id}</PuzzleNumber>
+            </Puzzle>
+          </Row>
+          <Date>{dayjs(today).format("MMMM D, YYYY")}</Date>
+        </TitleContainer>
+        <AppBarSlot data-app-bar-right />
       </AppBarRow>
     </AppBarStyles>
   );

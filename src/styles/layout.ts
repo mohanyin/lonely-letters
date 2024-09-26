@@ -10,6 +10,7 @@ export const ROW = {
 
 export const Row = styled.div`
   ${ROW}
+  gap: 4px;
 `;
 
 export const ROW_RIGHT = `

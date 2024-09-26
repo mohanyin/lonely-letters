@@ -15,14 +15,14 @@ const GridSpotStyle = styled.button<{ highlight: boolean }>`
   width: 100%;
   height: 100%;
   background: ${({ highlight }) =>
-    highlight ? Colors.GOLD : Colors.GREEN_600};
+    highlight ? Colors.GOLD_500 : Colors.GREEN_600};
   border: ${Border.THIN};
   border-top-width: 4cqw;
   border-radius: 20cqw;
   transition: background 0.2s ease-in-out;
 
   &:active {
-    background: ${Colors.GOLD};
+    background: ${Colors.GOLD_500};
   }
 `;
 
@@ -40,7 +40,7 @@ const GridSpotBonus = styled.div`
   font-weight: ${Type.FONT_WEIGHT_LIGHT};
   font-size: 30cqw;
   line-height: 55cqw;
-  background: ${Colors.GOLD};
+  background: ${Colors.GOLD_500};
   border: ${Border.THIN};
   border-radius: 100%;
 `;

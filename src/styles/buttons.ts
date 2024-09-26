@@ -6,7 +6,7 @@ export const BUTTON = {
   ...TypeStyles.OVERLINE,
   color: Colors.BLACK,
   padding: "12px 16px",
-  background: Colors.GOLD,
+  background: Colors.GOLD_500,
   border: Border.THIN,
   "border-bottom-width": "4px",
   "border-radius": BorderRadius.MEDIUM,

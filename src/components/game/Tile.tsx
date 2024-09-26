@@ -18,7 +18,7 @@ const TileStyles = styled.div<{ selected: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background: ${({ selected }) => (selected ? Colors.GOLD : Colors.WHITE)};
+  background: ${({ selected }) => (selected ? Colors.GOLD_500 : Colors.WHITE)};
   border: ${Border.THIN};
   border-bottom-width: 6cqw;
   border-radius: 20cqw;
@@ -32,6 +32,7 @@ const LetterStyles = styled.div`
   right: 30cqw;
   left: 10cqw;
   font-size: 75cqw;
+  line-height: 1;
   text-align: center;
 `;
 
@@ -53,7 +54,8 @@ const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
   line-height: ${scoreWidth - 3}cqw;
   letter-spacing: -1cqw;
   text-align: center;
-  background: ${({ highlight }) => (highlight ? Colors.GOLD : Colors.GREEN)};
+  background: ${({ highlight }) =>
+    highlight ? Colors.GOLD_500 : Colors.GREEN_500};
   border: ${Border.THIN};
   border-radius: ${scoreWidth}cqw;
 `;
