@@ -43,7 +43,7 @@ const SCORE = {
 };
 
 const SCORE_MEDIUM = { ...SCORE, fontSize: "2em" };
-const SCORE_SMALL = { ...SCORE, fontSize: "0.85em" };
+const SCORE_SMALL = { ...SCORE, fontSize: "1.2em" };
 
 const HEADLINE_1 = {
   fontFamily: Type.FONT_FAMILY,
