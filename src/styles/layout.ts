@@ -47,3 +47,7 @@ export const COLUMN = {
   alignItems: "center",
   gap: "8px",
 };
+
+export const Column = styled.div`
+  ${COLUMN}
+`;

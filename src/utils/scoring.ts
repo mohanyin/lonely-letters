@@ -30,8 +30,8 @@ export function calculateBonus(word: string | number[]) {
   return clamp(1 + bonusLength * 0.5, MIN_LETTER_BONUS, MAX_LETTER_BONUS);
 }
 
-export function formatBonus(word: string | number[]) {
-  const relativeBonus = Math.round((calculateBonus(word) - 1) * 100);
+export function formatBonus(bonus: number) {
+  const relativeBonus = Math.round((bonus - 1) * 100);
   if (relativeBonus === 0) return "0%";
   return relativeBonus < 0
     ? `- ${Math.abs(relativeBonus)}%`

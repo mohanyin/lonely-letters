@@ -38,10 +38,11 @@ export const Border = {
 
 const SCORE = {
   fontFamily: Type.FONT_FAMILY_DISPLAY,
-  fontSize: "2.5em",
+  fontSize: "2.625em",
   lineHeight: 1,
 };
 
+const SCORE_MEDIUM = { ...SCORE, fontSize: "2em" };
 const SCORE_SMALL = { ...SCORE, fontSize: "0.85em" };
 
 const HEADLINE_1 = {
@@ -52,7 +53,7 @@ const HEADLINE_1 = {
 };
 const HEADLINE_2 = {
   ...HEADLINE_1,
-  fontSize: "2em",
+  fontSize: "1.375em",
 };
 const HEADLINE_3 = {
   ...HEADLINE_1,
@@ -98,6 +99,7 @@ const CAPTION_ITALIC = {
 
 export const TypeStyles = {
   SCORE,
+  SCORE_MEDIUM,
   SCORE_SMALL,
   HEADLINE_1,
   HEADLINE_2,
