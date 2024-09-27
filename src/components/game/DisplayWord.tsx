@@ -1,16 +1,10 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
-import { Colors, BorderRadius, Border, Page, TypeStyles } from "@/styles/core";
+import { Colors, BorderRadius, Border, TypeStyles } from "@/styles/core";
 import { Row, Column } from "@/styles/layout";
 import { OverlineSmall, ScoreSmall } from "@/styles/typography";
 import { formatBonus, MIN_LETTER_BONUS } from "@/utils/scoring";
-
-const DisplayContainer = styled.div`
-  width: 100%;
-  max-width: ${Page.MAX_WIDTH};
-  padding: 0 ${Page.PADDING_HORIZONTAL};
-`;
 
 const Display = styled(Column)`
   position: relative;
@@ -70,7 +64,6 @@ const BonusBarGraph = styled(Row)`
   width: 100%;
   height: 6px;
   overflow: hidden;
-  background-color: ${Colors.GOLD_500};
   border-radius: 1000px 0 0;
   outline: ${Border.THIN};
 `;
@@ -79,7 +72,7 @@ const BonusBarGraphItem = styled.div<{ active: boolean }>`
   flex: 1;
   height: 100%;
   background-color: ${({ active }) =>
-    active ? Colors.GOLD_600 : Colors.BLACK};
+    active ? Colors.GOLD_500 : Colors.BLACK};
   outline: ${Border.THIN};
   transition: background-color 0.2s ease-in-out;
 `;
@@ -100,34 +93,32 @@ function DisplayWord({
   }, [bonus]);
 
   return (
-    <DisplayContainer>
-      <Display>
-        <WordRow>
-          <Word>{word}</Word>
-          {valid ? (
-            <Label color={Colors.GREEN_500}>Valid</Label>
-          ) : (
-            <Label color={Colors.RED_500}>Invalid</Label>
-          )}
-        </WordRow>
+    <Display>
+      <WordRow>
+        <Word>{word ?? "&nbsp;"}</Word>
+        {valid ? (
+          <Label color={Colors.GREEN_500}>Valid</Label>
+        ) : (
+          <Label color={Colors.RED_500}>Invalid</Label>
+        )}
+      </WordRow>
 
-        <ScoreRow>
-          <ScoreContainer>
-            <OverlineSmall>Score</OverlineSmall>
-            <ScoreSmall>{score}</ScoreSmall>
-          </ScoreContainer>
-          <BonusContainer>
-            <BonusBarGraph>
-              {Array.from({ length: 4 }).map((_, index) => (
-                <BonusBarGraphItem key={index} active={index < bonusRatio} />
-              ))}
-            </BonusBarGraph>
-            <OverlineSmall>Bonus</OverlineSmall>
-            <ScoreSmall>{formatBonus(bonus)}</ScoreSmall>
-          </BonusContainer>
-        </ScoreRow>
-      </Display>
-    </DisplayContainer>
+      <ScoreRow>
+        <ScoreContainer>
+          <OverlineSmall>Score</OverlineSmall>
+          <ScoreSmall>{score}</ScoreSmall>
+        </ScoreContainer>
+        <BonusContainer>
+          <BonusBarGraph>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <BonusBarGraphItem key={index} active={index < bonusRatio} />
+            ))}
+          </BonusBarGraph>
+          <OverlineSmall>Bonus</OverlineSmall>
+          <ScoreSmall>{formatBonus(bonus)}</ScoreSmall>
+        </BonusContainer>
+      </ScoreRow>
+    </Display>
   );
 }
 

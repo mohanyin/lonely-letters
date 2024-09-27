@@ -1,14 +1,8 @@
 import { styled } from "@linaria/react";
 
 import { BASE_TILE_COUNT } from "@/store/puzzle";
-import { Colors, BorderRadius, Border, Page, TypeStyles } from "@/styles/core";
+import { Colors, BorderRadius, Border, TypeStyles } from "@/styles/core";
 import { ROW, Column } from "@/styles/layout";
-
-const DisplayContainer = styled.div`
-  width: 100%;
-  max-width: ${Page.MAX_WIDTH};
-  padding: 0 ${Page.PADDING_HORIZONTAL};
-`;
 
 const Display = styled.div`
   ${ROW}
@@ -70,25 +64,23 @@ const TileBarGraphItem = styled.div<{ selected: boolean }>`
 
 function DisplayGame({ score, tiles }: { score: number; tiles: number }) {
   return (
-    <DisplayContainer>
-      <Display>
-        <SectionScore>
-          <Label>Score</Label>
-          <Score>{score}</Score>
-        </SectionScore>
+    <Display>
+      <SectionScore>
+        <Label>Score</Label>
+        <Score>{score}</Score>
+      </SectionScore>
 
-        <TileBarGraph>
-          {Array.from({ length: BASE_TILE_COUNT }).map((_, index) => (
-            <TileBarGraphItem key={index} selected={index > tiles} />
-          ))}
-        </TileBarGraph>
+      <TileBarGraph>
+        {Array.from({ length: BASE_TILE_COUNT }).map((_, index) => (
+          <TileBarGraphItem key={index} selected={index > tiles} />
+        ))}
+      </TileBarGraph>
 
-        <SectionTiles>
-          <Label>Tiles</Label>
-          <Tiles>{tiles}</Tiles>
-        </SectionTiles>
-      </Display>
-    </DisplayContainer>
+      <SectionTiles>
+        <Label>Tiles</Label>
+        <Tiles>{tiles}</Tiles>
+      </SectionTiles>
+    </Display>
   );
 }
 

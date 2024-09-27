@@ -1,11 +1,64 @@
-// import { styled } from "@linaria/react";
+import { css, cx } from "@linaria/core";
+import { styled } from "@linaria/react";
 import { useEffect, useMemo, useState } from "react";
 
 import DisplayGame from "@/components/game/DisplayGame";
 import DisplayWord from "@/components/game/DisplayWord";
 import { useStore, useIsSelecting, useSelectedWord } from "@/store";
+import { Border, BorderRadius, Colors, Page } from "@/styles/core";
+import { Column } from "@/styles/layout";
 import { checkWord } from "@/utils/dictionary";
 import { getScore, calculateBonus } from "@/utils/scoring";
+
+const Container = styled.div`
+  width: 100%;
+  max-width: ${Page.MAX_WIDTH};
+  padding: 0 ${Page.PADDING_HORIZONTAL};
+`;
+
+const Wrapper = styled.div`
+  height: 80px;
+  overflow: hidden;
+  background: ${Colors.GREEN_600};
+  border: ${Border.THIN};
+  border-top-width: 2px;
+  border-radius: ${BorderRadius.MEDIUM};
+`;
+
+const animation = `
+  @keyframes slide-up {
+    0% {
+      transform: translateY(0%) scale(1);
+    }
+
+    15% {
+      transform: translateY(0) scale(0.95);
+    }
+
+    85% {
+      transform: translateY(-92px) scale(0.95);
+    }
+
+    100% {
+      transform: translateY(-92px) scale(1);
+    }
+  }
+`;
+
+const slideUp = css`
+  ${animation}
+  animation: slide-up 0.5s ease-in-out forwards;
+`;
+
+const slideDown = css`
+  ${animation}
+  animation: slide-up 0.5s ease-in-out reverse;
+`;
+
+const Track = styled(Column)`
+  gap: 12px;
+  align-items: stretch;
+`;
 
 function Display() {
   const [isSelectedValid, setIsSelectedValid] = useState(false);
@@ -29,15 +82,21 @@ function Display() {
 
   const isSelecting = useIsSelecting();
 
-  return isSelecting ? (
-    <DisplayWord
-      score={selectedScore}
-      bonus={calculateBonus(selectedWord)}
-      word={selectedWord}
-      valid={isSelectedValid}
-    />
-  ) : (
-    <DisplayGame score={score} tiles={remainingTilesCount} />
+  return (
+    <Container>
+      <Wrapper>
+        <Track className={cx(animation, isSelecting ? slideUp : slideDown)}>
+          <DisplayGame score={score} tiles={remainingTilesCount} />
+
+          <DisplayWord
+            score={selectedScore}
+            bonus={calculateBonus(selectedWord)}
+            word={selectedWord}
+            valid={isSelectedValid}
+          />
+        </Track>
+      </Wrapper>
+    </Container>
   );
 }
 
