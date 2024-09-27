@@ -72,7 +72,7 @@ function DisplayGame({ score, tiles }: { score: number; tiles: number }) {
 
       <TileBarGraph>
         {Array.from({ length: BASE_TILE_COUNT }).map((_, index) => (
-          <TileBarGraphItem key={index} selected={index > tiles} />
+          <TileBarGraphItem key={index} selected={index >= tiles} />
         ))}
       </TileBarGraph>
 
