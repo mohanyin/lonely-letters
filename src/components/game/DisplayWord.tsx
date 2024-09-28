@@ -49,7 +49,7 @@ const ScoreContainer = styled(Row)`
 
 const BonusContainer = styled(Row)`
   position: relative;
-  flex: 0 0 150px;
+  flex: 0 0 180px;
   height: 100%;
   padding: 0 12px;
   background-color: ${Colors.GOLD_500};
