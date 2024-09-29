@@ -39,9 +39,9 @@ const scoreBase = {
   fontFamily: font.score,
   lineHeight: 1,
 } as const;
-const score = { ...scoreBase, fontSize: "2.625em" } as const;
+const score = { ...scoreBase, fontSize: "2.67em" } as const;
 const scoreMedium = { ...scoreBase, fontSize: "2em" } as const;
-const scoreSmall = { ...scoreBase, fontSize: "1.2em" } as const;
+const scoreSmall = { ...scoreBase, fontSize: "1.125em" } as const;
 
 const headlineBase = {
   fontFamily: font.default,

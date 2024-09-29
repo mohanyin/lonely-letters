@@ -40,6 +40,8 @@ function Index() {
   const placeTile = useStore((store) => store.placeTile);
   const [drawer, setDrawer] = useState<ReactPortal | null>(null);
 
+  const [initialized, setInitialized] = useState(false);
+
   useEffect(() => {
     importTries();
     startOrResume();
@@ -49,6 +51,9 @@ function Index() {
         document.querySelector("[data-app-bar-right]")!,
       ),
     );
+    setTimeout(() => {
+      setInitialized(true);
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,7 +66,7 @@ function Index() {
   return (
     <Main>
       {drawer}
-      <Display />
+      <Display initialized={initialized} />
       <GridAndFooter>
         <Grid highlight={dragLocation} onHighlight={setActiveTile} />
         <Footer

@@ -7,6 +7,10 @@ const overline = css`
   ${type.overline}
 `;
 
+const overlineSmall = css`
+  ${type.overlineSmall}
+`;
+
 const caption = css`
   ${type.caption}
 `;
@@ -27,6 +31,10 @@ const scoreMedium = css`
   ${type.scoreMedium}
 `;
 
+const scoreSmall = css`
+  ${type.scoreSmall}
+`;
+
 export default function Text({
   style,
   as: Tag = "div",
@@ -42,11 +50,13 @@ export default function Text({
     <Tag
       className={cx(
         style === "overline" && overline,
+        style === "overlineSmall" && overlineSmall,
         style === "caption" && caption,
         style === "captionItalic" && captionItalic,
         style === "headline3" && headline3,
         style === "score" && score,
         style === "scoreMedium" && scoreMedium,
+        style === "scoreSmall" && scoreSmall,
         className,
       )}
     >

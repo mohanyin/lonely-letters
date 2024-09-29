@@ -1,21 +1,23 @@
 import { styled } from "@linaria/react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Text from "@/components/text";
+import { useSelectedWord, useStore } from "@/store";
 import { colors, borderRadius, border, type } from "@/styles/core";
+import display from "@/styles/display";
 import { Row, Column } from "@/styles/layout";
-import { formatBonus, MIN_LETTER_BONUS } from "@/utils/scoring";
+import { checkWord } from "@/utils/dictionary";
+import {
+  calculateBonus,
+  formatBonus,
+  getScore,
+  MIN_LETTER_BONUS,
+} from "@/utils/scoring";
 
 const Display = styled(Column)`
-  position: relative;
-  gap: 12px;
+  ${display.baseStyles}
   gap: 0;
   align-items: stretch;
-  height: 80px;
-  overflow: hidden;
-  background: ${colors.white};
-  border-radius: ${borderRadius.medium};
-  outline: ${border.thin};
 `;
 
 const WordRow = styled(Row)`
@@ -76,17 +78,24 @@ const BonusBarGraphItem = styled.div<{ active: boolean }>`
   transition: background-color 0.2s ease-in-out;
 `;
 
-function DisplayWord({
-  score,
-  bonus,
-  word,
-  valid,
-}: {
-  score: number;
-  bonus: number;
-  word: string;
-  valid: boolean;
-}) {
+function DisplayWord() {
+  const [isValid, setIsValid] = useState(false);
+
+  const selectedIndices = useStore((state) => state.selectedIndices);
+  const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
+  const selectedWord = useSelectedWord();
+  const score = useMemo(() => {
+    const bonusIndex = selectedIndices.indexOf(bonusTile);
+    return getScore(selectedWord, bonusIndex);
+  }, [selectedWord, selectedIndices, bonusTile]);
+  const bonus = useMemo(() => {
+    return calculateBonus(selectedWord);
+  }, [selectedWord]);
+
+  useEffect(() => {
+    checkWord(selectedWord).then((isValid) => setIsValid(isValid));
+  }, [selectedWord]);
+
   const bonusRatio = useMemo(() => {
     return (bonus - MIN_LETTER_BONUS) * 2;
   }, [bonus]);
@@ -94,8 +103,8 @@ function DisplayWord({
   return (
     <Display>
       <WordRow>
-        <Word>{word ?? "&nbsp;"}</Word>
-        {valid ? (
+        <Word>{selectedWord ?? "&nbsp;"}</Word>
+        {isValid ? (
           <Label color={colors.green500}>Valid</Label>
         ) : (
           <Label color={colors.red500}>Invalid</Label>

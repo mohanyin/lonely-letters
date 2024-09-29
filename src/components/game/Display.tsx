@@ -1,14 +1,12 @@
-import { css, cx } from "@linaria/core";
 import { styled } from "@linaria/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import DisplayGame from "@/components/game/DisplayGame";
 import DisplayWord from "@/components/game/DisplayWord";
-import { useStore, useIsSelecting, useSelectedWord } from "@/store";
+import { useIsSelecting } from "@/store";
 import { border, borderRadius, colors, page } from "@/styles/core";
+import display from "@/styles/display";
 import { Column } from "@/styles/layout";
-import { checkWord } from "@/utils/dictionary";
-import { getScore, calculateBonus } from "@/utils/scoring";
 
 const Container = styled.div`
   width: 100%;
@@ -16,84 +14,44 @@ const Container = styled.div`
   padding: 0 ${page.paddingHorizontal};
 `;
 
-const Wrapper = styled.div`
-  height: 80px;
+const Wrapper = styled.div<{ initialized: boolean }>`
+  height: ${display.height}px;
   overflow: hidden;
-  background: ${colors.green600};
+  background: ${({ initialized }) =>
+    initialized ? colors.green600 : colors.green500};
   border: ${border.thin};
-  border-top-width: 2px;
+  border-top-width: ${({ initialized }) => (initialized ? "2px" : "1px")};
   border-radius: ${borderRadius.medium};
+  transition: all 0.2s ease-in-out;
 `;
 
-const animation = `
-  @keyframes slide-up {
-    0% {
-      transform: translateY(0%) scale(1);
-    }
-
-    15% {
-      transform: translateY(0) scale(0.95);
-    }
-
-    85% {
-      transform: translateY(-92px) scale(0.95);
-    }
-
-    100% {
-      transform: translateY(-92px) scale(1);
-    }
-  }
-`;
-
-const slideUp = css`
-  ${animation}
-  animation: slide-up 0.5s ease-in-out forwards;
-`;
-
-const slideDown = css`
-  ${animation}
-  animation: slide-up 0.5s ease-in-out reverse;
-`;
-
-const Track = styled(Column)`
+const animationDistance = display.height + display.gap;
+const Track = styled(Column)<{ slide: number }>`
   gap: 12px;
   align-items: stretch;
+  margin: -2px -1px -1px;
+  transform: translateY(${({ slide }) => -1 * slide * animationDistance}px);
+  transition: transform 0.5s ease-in-out;
 `;
 
-function Display() {
-  const [isSelectedValid, setIsSelectedValid] = useState(false);
-
-  const score = useStore((state) => state.game.score);
-  const selectedIndices = useStore((state) => state.selectedIndices);
-  const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
-  const selectedWord = useSelectedWord();
-  const selectedScore = useMemo(() => {
-    const bonusIndex = selectedIndices.indexOf(bonusTile);
-    return getScore(selectedWord, bonusIndex);
-  }, [selectedWord, selectedIndices, bonusTile]);
-
-  const remainingTilesCount = useStore(
-    (state) => state.game.remainingTiles.length,
-  );
-
-  useEffect(() => {
-    checkWord(selectedWord).then((isValid) => setIsSelectedValid(isValid));
-  }, [selectedWord]);
-
+function Display({ initialized }: { initialized: boolean }) {
   const isSelecting = useIsSelecting();
+  const slide = useMemo(() => {
+    if (!initialized) {
+      return -1;
+    } else if (isSelecting) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }, [isSelecting, initialized]);
 
   return (
     <Container>
-      <Wrapper>
-        <Track className={cx(animation, isSelecting ? slideUp : slideDown)}>
-          <DisplayGame score={score} tiles={remainingTilesCount} />
-
-          <DisplayWord
-            score={selectedScore}
-            bonus={calculateBonus(selectedWord)}
-            word={selectedWord}
-            valid={isSelectedValid}
-          />
+      <Wrapper initialized={initialized}>
+        <Track slide={slide}>
+          <DisplayGame />
+          <DisplayWord />
         </Track>
       </Wrapper>
     </Container>

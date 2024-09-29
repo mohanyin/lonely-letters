@@ -1,20 +1,17 @@
 import { styled } from "@linaria/react";
 
 import Text from "@/components/text";
+import { useStore } from "@/store";
 import { BASE_TILE_COUNT } from "@/store/puzzle";
-import { colors, borderRadius, border } from "@/styles/core";
+import { colors, border } from "@/styles/core";
+import display from "@/styles/display";
 import { Column, Row } from "@/styles/layout";
 
 const Display = styled(Row)`
-  position: relative;
+  ${display.baseStyles}
   gap: 12px;
   align-items: stretch;
-  height: 80px;
   padding: 0 12px;
-  overflow: hidden;
-  background: ${colors.white};
-  border-radius: ${borderRadius.medium};
-  outline: ${border.thin};
 `;
 const Section = styled(Column)`
   gap: 0;
@@ -49,7 +46,10 @@ const TileBarGraphItem = styled.div<{ selected: boolean }>`
   transition: background 0.2s ease-in-out;
 `;
 
-function DisplayGame({ score, tiles }: { score: number; tiles: number }) {
+function DisplayGame() {
+  const score = useStore((state) => state.game.score);
+  const tiles = useStore((state) => state.game.remainingTiles.length);
+
   return (
     <Display>
       <SectionScore>
