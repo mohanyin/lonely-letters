@@ -1,9 +1,8 @@
 import { styled } from "@linaria/react";
-import { Link } from "@tanstack/react-router";
 import mixpanel from "mixpanel-browser";
 
+import Button from "@/components/button";
 import { useStore } from "@/store";
-import { BUTTON, BUTTON_ACTIVE } from "@/styles/buttons";
 import { border, type } from "@/styles/core";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
@@ -13,15 +12,6 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   border-top: ${border.thin};
   transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
-`;
-
-const DoneLink = styled(Link)`
-  ${BUTTON}
-  display: block;
-
-  &:active {
-    ${BUTTON_ACTIVE}
-  }
 `;
 
 const DoneWithPuzzle = styled.div`
@@ -43,9 +33,9 @@ function DoneFooter() {
   return (
     <FooterStyles dragging={false}>
       <DoneWithPuzzle>Done with the puzzle?</DoneWithPuzzle>
-      <DoneLink to="/results" onClick={logFinish}>
+      <Button to="/results" fullWidth onClick={logFinish}>
         View results
-      </DoneLink>
+      </Button>
     </FooterStyles>
   );
 }

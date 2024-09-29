@@ -2,14 +2,22 @@ import { css, cx } from "@linaria/core";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 
-import { BUTTON } from "@/styles/buttons";
-import { colors, type } from "@/styles/core";
+import { border, borderRadius, colors, type } from "@/styles/core";
 
 const buttonClass = css`
-  ${BUTTON}
+  ${type.overline}
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 12px 16px;
+  overflow: hidden;
+  color: ${colors.black};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: ${colors.gold500};
+  border: ${border.thin};
+  border-bottom-width: 4px;
+  border-radius: ${borderRadius.medium};
 `;
 
 const tapAnimation = css`
@@ -77,6 +85,7 @@ export default function Button({
         buttonClass,
         className,
       )}
+      to={to}
       onClick={_onClick}
       onAnimationEnd={() => setHasTapped(false)}
     >
