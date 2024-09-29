@@ -11,28 +11,6 @@ import Text from "@/components/text";
 import { border, borderRadius, colors, type } from "@/styles/core";
 import { Row, Center } from "@/styles/layout";
 
-const ICON_SIZE = 36;
-
-const IconButton = styled(Drawer.Trigger)`
-  ${type.body}
-  position: relative;
-  width: ${ICON_SIZE}px;
-  height: ${ICON_SIZE}px;
-  color: ${colors.black};
-  background: ${colors.gold500};
-  border: ${border.thin};
-  border-bottom-width: 2px;
-  border-radius: ${borderRadius.medium};
-  transition: all 0.1s ease-in-out;
-
-  &:active {
-    height: ${ICON_SIZE - 1}px;
-    margin-top: 1px;
-    background: ${colors.gold600};
-    border-bottom-width: 1px;
-  }
-`;
-
 const DragHandle = styled.div`
   width: 125px;
   height: 9px;
@@ -152,7 +130,11 @@ function BottomDrawer() {
 
   return (
     <Drawer.Root shouldScaleBackground open={open} onOpenChange={setOpen}>
-      <IconButton aria-label="Instructions">?</IconButton>
+      <Drawer.Trigger aria-label="Instructions">
+        <Button icon small>
+          ?
+        </Button>
+      </Drawer.Trigger>
       <Drawer.Portal>
         <DrawerOverlay />
 

@@ -3,11 +3,13 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { BUTTON } from "@/styles/buttons";
-import { colors } from "@/styles/core";
+import { colors, type } from "@/styles/core";
 
 const buttonClass = css`
   ${BUTTON}
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const tapAnimation = css`
@@ -26,6 +28,18 @@ const tapAnimation = css`
   animation: tap 0.3s ease-in-out;
 `;
 
+const smallClass = css`
+  height: 36px;
+  padding: 4px;
+  border-bottom-width: 2px;
+`;
+
+const iconClass = css`
+  ${type.body}
+  width: 36px;
+  padding: 0;
+`;
+
 const fullWidthClass = css`
   width: 100%;
 `;
@@ -33,26 +47,32 @@ const fullWidthClass = css`
 export default function Button({
   children,
   fullWidth,
+  small,
+  icon,
   className,
   to,
   onClick,
 }: {
   children: React.ReactNode;
   fullWidth?: boolean;
+  small?: boolean;
+  icon?: boolean;
   className?: string;
   to?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   const [hasTapped, setHasTapped] = useState(false);
-  const Tag = to ? Link : "button";
+  const Tag = to ? Link : onClick ? "button" : "div";
   const _onClick = () => {
-    onClick();
+    onClick?.();
     setHasTapped(true);
   };
   return (
     <Tag
       className={cx(
         className,
+        small && smallClass,
+        icon && iconClass,
         fullWidth && fullWidthClass,
         hasTapped && tapAnimation,
         buttonClass,
