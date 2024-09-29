@@ -4,13 +4,13 @@ import mixpanel from "mixpanel-browser";
 
 import { useStore } from "@/store";
 import { BUTTON, BUTTON_ACTIVE } from "@/styles/buttons";
-import { Border, TypeStyles } from "@/styles/core";
+import { border, type } from "@/styles/core";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
   width: 100%;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: ${Border.THIN};
+  border-top: ${border.thin};
   transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
 `;
@@ -25,7 +25,7 @@ const DoneLink = styled(Link)`
 `;
 
 const DoneWithPuzzle = styled.div`
-  ${TypeStyles.BODY_ITALIC}
+  ${type.bodyItalic}
   padding-bottom: 12px;
   text-align: center;
 `;

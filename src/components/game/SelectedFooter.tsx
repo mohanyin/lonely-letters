@@ -3,7 +3,7 @@ import { styled } from "@linaria/react";
 import xSvg from "@/assets/images/x.svg";
 import { useStore } from "@/store";
 import { Button } from "@/styles/buttons";
-import { Border, BorderRadius, Colors } from "@/styles/core";
+import { border, borderRadius, colors } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
@@ -12,24 +12,24 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   width: 100%;
   margin-top: 12px;
   padding-top: 24px;
-  border-top: ${Border.THIN};
+  border-top: ${border.thin};
   transform: perspective(800px) rotateX(20deg);
   transform-origin: top center;
 `;
 
 const CancelButton = styled(Button)`
   ${CENTER}
-  background: ${Colors.RED_500};
+  background: ${colors.red500};
   border-right: none;
-  border-radius: ${BorderRadius.MEDIUM} 0 0 ${BorderRadius.MEDIUM};
+  border-radius: ${borderRadius.medium} 0 0 ${borderRadius.medium};
 
   &:active {
-    background: ${Colors.RED_600};
+    background: ${colors.red600};
   }
 `;
 const DoneButton = styled(Button)`
   grid-column: 2 / 5;
-  border-radius: 0 ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0;
+  border-radius: 0 ${borderRadius.medium} ${borderRadius.medium} 0;
 `;
 
 function SelectedFooter() {

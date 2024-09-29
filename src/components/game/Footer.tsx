@@ -5,7 +5,7 @@ import DoneFooter from "@/components/game/DoneFooter";
 import SelectedFooter from "@/components/game/SelectedFooter";
 import Tile from "@/components/game/Tile";
 import { useStore, useIsSelecting } from "@/store";
-import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { border, borderRadius, colors, type } from "@/styles/core";
 import { CENTER_COLUMN } from "@/styles/layout";
 
 interface Position {
@@ -25,16 +25,16 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 const MainTileContainer = styled.div`
   grid-column: 2 / 4;
   padding: 6px;
-  background: ${Colors.GOLD_500};
-  border: ${Border.THIN};
+  background: ${colors.gold500};
+  border: ${border.thin};
   border-radius: 0 0 30px 30px;
 `;
 
 const NestedMainTileContainer = styled(MainTileContainer)`
   padding: 12%;
-  background: ${Colors.GOLD_600};
+  background: ${colors.gold600};
   border-top-width: 4px;
-  border-radius: ${BorderRadius.LARGE};
+  border-radius: ${borderRadius.large};
 `;
 
 const MainTile = styled(Tile)<{ dragging: boolean }>`
@@ -62,7 +62,7 @@ const DraggedMainTile = styled(Tile)<{
 const NextTileContainer = styled.div`
   ${CENTER_COLUMN}
   padding: 0 4px;
-  border-top: ${Border.THIN};
+  border-top: ${border.thin};
 `;
 
 const NextTile = styled(Tile)<{ dragging: boolean }>`
@@ -72,7 +72,7 @@ const NextTile = styled(Tile)<{ dragging: boolean }>`
 `;
 
 const NextLabel = styled.div`
-  ${TypeStyles.OVERLINE}
+  ${type.overline}
   margin-bottom: 8px;
   text-align: center;
 `;

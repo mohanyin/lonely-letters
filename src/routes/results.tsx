@@ -6,15 +6,9 @@ import { loadFull } from "tsparticles";
 
 import { useStore } from "@/store";
 import { Button } from "@/styles/buttons";
-import {
-  Border,
-  BorderRadius,
-  Colors,
-  Headline3,
-  Page,
-  TypeStyles,
-} from "@/styles/core";
+import { border, borderRadius, colors, page, type } from "@/styles/core";
 import { COLUMN, Row } from "@/styles/layout";
+import Text from "@/styles/typography";
 import { useConfettiConfig } from "@/utils/confetti";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
@@ -46,13 +40,13 @@ const PageBody = styled.div`
   z-index: 1;
   flex: 1 1 auto;
   width: 100%;
-  max-width: ${Page.MAX_WIDTH};
+  max-width: ${page.maxWidth};
   padding: 12px 20px;
   overflow-y: auto;
 `;
 
 const Title = styled.h1`
-  ${TypeStyles.HEADLINE_2}
+  ${type.headline2}
   margin-bottom: 20px;
 `;
 
@@ -63,22 +57,22 @@ const ScoreContainer = styled(Row)`
   justify-content: space-between;
   margin-bottom: 12px;
   padding: 16px;
-  background: ${Colors.WHITE};
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.MEDIUM};
+  background: ${colors.white};
+  border: ${border.thin};
+  border-radius: ${borderRadius.medium};
 `;
 
 const ScoreLabel = styled.h2`
-  ${TypeStyles.OVERLINE}
-  color: ${Colors.BLACK};
+  ${type.overline}
+  color: ${colors.black};
 `;
 
 const Score = styled.div`
-  ${TypeStyles.SCORE}
+  ${type.score}
 `;
 
 const CardHeader = styled.h2`
-  ${TypeStyles.OVERLINE}
+  ${type.overline}
 `;
 
 const Card = styled.div<{ row?: boolean }>`
@@ -88,10 +82,10 @@ const Card = styled.div<{ row?: boolean }>`
   justify-content: ${({ row }) => (row ? "space-between" : "flex-start")};
   margin-bottom: 8px;
   padding: 24px 16px;
-  color: ${Colors.BLACK};
-  background: ${Colors.GREEN_500};
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.MEDIUM};
+  color: ${colors.black};
+  background: ${colors.green500};
+  border: ${border.thin};
+  border-radius: ${borderRadius.medium};
 
   /* stylelint-disable-next-line selector-class-pattern */
   ${CardHeader} {
@@ -100,11 +94,11 @@ const Card = styled.div<{ row?: boolean }>`
 `;
 
 const ResultLabel = styled.div`
-  ${TypeStyles.HEADLINE_3}
+  ${type.headline3}
 `;
 
 const ResultValue = styled.div`
-  ${TypeStyles.SCORE_SMALL}
+  ${type.scoreSmall}
 `;
 
 const ResultValueRow = styled(ResultValue)`
@@ -117,7 +111,7 @@ const ResultValueRow = styled(ResultValue)`
 
   & + & {
     margin-top: 12px;
-    border-top: ${Border.THIN};
+    border-top: ${border.thin};
   }
 `;
 
@@ -125,11 +119,11 @@ const PageFooter = styled.footer`
   z-index: 1;
   flex: none;
   width: 100%;
-  max-width: ${Page.MAX_WIDTH};
+  max-width: ${page.maxWidth};
   padding: 8px 20px max(env(safe-area-inset-bottom), 12px);
   overflow: hidden;
-  background: ${Colors.GREEN_500};
-  border-top: ${Border.THIN};
+  background: ${colors.green500};
+  border-top: ${border.thin};
 `;
 
 const ShareButton = styled(Button)`
@@ -140,7 +134,7 @@ const ShareButton = styled(Button)`
   &::before {
     position: absolute;
     z-index: -1;
-    border-radius: ${BorderRadius.MEDIUM};
+    border-radius: ${borderRadius.medium};
     opacity: 0;
     animation: rotate 4s linear infinite;
     content: " ";
@@ -155,17 +149,17 @@ const ShareButton = styled(Button)`
     }
 
     5% {
-      outline: 0 solid ${Colors.GOLD_500};
+      outline: 0 solid ${colors.gold500};
       opacity: 1;
     }
 
     40% {
-      outline: 100px solid ${Colors.WHITE};
+      outline: 100px solid ${colors.white};
       opacity: 0;
     }
 
     100% {
-      outline: 100px solid ${Colors.GOLD_500};
+      outline: 100px solid ${colors.gold500};
       opacity: 0;
     }
   }
@@ -238,7 +232,7 @@ ${bestWordsFormatted}
           <ScoreLabel>Score</ScoreLabel>
         </ScoreContainer>
         <Card row>
-          <Headline3>{words.length}</Headline3>
+          <Text style="headline3">{words.length}</Text>
           <CardHeader>Words Swiped</CardHeader>
         </Card>
         <Card>

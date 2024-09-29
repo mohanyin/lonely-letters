@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colors } from "@/styles/core";
+import { colors } from "@/styles/core";
 
 export default css`
   :global() {
@@ -8,7 +8,7 @@ export default css`
     body {
       height: 100svh;
       overflow: hidden;
-      background: ${Colors.GREEN_500};
+      background: ${colors.green500};
     }
   }
 `;

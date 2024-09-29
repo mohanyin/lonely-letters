@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 
 import { BASE_TILE_COUNT } from "@/store/puzzle";
-import { Colors, BorderRadius, Border, TypeStyles } from "@/styles/core";
+import { colors, borderRadius, border, type } from "@/styles/core";
 import { ROW, Column } from "@/styles/layout";
 
 const Display = styled.div`
@@ -12,21 +12,21 @@ const Display = styled.div`
   height: 80px;
   padding: 0 12px;
   overflow: hidden;
-  background: ${Colors.WHITE};
-  border-radius: ${BorderRadius.MEDIUM};
-  outline: ${Border.THIN};
+  background: ${colors.white};
+  border-radius: ${borderRadius.medium};
+  outline: ${border.thin};
 `;
 
 const Label = styled.h3`
-  ${TypeStyles.OVERLINE}
+  ${type.overline}
 `;
 
 const Score = styled.div`
-  ${TypeStyles.SCORE}
+  ${type.score}
 `;
 
 const Tiles = styled.div`
-  ${TypeStyles.SCORE_MEDIUM}
+  ${type.scoreMedium}
 `;
 
 const Section = styled(Column)`
@@ -50,15 +50,15 @@ const TileBarGraph = styled(Column)`
   gap: 0;
   width: 8px;
   height: 100%;
-  background: ${Colors.BLACK};
-  outline: ${Border.THIN};
+  background: ${colors.black};
+  outline: ${border.thin};
 `;
 
 const TileBarGraphItem = styled.div<{ selected: boolean }>`
   flex: 1 1 auto;
   width: 100%;
-  background: ${({ selected }) => (selected ? Colors.BLACK : Colors.GREEN_500)};
-  outline: ${Border.THIN};
+  background: ${({ selected }) => (selected ? colors.black : colors.green500)};
+  outline: ${border.thin};
   transition: background 0.2s ease-in-out;
 `;
 

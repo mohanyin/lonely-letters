@@ -5,24 +5,24 @@ import { useEffect, useMemo, useState } from "react";
 import DisplayGame from "@/components/game/DisplayGame";
 import DisplayWord from "@/components/game/DisplayWord";
 import { useStore, useIsSelecting, useSelectedWord } from "@/store";
-import { Border, BorderRadius, Colors, Page } from "@/styles/core";
+import { border, borderRadius, colors, page } from "@/styles/core";
 import { Column } from "@/styles/layout";
 import { checkWord } from "@/utils/dictionary";
 import { getScore, calculateBonus } from "@/utils/scoring";
 
 const Container = styled.div`
   width: 100%;
-  max-width: ${Page.MAX_WIDTH};
-  padding: 0 ${Page.PADDING_HORIZONTAL};
+  max-width: ${page.maxWidth};
+  padding: 0 ${page.paddingHorizontal};
 `;
 
 const Wrapper = styled.div`
   height: 80px;
   overflow: hidden;
-  background: ${Colors.GREEN_600};
-  border: ${Border.THIN};
+  background: ${colors.green600};
+  border: ${border.thin};
   border-top-width: 2px;
-  border-radius: ${BorderRadius.MEDIUM};
+  border-radius: ${borderRadius.medium};
 `;
 
 const animation = `

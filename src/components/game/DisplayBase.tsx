@@ -1,22 +1,22 @@
 import { styled } from "@linaria/react";
 
-import { Colors, BorderRadius, Border, Page } from "@/styles/core";
+import { colors, borderRadius, border, page } from "@/styles/core";
 import { Row } from "@/styles/layout";
 
 const DisplayContainer = styled.div`
   width: 100%;
-  max-width: ${Page.MAX_WIDTH};
-  padding: 0 ${Page.PADDING_HORIZONTAL};
+  max-width: ${page.maxWidth};
+  padding: 0 ${page.paddingHorizontal};
 `;
 
 const Display = styled.div<{ color?: string }>`
   position: relative;
   box-sizing: content-box;
   overflow: hidden;
-  background: ${Colors.WHITE};
-  border: ${Border.THIN};
+  background: ${colors.white};
+  border: ${border.thin};
   border-bottom-width: 3px;
-  border-radius: ${BorderRadius.MEDIUM};
+  border-radius: ${borderRadius.medium};
 `;
 
 const MainRow = styled(Row)`

@@ -1,9 +1,9 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
-import { Colors, BorderRadius, Border, TypeStyles } from "@/styles/core";
+import { colors, borderRadius, border, type } from "@/styles/core";
 import { Row, Column } from "@/styles/layout";
-import { OverlineSmall, ScoreSmall } from "@/styles/typography";
+import Text from "@/styles/typography";
 import { formatBonus, MIN_LETTER_BONUS } from "@/utils/scoring";
 
 const Display = styled(Column)`
@@ -13,9 +13,9 @@ const Display = styled(Column)`
   align-items: stretch;
   height: 80px;
   overflow: hidden;
-  background: ${Colors.WHITE};
-  border-radius: ${BorderRadius.MEDIUM};
-  outline: ${Border.THIN};
+  background: ${colors.white};
+  border-radius: ${borderRadius.medium};
+  outline: ${border.thin};
 `;
 
 const WordRow = styled(Row)`
@@ -24,22 +24,22 @@ const WordRow = styled(Row)`
 `;
 
 const Word = styled.div`
-  ${TypeStyles.HEADLINE_2}
+  ${type.headline2}
 `;
 
 const Label = styled.div<{ color: string }>`
-  ${TypeStyles.OVERLINE_SMALL}
+  ${type.overlineSmall}
   display: inline-block;
   padding: 2px 4px;
-  color: ${Colors.BLACK};
+  color: ${colors.black};
   background-color: ${({ color }) => color};
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.SMALL};
+  border: ${border.thin};
+  border-radius: ${borderRadius.small};
 `;
 
 const ScoreRow = styled(Row)`
   flex: auto;
-  border-top: ${Border.THIN};
+  border-top: ${border.thin};
 `;
 
 const ScoreContainer = styled(Row)`
@@ -52,8 +52,8 @@ const BonusContainer = styled(Row)`
   flex: 0 0 180px;
   height: 100%;
   padding: 0 12px;
-  background-color: ${Colors.GOLD_500};
-  outline: ${Border.THIN};
+  background-color: ${colors.gold500};
+  outline: ${border.thin};
 `;
 
 const BonusBarGraph = styled(Row)`
@@ -65,15 +65,14 @@ const BonusBarGraph = styled(Row)`
   height: 6px;
   overflow: hidden;
   border-radius: 1000px 0 0;
-  outline: ${Border.THIN};
+  outline: ${border.thin};
 `;
 
 const BonusBarGraphItem = styled.div<{ active: boolean }>`
   flex: 1;
   height: 100%;
-  background-color: ${({ active }) =>
-    active ? Colors.GOLD_500 : Colors.BLACK};
-  outline: ${Border.THIN};
+  background-color: ${({ active }) => (active ? colors.gold500 : colors.black)};
+  outline: ${border.thin};
   transition: background-color 0.2s ease-in-out;
 `;
 
@@ -97,16 +96,16 @@ function DisplayWord({
       <WordRow>
         <Word>{word ?? "&nbsp;"}</Word>
         {valid ? (
-          <Label color={Colors.GREEN_500}>Valid</Label>
+          <Label color={colors.green500}>Valid</Label>
         ) : (
-          <Label color={Colors.RED_500}>Invalid</Label>
+          <Label color={colors.red500}>Invalid</Label>
         )}
       </WordRow>
 
       <ScoreRow>
         <ScoreContainer>
-          <OverlineSmall>Score</OverlineSmall>
-          <ScoreSmall>{score}</ScoreSmall>
+          <Text style="overlineSmall">Score</Text>
+          <Text style="scoreSmall">{score}</Text>
         </ScoreContainer>
         <BonusContainer>
           <BonusBarGraph>
@@ -114,8 +113,8 @@ function DisplayWord({
               <BonusBarGraphItem key={index} active={index < bonusRatio} />
             ))}
           </BonusBarGraph>
-          <OverlineSmall>Bonus</OverlineSmall>
-          <ScoreSmall>{formatBonus(bonus)}</ScoreSmall>
+          <Text style="overlineSmall">Bonus</Text>
+          <Text style="scoreSmall">{formatBonus(bonus)}</Text>
         </BonusContainer>
       </ScoreRow>
     </Display>

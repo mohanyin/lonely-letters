@@ -8,18 +8,9 @@ export const ROW = {
   gap: "8px",
 };
 
-export const Row = styled.div`
+export const Row = styled.div<{ gap?: string }>`
   ${ROW}
-  gap: 4px;
-`;
-
-export const ROW_RIGHT = `
-  ${ROW}
-  justify-content: flex-end;
-`;
-
-export const RowRight = styled.div`
-  ${ROW_RIGHT}
+  gap: ${({ gap }) => gap || "8px"};
 `;
 
 export const CENTER = {
@@ -48,6 +39,7 @@ export const COLUMN = {
   gap: "8px",
 };
 
-export const Column = styled.div`
+export const Column = styled.div<{ gap?: string }>`
   ${COLUMN}
+  gap: ${({ gap }) => gap || "8px"};
 `;

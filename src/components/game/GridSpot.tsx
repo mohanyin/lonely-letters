@@ -3,7 +3,7 @@ import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
 import dottedCircle from "@/assets/images/dotted-circle.png";
-import { Border, Colors, TypeStyles, Type } from "@/styles/core";
+import { border, colors, type, fontWeight } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
 import { parseIndex } from "@/utils/grid";
 
@@ -36,14 +36,14 @@ const GridSpotStyle = styled.button<{ highlight: boolean }>`
   width: 100%;
   height: 100%;
   background: ${({ highlight }) =>
-    highlight ? Colors.GOLD_500 : Colors.GREEN_600};
-  border: ${Border.THIN};
+    highlight ? colors.gold500 : colors.green600};
+  border: ${border.thin};
   border-top-width: 4cqw;
   border-radius: 20cqw;
   transition: background 0.15s ease-in-out;
 
   &:active {
-    background: ${Colors.GOLD_500};
+    background: ${colors.gold500};
   }
 `;
 
@@ -52,16 +52,16 @@ const GridSpotBonusContainer = styled.div`
 `;
 
 const GridSpotCircleBonus = styled(GridSpotCircle)`
-  background: ${Colors.GOLD_500};
+  background: ${colors.gold500};
   border-radius: 100%;
 `;
 
 const GridSpotBonus = styled.div`
-  ${TypeStyles.HEADLINE_3}
+  ${type.headline3}
   position: absolute;
   top: 50%;
   left: 50%;
-  font-weight: ${Type.FONT_WEIGHT_LIGHT};
+  font-weight: ${fontWeight.light};
   font-size: 23cqw;
   line-height: 55cqw;
   transform: translate(-50%, -50%);
@@ -79,7 +79,7 @@ const CROSS = {
   left: "0",
   width: "100%",
   height: "1px",
-  background: Colors.BLACK,
+  background: colors.black,
   "transform-origin": "center center",
 };
 

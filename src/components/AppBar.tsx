@@ -1,48 +1,34 @@
 import { styled } from "@linaria/react";
 import dayjs from "dayjs";
+import { useMemo } from "react";
 
 import { useStore } from "@/store";
-import { Border, BorderRadius, Colors, Page, TypeStyles } from "@/styles/core";
-import { CENTER, Row } from "@/styles/layout";
+import { borderRadius, colors, page, type } from "@/styles/core";
+import { CENTER, Column, Row } from "@/styles/layout";
+import Text from "@/styles/typography";
 
-const AppBarStyles = styled.header`
+const Container = styled.header`
   ${CENTER}
   flex: none;
   width: 100%;
-  color: ${Colors.BLACK};
+  color: ${colors.textPrimary};
 `;
 
-const AppBarRow = styled(Row)`
+const Content = styled(Row)`
   width: 100%;
-  max-width: ${Page.MAX_WIDTH};
+  max-width: ${page.maxWidth};
   padding: 8px 20px;
 `;
 
-const TitleContainer = styled.div`
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  ${TypeStyles.HEADLINE_3}
-`;
-
 const Puzzle = styled.div`
-  ${TypeStyles.OVERLINE_SMALL}
-  border: ${Border.THIN};
-  border-radius: ${BorderRadius.SMALL};
+  ${type.overlineSmall}
+  padding: 3px 4px;
+  color: ${colors.green500};
+  background: ${colors.black};
+  border-radius: ${borderRadius.small};
 `;
 
-const PuzzleNumber = styled.div`
-  padding: 2px 4px;
-  color: ${Colors.GREEN_500};
-  background: ${Colors.BLACK};
-`;
-
-const Date = styled.div`
-  ${TypeStyles.CAPTION_ITALIC}
-`;
-
-const AppBarSlot = styled.div`
+const ButtonSlot = styled.div`
   width: 36px;
 `;
 
@@ -50,22 +36,26 @@ function AppBar() {
   const id = useStore((state) => state.currentPuzzle);
   const today = useStore((state) => state.today);
 
+  const todayFormatted = useMemo(() => {
+    return dayjs(today).format("MMMM D, YYYY");
+  }, [today]);
+
   return (
-    <AppBarStyles>
-      <AppBarRow>
-        <AppBarSlot data-app-bar-left />
-        <TitleContainer>
-          <Row>
-            <Title>Woggle</Title>
-            <Puzzle>
-              <PuzzleNumber>#{id}</PuzzleNumber>
-            </Puzzle>
+    <Container>
+      <Content>
+        <ButtonSlot data-app-bar-left />
+        <Column gap="0">
+          <Row gap="4px">
+            <Text style="headline3" as="h1">
+              Woggle
+            </Text>
+            <Puzzle>#{id}</Puzzle>
           </Row>
-          <Date>{dayjs(today).format("MMMM D, YYYY")}</Date>
-        </TitleContainer>
-        <AppBarSlot data-app-bar-right />
-      </AppBarRow>
-    </AppBarStyles>
+          <Text style="captionItalic">{todayFormatted}</Text>
+        </Column>
+        <ButtonSlot data-app-bar-right />
+      </Content>
+    </Container>
   );
 }
 

@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 
-import { Colors, Border } from "@/styles/core";
+import { colors, border } from "@/styles/core";
 
 const Base = styled.div`
   padding: 6px 0;
@@ -13,8 +13,8 @@ const Main = styled(Base)`
   position: relative;
   flex: 0 0 65%;
   height: 29px;
-  color: ${Colors.WHITE};
-  background: ${Colors.BLACK};
+  color: ${colors.white};
+  background: ${colors.black};
   container: display / size;
 `;
 
@@ -29,7 +29,7 @@ const OverlayMask = styled.div<{ width?: number }>`
   width: ${(props) => getOverlayWidth(props.width)};
   min-width: 2px;
   overflow: hidden;
-  border-top: ${Border.THIN};
+  border-top: ${border.thin};
   transition: width 0.2s ease-in-out;
 `;
 
@@ -38,8 +38,8 @@ const Top = styled(Base)<{ color?: string }>`
   top: 0;
   left: 0;
   width: 100cqw;
-  color: ${Colors.BLACK};
-  background: ${({ color }) => color ?? Colors.GREEN_500};
+  color: ${colors.black};
+  background: ${({ color }) => color ?? colors.green500};
   transition: width 0.2s ease-in-out;
 `;
 

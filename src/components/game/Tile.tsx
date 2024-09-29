@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 
-import { Border, Colors, Type, TypeStyles } from "@/styles/core";
+import { border, colors, font, fontWeight, type } from "@/styles/core";
 import { getGridSpotBonusScore } from "@/utils/scoring";
 import { Letter, SCORES } from "@/utils/tiles";
 
@@ -18,15 +18,15 @@ const TileStyles = styled.div<{ selected: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background: ${({ selected }) => (selected ? Colors.GOLD_500 : Colors.WHITE)};
-  border: ${Border.THIN};
+  background: ${({ selected }) => (selected ? colors.gold500 : colors.white)};
+  border: ${border.thin};
   border-bottom-width: 6cqw;
   border-radius: 20cqw;
   transition: background 0.2s ease-in-out;
 `;
 
 const LetterStyles = styled.div`
-  ${TypeStyles.HEADLINE_2}
+  ${type.headline2}
   position: absolute;
   top: 4cqw;
   right: 30cqw;
@@ -38,16 +38,16 @@ const LetterStyles = styled.div`
 
 const scoreWidth = 30;
 const getFontFamily = (narrow?: boolean) => {
-  return narrow ? Type.FONT_FAMILY_CONDENSED : Type.FONT_FAMILY;
+  return narrow ? font.condensed : font.default;
 };
 const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
-  ${TypeStyles.BODY}
+  ${type.body}
   position: absolute;
   right: 12cqw;
   bottom: 12cqw;
   width: ${scoreWidth}cqw;
   height: ${scoreWidth}cqw;
-  font-weight: ${Type.FONT_WEIGHT_LIGHT};
+  font-weight: ${fontWeight.light};
   font-size: ${scoreWidth * 0.7}cqw;
   /* stylelint-disable-next-line font-family-name-quotes */
   font-family: ${({ narrow }) => getFontFamily(narrow)};
@@ -55,8 +55,8 @@ const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
   letter-spacing: -1cqw;
   text-align: center;
   background: ${({ highlight }) =>
-    highlight ? Colors.GOLD_500 : Colors.GREEN_500};
-  border: ${Border.THIN};
+    highlight ? colors.gold500 : colors.green500};
+  border: ${border.thin};
   border-radius: ${scoreWidth}cqw;
 `;
 

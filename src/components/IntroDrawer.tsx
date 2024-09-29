@@ -7,27 +7,27 @@ import instructions1 from "@/assets/images/instructions-1.png";
 import instructions2 from "@/assets/images/instructions-2.png";
 import instructions3 from "@/assets/images/instructions-3.png";
 import { Button } from "@/styles/buttons";
-import { Border, BorderRadius, Colors, TypeStyles } from "@/styles/core";
+import { border, borderRadius, colors, type } from "@/styles/core";
 import { Row, Center } from "@/styles/layout";
 
 const ICON_SIZE = 36;
 
 const IconButton = styled(Drawer.Trigger)`
-  ${TypeStyles.BODY}
+  ${type.body}
   position: relative;
   width: ${ICON_SIZE}px;
   height: ${ICON_SIZE}px;
-  color: ${Colors.BLACK};
-  background: ${Colors.GOLD_500};
-  border: ${Border.THIN};
+  color: ${colors.black};
+  background: ${colors.gold500};
+  border: ${border.thin};
   border-bottom-width: 2px;
-  border-radius: ${BorderRadius.MEDIUM};
+  border-radius: ${borderRadius.medium};
   transition: all 0.1s ease-in-out;
 
   &:active {
     height: ${ICON_SIZE - 1}px;
     margin-top: 1px;
-    background: ${Colors.GOLD_600};
+    background: ${colors.gold600};
     border-bottom-width: 1px;
   }
 `;
@@ -36,8 +36,8 @@ const DragHandle = styled.div`
   width: 125px;
   height: 9px;
   margin-bottom: 24px;
-  border: ${Border.THIN_WHITE};
-  border-radius: ${BorderRadius.ROUNDED};
+  border: ${border.thinWhite};
+  border-radius: ${borderRadius.round};
 `;
 
 const TitleRow = styled(Row)`
@@ -45,11 +45,11 @@ const TitleRow = styled(Row)`
 `;
 
 const Title = styled(Drawer.Title)`
-  ${TypeStyles.HEADLINE_2}
+  ${type.headline2}
 `;
 
 const TitleAppend = styled.div`
-  ${TypeStyles.OVERLINE}
+  ${type.overline}
 `;
 
 const getBackgroundImage = (image: string) => `url(${image})`;
@@ -61,7 +61,7 @@ const InstructionsImage = styled.div<{ image: string }>`
 `;
 
 const Instruction = styled.div`
-  ${TypeStyles.BODY}
+  ${type.body}
   margin: 0 12px;
   text-align: center;
 `;
@@ -133,16 +133,16 @@ const DrawerContent = styled(Drawer.Content)`
   width: 100%;
   max-width: 500px;
   padding: 16px 24px max(env(safe-area-inset-bottom), 12px);
-  color: ${Colors.WHITE};
-  background: ${Colors.BLACK};
-  border-radius: ${BorderRadius.MEDIUM} ${BorderRadius.MEDIUM} 0 0;
+  color: ${colors.white};
+  background: ${colors.black};
+  border-radius: ${borderRadius.medium} ${borderRadius.medium} 0 0;
 
   :focus {
     outline: none;
   }
 `;
 
-const drawerOverlayColor = `${Colors.BLACK}A0`;
+const drawerOverlayColor = `${colors.black}A0`;
 const DrawerOverlay = styled(Drawer.Overlay)`
   position: fixed;
   background: ${drawerOverlayColor};

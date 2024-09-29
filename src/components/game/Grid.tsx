@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import GridSpot from "@/components/game/GridSpot";
 import Tile from "@/components/game/Tile";
 import { useStore } from "@/store";
-import { Colors } from "@/styles/core";
+import { colors } from "@/styles/core";
 
 const ROWS = 4;
 const COLS = 4;
@@ -36,7 +36,7 @@ const VerticalGridStripes = styled.div`
 `;
 
 const VerticalGridStripe = styled.div<{ active: boolean }>`
-  background: ${({ active }) => (active ? Colors.BLACK : "transparent")};
+  background: ${({ active }) => (active ? colors.black : "transparent")};
   transform: ${({ active }) => (active ? "scaleX(1)" : "scaleX(0.5)")};
   transition:
     background 0.1s ease-in-out,
@@ -54,7 +54,7 @@ const HorizontalGridStripes = styled.div`
 `;
 
 const HorizontalGridStripe = styled.div<{ active: boolean }>`
-  background: ${({ active }) => (active ? Colors.BLACK : "transparent")};
+  background: ${({ active }) => (active ? colors.black : "transparent")};
   transform: ${({ active }) => (active ? "scaleY(1)" : "scaleY(0.5)")};
   transition:
     background 0.1s ease-in-out,

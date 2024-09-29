@@ -3,15 +3,15 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import AppBar from "@/components/AppBar";
-import { Colors, Type } from "@/styles/core";
+import { colors, font } from "@/styles/core";
 import { CENTER_COLUMN } from "@/styles/layout";
 
 const AppContainerStyles = css`
   ${CENTER_COLUMN}
   height: 100svh;
   /* stylelint-disable-next-line font-family-name-quotes */
-  font-family: ${Type.FONT_FAMILY};
-  background: ${Colors.GREEN_500};
+  font-family: ${font.default};
+  background: ${colors.green500};
 `;
 
 function AppContainer({ children }: { children: React.ReactNode }) {

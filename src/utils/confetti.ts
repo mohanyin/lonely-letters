@@ -1,7 +1,7 @@
 import { ISourceOptions } from "@tsparticles/engine";
 import { useMemo } from "react";
 
-import { Colors } from "@/styles/core";
+import { colors } from "@/styles/core";
 
 export const useConfettiConfig = (): ISourceOptions => {
   return useMemo(
@@ -30,7 +30,7 @@ export const useConfettiConfig = (): ISourceOptions => {
       },
       particles: {
         color: {
-          value: [Colors.RED_500, Colors.GOLD_500, Colors.WHITE],
+          value: [colors.red500, colors.gold500, colors.white],
         },
         move: {
           direction: "bottom",

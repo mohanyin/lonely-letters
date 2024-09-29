@@ -8,7 +8,7 @@ import Display from "@/components/game/Display";
 import Footer from "@/components/game/Footer";
 import Grid from "@/components/game/Grid";
 import { useStore } from "@/store";
-import { Page } from "@/styles/core";
+import { page } from "@/styles/core";
 import { CENTER_COLUMN } from "@/styles/layout";
 import { importTries } from "@/utils/dictionary";
 
@@ -31,8 +31,8 @@ const GridAndFooter = styled.div`
   gap: 16px;
   justify-content: flex-start;
   width: 50svh;
-  max-width: min(100vw, ${Page.MAX_WIDTH});
-  padding: 0 ${Page.PADDING_HORIZONTAL};
+  max-width: min(100vw, ${page.maxWidth});
+  padding: 0 ${page.paddingHorizontal};
 `;
 
 function Index() {
