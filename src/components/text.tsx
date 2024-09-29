@@ -19,6 +19,14 @@ const headline3 = css`
   ${type.headline3}
 `;
 
+const score = css`
+  ${type.score}
+`;
+
+const scoreMedium = css`
+  ${type.scoreMedium}
+`;
+
 export default function Text({
   style,
   as: Tag = "div",
@@ -33,11 +41,13 @@ export default function Text({
   return (
     <Tag
       className={cx(
-        className,
         style === "overline" && overline,
         style === "caption" && caption,
         style === "captionItalic" && captionItalic,
         style === "headline3" && headline3,
+        style === "score" && score,
+        style === "scoreMedium" && scoreMedium,
+        className,
       )}
     >
       {children}{" "}

@@ -1,11 +1,11 @@
 import { styled } from "@linaria/react";
 
+import Text from "@/components/text";
 import { BASE_TILE_COUNT } from "@/store/puzzle";
-import { colors, borderRadius, border, type } from "@/styles/core";
-import { ROW, Column } from "@/styles/layout";
+import { colors, borderRadius, border } from "@/styles/core";
+import { Column, Row } from "@/styles/layout";
 
-const Display = styled.div`
-  ${ROW}
+const Display = styled(Row)`
   position: relative;
   gap: 12px;
   align-items: stretch;
@@ -16,19 +16,6 @@ const Display = styled.div`
   border-radius: ${borderRadius.medium};
   outline: ${border.thin};
 `;
-
-const Label = styled.h3`
-  ${type.overline}
-`;
-
-const Score = styled.div`
-  ${type.score}
-`;
-
-const Tiles = styled.div`
-  ${type.scoreMedium}
-`;
-
 const Section = styled(Column)`
   gap: 0;
   align-items: flex-start;
@@ -66,8 +53,8 @@ function DisplayGame({ score, tiles }: { score: number; tiles: number }) {
   return (
     <Display>
       <SectionScore>
-        <Label>Score</Label>
-        <Score>{score}</Score>
+        <Text style="overline">Score</Text>
+        <Text style="score">{score}</Text>
       </SectionScore>
 
       <TileBarGraph>
@@ -77,8 +64,8 @@ function DisplayGame({ score, tiles }: { score: number; tiles: number }) {
       </TileBarGraph>
 
       <SectionTiles>
-        <Label>Tiles</Label>
-        <Tiles>{tiles}</Tiles>
+        <Text style="overline">Tiles</Text>
+        <Text style="scoreMedium">{tiles}</Text>
       </SectionTiles>
     </Display>
   );
