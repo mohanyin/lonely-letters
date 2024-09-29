@@ -1,8 +1,8 @@
 import { styled } from "@linaria/react";
 
 import xSvg from "@/assets/images/x.svg";
+import Button from "@/components/button";
 import { useStore } from "@/store";
-import { Button } from "@/styles/buttons";
 import { border, borderRadius, colors } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
 

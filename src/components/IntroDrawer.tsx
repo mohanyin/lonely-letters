@@ -6,7 +6,8 @@ import { Drawer } from "vaul";
 import instructions1 from "@/assets/images/instructions-1.png";
 import instructions2 from "@/assets/images/instructions-2.png";
 import instructions3 from "@/assets/images/instructions-3.png";
-import { Button } from "@/styles/buttons";
+import Button from "@/components/button";
+import Text from "@/components/text";
 import { border, borderRadius, colors, type } from "@/styles/core";
 import { Row, Center } from "@/styles/layout";
 
@@ -48,10 +49,6 @@ const Title = styled(Drawer.Title)`
   ${type.headline2}
 `;
 
-const TitleAppend = styled.div`
-  ${type.overline}
-`;
-
 const getBackgroundImage = (image: string) => `url(${image})`;
 const InstructionsImage = styled.div<{ image: string }>`
   height: 200px;
@@ -67,11 +64,7 @@ const Instruction = styled.div`
 `;
 
 const NextButtonContainer = styled.div`
-  margin-top: 12px;
-`;
-
-const NextButton = styled(Button)`
-  width: 100%;
+  padding-top: 12px;
 `;
 
 function InstructionsCarousel({
@@ -169,16 +162,20 @@ function BottomDrawer() {
           </Center>
           <TitleRow>
             <Title>How to Woggle</Title>
-            <TitleAppend>{slide + 1} / 3</TitleAppend>
+            <Text style="overline">{slide + 1} / 3</Text>
           </TitleRow>
 
           <InstructionsCarousel slide={slide} onSlideChange={setSlide} />
 
           <NextButtonContainer>
             {slide === 2 ? (
-              <NextButton onClick={() => setOpen(false)}>Done</NextButton>
+              <Button fullWidth onClick={() => setOpen(false)}>
+                Done
+              </Button>
             ) : (
-              <NextButton onClick={() => setSlide(slide + 1)}>Next</NextButton>
+              <Button fullWidth onClick={() => setSlide(slide + 1)}>
+                Next
+              </Button>
             )}
           </NextButtonContainer>
         </DrawerContent>

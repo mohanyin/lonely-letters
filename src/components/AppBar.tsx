@@ -2,10 +2,10 @@ import { styled } from "@linaria/react";
 import dayjs from "dayjs";
 import { useMemo } from "react";
 
+import Text from "@/components/text";
 import { useStore } from "@/store";
 import { borderRadius, colors, page, type } from "@/styles/core";
 import { CENTER, Column, Row } from "@/styles/layout";
-import Text from "@/styles/typography";
 
 const Container = styled.header`
   ${CENTER}

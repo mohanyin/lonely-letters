@@ -4,11 +4,11 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useCallback, useMemo, useState } from "react";
 import { loadFull } from "tsparticles";
 
+import Button from "@/components/button";
+import Text from "@/components/text";
 import { useStore } from "@/store";
-import { Button } from "@/styles/buttons";
 import { border, borderRadius, colors, page, type } from "@/styles/core";
 import { COLUMN, Row } from "@/styles/layout";
-import Text from "@/styles/typography";
 import { useConfettiConfig } from "@/utils/confetti";
 import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 

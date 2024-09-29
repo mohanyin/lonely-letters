@@ -1,9 +1,9 @@
 import { styled } from "@linaria/react";
 import { useMemo } from "react";
 
+import Text from "@/components/text";
 import { colors, borderRadius, border, type } from "@/styles/core";
 import { Row, Column } from "@/styles/layout";
-import Text from "@/styles/typography";
 import { formatBonus, MIN_LETTER_BONUS } from "@/utils/scoring";
 
 const Display = styled(Column)`
