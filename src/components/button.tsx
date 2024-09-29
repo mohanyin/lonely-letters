@@ -70,12 +70,12 @@ export default function Button({
   return (
     <Tag
       className={cx(
-        className,
         small && smallClass,
         icon && iconClass,
         fullWidth && fullWidthClass,
         hasTapped && tapAnimation,
         buttonClass,
+        className,
       )}
       onClick={_onClick}
       onAnimationEnd={() => setHasTapped(false)}
