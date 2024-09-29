@@ -40,7 +40,7 @@ const GridSpotStyle = styled.button<{ highlight: boolean }>`
   border: ${border.thin};
   border-top-width: 4cqw;
   border-radius: 20cqw;
-  transition: background 0.15s ease-in-out;
+  transition: background 0.1s ease-in-out;
 
   &:active {
     background: ${colors.gold500};
