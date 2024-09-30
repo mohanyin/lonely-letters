@@ -75,14 +75,28 @@ function Grid({
   const selectedIndices = useStore((state) => state.selectedIndices);
   const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
   const blockedTile = useStore((state) => state.puzzle.blockedTiles[0]);
-  const [initialized, setInitialized] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setInitialized(true), 1000);
-  }, []);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
+
+  const [initializedCount, setInitializedCount] = useState(0);
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | undefined;
+    setTimeout(() => {
+      intervalId = setInterval(() => {
+        setInitializedCount((count) => {
+          if (count >= ROWS * COLS) {
+            clearInterval(intervalId);
+            return count;
+          }
+          return count + 1;
+        });
+      }, 175);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const detectDragTarget = useCallback((position: { x: number; y: number }) => {
     const possibleHighlights = document.elementsFromPoint(
@@ -162,7 +176,7 @@ function Grid({
           bonus={bonusTile === index}
           blocked={blockedTile === index}
           highlight={highlightedSpot === index}
-          initialized={initialized}
+          initialized={initializedCount > index}
           onClick={() => placeTile(index)}
         />,
       );
