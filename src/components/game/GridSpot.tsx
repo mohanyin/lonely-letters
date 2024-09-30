@@ -26,21 +26,38 @@ const rotate = css`
   animation: rotate 4s linear infinite;
 `;
 
-const GridSpotCircle = styled.img`
+const GridSpotCircle = styled.img<{ initialized: boolean }>`
   width: 50cqw;
   height: 50cqw;
+  transform: ${({ initialized }) =>
+    initialized ? "none" : "scale(0.8) rotate(45deg)"};
+  opacity: ${({ initialized }) => (initialized ? 1 : 0)};
+  transition:
+    transform 0.4s ease-in-out,
+    opacity 0.2s ease-in-out;
 `;
 
-const GridSpotStyle = styled.button<{ highlight: boolean }>`
+function gridSpotTransition(initialized: boolean) {
+  return `background ${initialized ? 0.2 : 0.4}s ease-in-out, border-width 0.4s ease-in-out`;
+}
+
+const GridSpotStyle = styled.button<{
+  highlight: boolean;
+  initialized: boolean;
+}>`
   ${CENTER}
   width: 100%;
   height: 100%;
-  background: ${({ highlight }) =>
-    highlight ? colors.gold500 : colors.green600};
+  background: ${({ highlight, initialized }) =>
+    highlight
+      ? colors.gold500
+      : initialized
+        ? colors.green600
+        : colors.green500};
   border: ${border.thin};
-  border-top-width: 4cqw;
+  border-top-width: ${({ initialized }) => (initialized ? 4 : 1)}px;
   border-radius: 20cqw;
-  transition: background 0.1s ease-in-out;
+  transition: ${({ initialized }) => gridSpotTransition(initialized)};
 
   &:active {
     background: ${colors.gold500};
@@ -98,12 +115,14 @@ function GridSpot({
   highlight,
   bonus,
   blocked,
+  initialized,
   onClick,
 }: {
   index: number;
   highlight: boolean;
   bonus?: boolean;
   blocked?: boolean;
+  initialized?: boolean;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   const { x, y } = parseIndex(index);
@@ -117,6 +136,7 @@ function GridSpot({
         <GridSpotStyle
           data-grid-spot={index}
           highlight={highlight}
+          initialized={initialized ?? false}
           onClick={onClick}
           aria-label={ariaLabel}
         >
@@ -125,6 +145,7 @@ function GridSpot({
               <GridSpotCircleBonus
                 src={dottedCircle}
                 className={cx(highlight && rotate)}
+                initialized={initialized ?? false}
               />
               <GridSpotBonus>2x</GridSpotBonus>
             </GridSpotBonusContainer>
@@ -132,6 +153,7 @@ function GridSpot({
             <GridSpotCircle
               src={dottedCircle}
               className={cx(highlight && rotate)}
+              initialized={initialized ?? false}
             />
           )}
         </GridSpotStyle>

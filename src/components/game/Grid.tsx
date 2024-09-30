@@ -75,6 +75,11 @@ function Grid({
   const selectedIndices = useStore((state) => state.selectedIndices);
   const bonusTile = useStore((state) => state.puzzle.bonusTiles[0]);
   const blockedTile = useStore((state) => state.puzzle.blockedTiles[0]);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setInitialized(true), 1000);
+  }, []);
 
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
@@ -157,6 +162,7 @@ function Grid({
           bonus={bonusTile === index}
           blocked={blockedTile === index}
           highlight={highlightedSpot === index}
+          initialized={initialized}
           onClick={() => placeTile(index)}
         />,
       );
