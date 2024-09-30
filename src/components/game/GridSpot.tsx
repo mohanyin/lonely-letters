@@ -73,7 +73,7 @@ const GridSpotCircleBonus = styled(GridSpotCircle)`
   border-radius: 100%;
 `;
 
-const GridSpotBonus = styled.div`
+const GridSpotBonus = styled.div<{ initialized: boolean }>`
   ${type.headline3}
   position: absolute;
   top: 50%;
@@ -81,7 +81,14 @@ const GridSpotBonus = styled.div`
   font-weight: ${fontWeight.light};
   font-size: 23cqw;
   line-height: 55cqw;
-  transform: translate(-50%, -50%);
+  transform: ${({ initialized }) =>
+    initialized
+      ? "translate(-50%, -50%) scale(1)"
+      : "translate(-50%, -50%) scale(1.25)"};
+  opacity: ${({ initialized }) => (initialized ? 1 : 0)};
+  transition:
+    transform 0.4s ease-in-out,
+    opacity 0.2s ease-in-out;
 `;
 
 const GridCrossContainer = styled.div`
@@ -147,7 +154,9 @@ function GridSpot({
                 className={cx(highlight && rotate)}
                 initialized={initialized ?? false}
               />
-              <GridSpotBonus>2x</GridSpotBonus>
+              <GridSpotBonus initialized={initialized ?? false}>
+                2x
+              </GridSpotBonus>
             </GridSpotBonusContainer>
           ) : (
             <GridSpotCircle
