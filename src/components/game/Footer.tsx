@@ -7,7 +7,7 @@ import Tile from "@/components/game/Tile";
 import Text from "@/components/text";
 import { useStore, useIsSelecting } from "@/store";
 import { border, borderRadius, colors } from "@/styles/core";
-import { CENTER, Column, Row } from "@/styles/layout";
+import { CENTER, Column } from "@/styles/layout";
 
 interface Position {
   x: number;
@@ -21,17 +21,30 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   width: 100%;
 `;
 
-const MainTileContainer = styled(Row)`
+const ControlContainer = styled.div`
+  display: grid;
   grid-column: 2 / 5;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: center;
   height: 120px;
-  padding: 6% 16px;
+  padding: 0 12px;
   background: ${colors.gold600};
   border: ${border.thin};
   border-top-width: 4px;
   border-radius: ${borderRadius.large};
 `;
 
+const MainTileContainer = styled.div`
+  ${CENTER}
+  grid-column: 1 / 3;
+  height: 100%;
+  padding: 8px 0;
+`;
+
 const MainTile = styled(Tile)<{ dragging: boolean }>`
+  width: auto;
+  height: 100%;
   transform: ${(props) => (props.dragging ? "scale(75%)" : "none")};
   opacity: ${(props) => (props.dragging ? "0" : "1")};
   transition:
@@ -59,6 +72,7 @@ const NextTile = styled(Tile)<{ dragging: boolean }>`
 `;
 
 const HoldSpotContainer = styled.div`
+  grid-column: 3;
   width: 100%;
   container: spot / size;
   aspect-ratio: 1;
@@ -135,7 +149,6 @@ function Footer({
       );
       for (const el of possibleHighlights) {
         if (el instanceof HTMLElement && el.dataset.holdSpot) {
-          console.log("highlight");
           setHighlightHoldSpot(true);
         }
       }
@@ -193,7 +206,7 @@ function Footer({
     <>
       <FooterStyles dragging={!!dragStart}>
         {remainingTiles[1] ? (
-          <Column justify="center" padding="0 4px">
+          <Column justify="center" padding="0 8px">
             <NextTile
               pending
               key={remainingTiles.length}
@@ -203,17 +216,19 @@ function Footer({
             <Text style="overline">Next</Text>
           </Column>
         ) : null}
-        <MainTileContainer>
-          <MainTile
-            dragging={!!dragStart}
-            letter={remainingTiles[0]}
-            onTouchStart={(event) => handleTouchStart(event)}
-            onTouchMove={(event) => handleTouchMove(event)}
-            onTouchEnd={() => handleTouchEnd()}
-          />
-          <Column>
+        <ControlContainer>
+          <MainTileContainer>
+            <MainTile
+              dragging={!!dragStart}
+              letter={remainingTiles[0]}
+              onTouchStart={(event) => handleTouchStart(event)}
+              onTouchMove={(event) => handleTouchMove(event)}
+              onTouchEnd={() => handleTouchEnd()}
+            />
+          </MainTileContainer>
+          <Column padding="0 8px">
             {hold ? (
-              <Tile onClick={swapHoldTile} letter={hold} />
+              <Tile pending onClick={swapHoldTile} letter={hold} />
             ) : (
               <HoldSpotContainer>
                 <HoldSpot onClick={holdTile} data-hold-spot>
@@ -221,9 +236,9 @@ function Footer({
                 </HoldSpot>
               </HoldSpotContainer>
             )}
-            <Text style="overline">Hold</Text>
+            <Text style="overline">{hold ? "Swap" : "Hold"}</Text>
           </Column>
-        </MainTileContainer>
+        </ControlContainer>
       </FooterStyles>
       <DraggedMainTile
         data-draggable="main-tile"
