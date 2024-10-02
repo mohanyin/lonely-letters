@@ -13,8 +13,6 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   margin-top: 12px;
   padding-top: 24px;
   border-top: ${border.thin};
-  transform: perspective(800px) rotateX(20deg);
-  transform-origin: top center;
 `;
 
 const CancelButton = styled(Button)`

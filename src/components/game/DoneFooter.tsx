@@ -10,8 +10,6 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   margin-top: 12px;
   padding-top: 12px;
   border-top: ${border.thin};
-  transform: perspective(800px) rotateX(20deg);
-  transform-origin: top center;
 `;
 
 const DoneWithPuzzle = styled.div`

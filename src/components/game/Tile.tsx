@@ -14,13 +14,14 @@ const Container = styled.button`
   aspect-ratio: 1;
 `;
 
-const TileStyles = styled.div<{ selected: boolean }>`
+const TileStyles = styled.div<{ selected: boolean; pending?: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
   background: ${({ selected }) => (selected ? colors.gold500 : colors.white)};
   border: ${border.thin};
-  border-bottom-width: 6cqw;
+  border-style: ${({ pending }) => (pending ? "dashed" : "solid")};
+  border-bottom-width: ${({ pending }) => (pending ? "1px" : "6cqw")};
   border-radius: 20cqw;
   transition: background 0.2s ease-in-out;
 `;
@@ -40,7 +41,11 @@ const scoreWidth = 30;
 const getFontFamily = (narrow?: boolean) => {
   return narrow ? font.condensed : font.default;
 };
-const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
+const Score = styled.div<{
+  narrow?: boolean;
+  highlight?: boolean;
+  pending?: boolean;
+}>`
   ${type.body}
   position: absolute;
   right: 12cqw;
@@ -51,12 +56,12 @@ const Score = styled.div<{ narrow?: boolean; highlight?: boolean }>`
   font-size: ${scoreWidth * 0.7}cqw;
   /* stylelint-disable-next-line font-family-name-quotes */
   font-family: ${({ narrow }) => getFontFamily(narrow)};
-  line-height: ${scoreWidth - 3}cqw;
+  line-height: ${scoreWidth - 1.5}cqw;
   letter-spacing: -1cqw;
   text-align: center;
   background: ${({ highlight }) =>
     highlight ? colors.gold500 : colors.green500};
-  border: ${border.thin};
+  border: ${({ pending }) => (pending ? "none" : border.thin)};
   border-radius: ${scoreWidth}cqw;
 `;
 
@@ -64,9 +69,10 @@ function Tile(props: {
   letter: Letter;
   selected?: boolean;
   bonus?: boolean;
-  onClick?: () => void;
+  pending?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
   onTouchStart?: (event: React.TouchEvent) => void;
   onTouchMove?: (event: React.TouchEvent) => void;
   onTouchEnd?: (event: React.TouchEvent) => void;
@@ -75,9 +81,10 @@ function Tile(props: {
     letter,
     selected,
     bonus,
-    onClick,
+    pending,
     className,
     style,
+    onClick,
     onTouchStart,
     onTouchMove,
     onTouchEnd,
@@ -95,9 +102,13 @@ function Tile(props: {
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      <TileStyles selected={selected ?? false}>
+      <TileStyles selected={selected ?? false} pending={pending ?? false}>
         <LetterStyles>{letter}</LetterStyles>
-        <Score narrow={score >= 10} highlight={bonus}>
+        <Score
+          narrow={score >= 10}
+          highlight={bonus}
+          pending={pending ?? false}
+        >
           {score}
         </Score>
       </TileStyles>

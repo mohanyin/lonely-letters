@@ -39,7 +39,11 @@ export const COLUMN = {
   gap: "8px",
 };
 
-export const Column = styled.div<{ gap?: string }>`
+export const Column = styled.div<{
+  gap?: string;
+  justify?: string;
+}>`
   ${COLUMN}
   gap: ${({ gap }) => gap || "8px"};
+  justify-content: ${({ justify }) => justify || "flex-start"};
 `;

@@ -4,9 +4,10 @@ import { useCallback, useState } from "react";
 import DoneFooter from "@/components/game/DoneFooter";
 import SelectedFooter from "@/components/game/SelectedFooter";
 import Tile from "@/components/game/Tile";
+import Text from "@/components/text";
 import { useStore, useIsSelecting } from "@/store";
-import { border, borderRadius, colors, type } from "@/styles/core";
-import { CENTER_COLUMN } from "@/styles/layout";
+import { border, borderRadius, colors } from "@/styles/core";
+import { Column } from "@/styles/layout";
 
 interface Position {
   x: number;
@@ -18,21 +19,13 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   width: 100%;
-  transform: perspective(800px) rotateX(20deg);
-  transform-origin: top center;
 `;
 
 const MainTileContainer = styled.div`
   grid-column: 2 / 4;
-  padding: 6px;
-  background: ${colors.gold500};
-  border: ${border.thin};
-  border-radius: 0 0 30px 30px;
-`;
-
-const NestedMainTileContainer = styled(MainTileContainer)`
-  padding: 12%;
+  padding: 6% 12%;
   background: ${colors.gold600};
+  border: ${border.thin};
   border-top-width: 4px;
   border-radius: ${borderRadius.large};
 `;
@@ -59,22 +52,9 @@ const DraggedMainTile = styled(Tile)<{
   pointer-events: none;
 `;
 
-const NextTileContainer = styled.div`
-  ${CENTER_COLUMN}
-  padding: 0 4px;
-  border-top: ${border.thin};
-`;
-
 const NextTile = styled(Tile)<{ dragging: boolean }>`
-  transform: ${({ dragging }) =>
-    dragging ? "translateX(-25%) scale(110%)" : "none"};
+  transform: ${({ dragging }) => (dragging ? "translateX(25%)" : "none")};
   transition: transform 0.2s ease-in-out;
-`;
-
-const NextLabel = styled.div`
-  ${type.overline}
-  margin-bottom: 8px;
-  text-align: center;
 `;
 
 function Footer({
@@ -154,27 +134,26 @@ function Footer({
   ) : (
     <>
       <FooterStyles dragging={!!dragStart}>
-        <MainTileContainer>
-          <NestedMainTileContainer>
-            <MainTile
-              dragging={!!dragStart}
-              letter={remainingTiles[0]}
-              onTouchStart={(event) => handleTouchStart(event)}
-              onTouchMove={(event) => handleTouchMove(event)}
-              onTouchEnd={() => handleTouchEnd()}
-            />
-          </NestedMainTileContainer>
-        </MainTileContainer>
         {remainingTiles[1] ? (
-          <NextTileContainer>
-            <NextLabel>Next</NextLabel>
+          <Column justify="center">
             <NextTile
+              pending
               key={remainingTiles.length}
               dragging={!!dragStart}
               letter={remainingTiles[1]}
             />
-          </NextTileContainer>
+            <Text style="overline">Next</Text>
+          </Column>
         ) : null}
+        <MainTileContainer>
+          <MainTile
+            dragging={!!dragStart}
+            letter={remainingTiles[0]}
+            onTouchStart={(event) => handleTouchStart(event)}
+            onTouchMove={(event) => handleTouchMove(event)}
+            onTouchEnd={() => handleTouchEnd()}
+          />
+        </MainTileContainer>
       </FooterStyles>
       <DraggedMainTile
         data-draggable="main-tile"
