@@ -79,17 +79,20 @@ function Grid({
   const [highlightedSpot, setHighlightedSpot] = useState<number | null>(null);
   const debouncedHighlight = useThrottle(highlight, 30);
 
-  const [initializedCount, setInitializedCount] = useState(0);
+  const initializationOrder = [
+    0, 1, 4, 8, 5, 2, 3, 6, 9, 12, 13, 10, 7, 11, 14, 15,
+  ];
+  const [initialized, setInitialized] = useState<number[]>([]);
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined;
     setTimeout(() => {
       intervalId = setInterval(() => {
-        setInitializedCount((count) => {
-          if (count >= ROWS * COLS) {
+        setInitialized((initialized) => {
+          if (initialized.length >= ROWS * COLS) {
             clearInterval(intervalId);
-            return count;
+            return initialized;
           }
-          return count + 1;
+          return [...initialized, initializationOrder[initialized.length]];
         });
       }, 175);
     }, 1000);
@@ -176,7 +179,7 @@ function Grid({
           bonus={bonusTile === index}
           blocked={blockedTile === index}
           highlight={highlightedSpot === index}
-          initialized={initializedCount > index}
+          initialized={initialized.includes(index)}
           onClick={() => placeTile(index)}
         />,
       );

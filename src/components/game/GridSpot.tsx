@@ -33,13 +33,9 @@ const GridSpotCircle = styled.img<{ initialized: boolean }>`
     initialized ? "none" : "scale(0.8) rotate(45deg)"};
   opacity: ${({ initialized }) => (initialized ? 1 : 0)};
   transition:
-    transform 0.4s ease-in-out,
-    opacity 0.2s ease-in-out;
+    transform 0.6s ease-in-out,
+    opacity 0.6s ease-in-out;
 `;
-
-function gridSpotTransition(initialized: boolean) {
-  return `background ${initialized ? 0.2 : 0.4}s ease-in-out, border-width 0.4s ease-in-out`;
-}
 
 const GridSpotStyle = styled.button<{
   highlight: boolean;
@@ -57,7 +53,9 @@ const GridSpotStyle = styled.button<{
   border: ${border.thin};
   border-top-width: ${({ initialized }) => (initialized ? 4 : 1)}px;
   border-radius: 20cqw;
-  transition: ${({ initialized }) => gridSpotTransition(initialized)};
+  transition:
+    background 0.2s ease-in-out,
+    border-width 0.6s ease-in-out;
 
   &:active {
     background: ${colors.gold500};
@@ -87,8 +85,8 @@ const GridSpotBonus = styled.div<{ initialized: boolean }>`
       : "translate(-50%, -50%) scale(1.25)"};
   opacity: ${({ initialized }) => (initialized ? 1 : 0)};
   transition:
-    transform 0.4s ease-in-out,
-    opacity 0.2s ease-in-out;
+    transform 0.6s ease-in-out,
+    opacity 0.6s ease-in-out;
 `;
 
 const GridCrossContainer = styled.div`
