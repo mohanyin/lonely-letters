@@ -32,6 +32,7 @@ export const fontWeight = {
 
 export const border = {
   thin: `1px solid ${colors.black}`,
+  dashed: `1px dashed ${colors.black}`,
   thinWhite: `1px solid ${colors.white}`,
 } as const;
 

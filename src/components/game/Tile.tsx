@@ -19,8 +19,7 @@ const TileStyles = styled.div<{ selected: boolean; pending?: boolean }>`
   width: 100%;
   height: 100%;
   background: ${({ selected }) => (selected ? colors.gold500 : colors.white)};
-  border: ${border.thin};
-  border-style: ${({ pending }) => (pending ? "dashed" : "solid")};
+  border: ${({ pending }) => (pending ? border.dashed : border.thin)};
   border-bottom-width: ${({ pending }) => (pending ? "1px" : "6cqw")};
   border-radius: 20cqw;
   transition: background 0.2s ease-in-out;
@@ -97,6 +96,7 @@ function Tile(props: {
       {...attributes}
       className={className}
       style={style}
+      role={pending ? "presentation" : undefined}
       onClick={onClick}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}

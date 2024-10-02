@@ -14,6 +14,7 @@ interface Game {
   words: { word: string; score: number }[];
   remainingTiles: Letter[];
   grid: (Letter | null)[];
+  hold: Letter | null;
 }
 
 interface State {
@@ -26,6 +27,8 @@ interface Actions {
   start: () => void;
   startOrResume: () => void;
   placeTile: (index: number) => void;
+  holdTile: () => void;
+  swapHoldTile: () => void;
   onTileTap: (index: number) => void;
   onTileSwipe: (index: number) => void;
   addSelectedTile: (index: number) => void;
@@ -53,6 +56,7 @@ const BASE_GAME: Game = {
   words: [],
   remainingTiles: [],
   grid: Array(16).fill(null),
+  hold: null,
 };
 
 export const createGameSlice: ImmerStateCreator<
@@ -62,6 +66,7 @@ export const createGameSlice: ImmerStateCreator<
   game: BASE_GAME,
   selectedIndices: [],
   selectMode: "tap",
+  hold: null,
 
   start: () => {
     const { currentPuzzle } = get();
@@ -98,6 +103,29 @@ export const createGameSlice: ImmerStateCreator<
 
       const tile = state.game!.remainingTiles.shift();
       state.game!.grid[index] = tile!;
+    });
+  },
+
+  holdTile() {
+    set((state) => {
+      if (state.game.hold !== null || state.game.remainingTiles.length === 0) {
+        return;
+      }
+
+      const letter = state.game.remainingTiles.shift()!;
+      state.game.hold = letter;
+    });
+  },
+
+  swapHoldTile() {
+    set((state) => {
+      if (state.game.hold === null) {
+        return;
+      }
+
+      const hold = state.game.hold;
+      state.game.hold = state.game.remainingTiles.shift() ?? null;
+      state.game.remainingTiles.unshift(hold!);
     });
   },
 

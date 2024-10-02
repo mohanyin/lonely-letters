@@ -42,8 +42,10 @@ export const COLUMN = {
 export const Column = styled.div<{
   gap?: string;
   justify?: string;
+  padding?: string;
 }>`
   ${COLUMN}
   gap: ${({ gap }) => gap || "8px"};
   justify-content: ${({ justify }) => justify || "flex-start"};
+  padding: ${({ padding }) => padding || "0"};
 `;

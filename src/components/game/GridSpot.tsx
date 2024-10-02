@@ -18,6 +18,18 @@ const rotate = css`
       transform: rotate(0deg);
     }
 
+    25% {
+      transform: scale(1.1) rotate(45deg);
+    }
+
+    50% {
+      transform: rotate(180deg);
+    }
+
+    75% {
+      transform: scale(0.9) rotate(315deg);
+    }
+
     100% {
       transform: rotate(360deg);
     }
@@ -121,6 +133,7 @@ function GridSpot({
   bonus,
   blocked,
   initialized,
+  className,
   onClick,
 }: {
   index: number;
@@ -128,6 +141,7 @@ function GridSpot({
   bonus?: boolean;
   blocked?: boolean;
   initialized?: boolean;
+  className?: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   const { x, y } = parseIndex(index);
@@ -136,7 +150,7 @@ function GridSpot({
     return `Add tile to row: ${y}, column: ${x}${bonusLabel}`;
   }, [x, y, bonus]);
   return (
-    <Container>
+    <Container className={className}>
       {!blocked ? (
         <GridSpotStyle
           data-grid-spot={index}

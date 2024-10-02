@@ -7,7 +7,7 @@ import Tile from "@/components/game/Tile";
 import Text from "@/components/text";
 import { useStore, useIsSelecting } from "@/store";
 import { border, borderRadius, colors } from "@/styles/core";
-import { Column } from "@/styles/layout";
+import { CENTER, Column, Row } from "@/styles/layout";
 
 interface Position {
   x: number;
@@ -21,9 +21,10 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
   width: 100%;
 `;
 
-const MainTileContainer = styled.div`
-  grid-column: 2 / 4;
-  padding: 6% 12%;
+const MainTileContainer = styled(Row)`
+  grid-column: 2 / 5;
+  height: 120px;
+  padding: 6% 16px;
   background: ${colors.gold600};
   border: ${border.thin};
   border-top-width: 4px;
@@ -57,6 +58,31 @@ const NextTile = styled(Tile)<{ dragging: boolean }>`
   transition: transform 0.2s ease-in-out;
 `;
 
+const HoldSpotContainer = styled.div`
+  width: 100%;
+  container: spot / size;
+  aspect-ratio: 1;
+`;
+
+const HoldSpot = styled.button`
+  ${CENTER}
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: ${colors.gold500};
+  border: ${border.thin};
+  border-top-width: 4px;
+  border-radius: 20cqw;
+`;
+
+const HoldSpotDiamond = styled.div<{ highlight?: boolean }>`
+  aspect-ratio: 1;
+  width: 35%;
+  border: ${border.dashed};
+  transform: ${(props) =>
+    props.highlight ? "rotate(45deg) scale(1.1)" : "rotate(45deg)"};
+`;
+
 function Footer({
   onDragStart,
   onDragMove,
@@ -67,6 +93,10 @@ function Footer({
   onDragEnd: () => void;
 }) {
   const remainingTiles = useStore((store) => store.game.remainingTiles);
+  const holdTile = useStore((store) => store.holdTile);
+  const [highlightHoldSpot, setHighlightHoldSpot] = useState(false);
+  const swapHoldTile = useStore((store) => store.swapHoldTile);
+  const hold = useStore((store) => store.game.hold);
   const isSelecting = useIsSelecting();
 
   const [draggableBasePosition, setDraggableBasePosition] =
@@ -98,6 +128,17 @@ function Footer({
       };
       setDragLocation(dragStart);
       setDragStart(dragStart);
+
+      const possibleHighlights = document.elementsFromPoint(
+        position.x,
+        position.y,
+      );
+      for (const el of possibleHighlights) {
+        if (el instanceof HTMLElement && el.dataset.holdSpot) {
+          console.log("highlight");
+          setHighlightHoldSpot(true);
+        }
+      }
     },
     [onDragStart],
   );
@@ -117,15 +158,32 @@ function Footer({
         x: dragLocation.x - draggableBasePosition.x,
         y: dragLocation.y - draggableBasePosition.y,
       });
+
+      const possibleHighlights = document.elementsFromPoint(
+        dragLocation.x,
+        dragLocation.y,
+      );
+      let containsHoldSpot = false;
+      for (const el of possibleHighlights) {
+        if (el instanceof HTMLElement && el.dataset.holdSpot) {
+          containsHoldSpot = true;
+        }
+      }
+      setHighlightHoldSpot(containsHoldSpot);
     },
     [onDragMove, draggableBasePosition],
   );
   const handleTouchEnd = useCallback(() => {
+    if (highlightHoldSpot) {
+      holdTile();
+    }
+
     onDragEnd();
     setDragLocation(null);
     setDraggableBasePosition(null);
     setDragStart(null);
-  }, [onDragEnd]);
+    setHighlightHoldSpot(false);
+  }, [onDragEnd, holdTile, highlightHoldSpot]);
 
   return isSelecting ? (
     <SelectedFooter />
@@ -135,7 +193,7 @@ function Footer({
     <>
       <FooterStyles dragging={!!dragStart}>
         {remainingTiles[1] ? (
-          <Column justify="center">
+          <Column justify="center" padding="0 4px">
             <NextTile
               pending
               key={remainingTiles.length}
@@ -153,6 +211,18 @@ function Footer({
             onTouchMove={(event) => handleTouchMove(event)}
             onTouchEnd={() => handleTouchEnd()}
           />
+          <Column>
+            {hold ? (
+              <Tile onClick={swapHoldTile} letter={hold} />
+            ) : (
+              <HoldSpotContainer>
+                <HoldSpot onClick={holdTile} data-hold-spot>
+                  <HoldSpotDiamond highlight={highlightHoldSpot} />
+                </HoldSpot>
+              </HoldSpotContainer>
+            )}
+            <Text style="overline">Hold</Text>
+          </Column>
         </MainTileContainer>
       </FooterStyles>
       <DraggedMainTile
