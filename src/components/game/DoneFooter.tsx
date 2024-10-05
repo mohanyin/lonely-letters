@@ -3,18 +3,21 @@ import mixpanel from "mixpanel-browser";
 
 import Button from "@/components/button";
 import { useStore } from "@/store";
-import { border, type } from "@/styles/core";
+import { border, colors, type } from "@/styles/core";
+import { Column } from "@/styles/layout";
 
-const FooterStyles = styled.div<{ dragging: boolean }>`
+const FooterStyles = styled(Column)`
+  flex: none;
+  justify-content: center;
   width: 100%;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: ${border.thin};
+  height: 140px;
+  padding: 0 12px;
+  background: ${colors.green600};
+  outline: ${border.thin};
 `;
 
 const DoneWithPuzzle = styled.div`
   ${type.bodyItalic}
-  padding-bottom: 12px;
   text-align: center;
 `;
 
@@ -29,7 +32,7 @@ function DoneFooter() {
     });
   }
   return (
-    <FooterStyles dragging={false}>
+    <FooterStyles>
       <DoneWithPuzzle>Done with the puzzle?</DoneWithPuzzle>
       <Button to="/results" fullWidth onClick={logFinish}>
         View results

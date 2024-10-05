@@ -5,6 +5,9 @@ import { useState } from "react";
 import { border, borderRadius, colors, type } from "@/styles/core";
 
 const buttonClass = css`
+  --background: ${colors.gold500};
+  --active-background: ${colors.gold600};
+
   ${type.overline}
   display: flex;
   align-items: center;
@@ -14,7 +17,7 @@ const buttonClass = css`
   color: ${colors.black};
   white-space: nowrap;
   text-overflow: ellipsis;
-  background: ${colors.gold500};
+  background: var(--background);
   border: ${border.thin};
   border-bottom-width: 4px;
   border-radius: ${borderRadius.medium};
@@ -24,16 +27,21 @@ const tapAnimation = css`
   @keyframes tap {
     50% {
       margin-top: 3px;
-      background: ${colors.gold600};
+      background: var(--active-background);
       border-bottom-width: 1px;
     }
 
     100% {
-      background: ${colors.gold500};
+      background: var(--background);
     }
   }
 
   animation: tap 0.3s ease-in-out;
+`;
+
+const destructiveClass = css`
+  --background: ${colors.red500};
+  --active-background: ${colors.red600};
 `;
 
 const smallClass = css`
@@ -59,6 +67,7 @@ export default function Button({
   icon,
   className,
   to,
+  destructive,
   onClick,
 }: {
   children: React.ReactNode;
@@ -67,6 +76,7 @@ export default function Button({
   icon?: boolean;
   className?: string;
   to?: string;
+  destructive?: boolean;
   onClick?: () => void;
 }) {
   const [hasTapped, setHasTapped] = useState(false);
@@ -82,6 +92,7 @@ export default function Button({
         icon && iconClass,
         fullWidth && fullWidthClass,
         hasTapped && tapAnimation,
+        destructive && destructiveClass,
         buttonClass,
         className,
       )}

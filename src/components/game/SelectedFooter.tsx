@@ -3,31 +3,28 @@ import { styled } from "@linaria/react";
 import xSvg from "@/assets/images/x.svg";
 import Button from "@/components/button";
 import { useStore } from "@/store";
-import { border, borderRadius, colors } from "@/styles/core";
+import { border } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  flex: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: center;
   width: 100%;
-  margin-top: 12px;
-  padding-top: 24px;
-  border-top: ${border.thin};
+  height: 140px;
+  padding: 0 12px;
+  outline: ${border.thin};
 `;
 
 const CancelButton = styled(Button)`
   ${CENTER}
-  background: ${colors.red500};
-  border-right: none;
-  border-radius: ${borderRadius.medium} 0 0 ${borderRadius.medium};
-
-  &:active {
-    background: ${colors.red600};
-  }
+  min-height: 64px;
 `;
 const DoneButton = styled(Button)`
-  grid-column: 2 / 5;
-  border-radius: 0 ${borderRadius.medium} ${borderRadius.medium} 0;
+  grid-column: 1 / 3;
+  min-height: 64px;
 `;
 
 function SelectedFooter() {
@@ -36,10 +33,10 @@ function SelectedFooter() {
 
   return (
     <FooterStyles dragging={false}>
-      <CancelButton onClick={cancelSelecting}>
+      <DoneButton onClick={finishSelecting}>Submit</DoneButton>
+      <CancelButton destructive onClick={cancelSelecting}>
         <img src={xSvg} alt="Cancel" />
       </CancelButton>
-      <DoneButton onClick={finishSelecting}>Submit</DoneButton>
     </FooterStyles>
   );
 }
