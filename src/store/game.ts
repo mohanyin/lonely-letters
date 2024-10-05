@@ -104,11 +104,16 @@ export const createGameSlice: ImmerStateCreator<
       const tile = state.game!.remainingTiles.shift();
       state.game!.grid[index] = tile!;
     });
+
+    const state = get();
+    if (state.game!.remainingTiles.length === 0 && state.game!.hold !== null) {
+      state.swapHoldTile();
+    }
   },
 
   holdTile() {
     set((state) => {
-      if (state.game.hold !== null || state.game.remainingTiles.length === 0) {
+      if (state.game.hold !== null || state.game.remainingTiles.length <= 1) {
         return;
       }
 

@@ -27,7 +27,7 @@ const ControlContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   align-items: center;
-  height: 120px;
+  height: 140px;
   padding: 0 12px;
   background: ${colors.gold600};
   border: ${border.thin};
@@ -71,11 +71,13 @@ const NextTile = styled(Tile)<{ dragging: boolean }>`
   transition: transform 0.2s ease-in-out;
 `;
 
-const HoldSpotContainer = styled.div`
+const HoldSpotContainer = styled.div<{ hidden: boolean }>`
   grid-column: 3;
   width: 100%;
   container: spot / size;
   aspect-ratio: 1;
+  opacity: ${(props) => (props.hidden ? "0" : "1")};
+  transition: opacity 0.2s ease-in-out;
 `;
 
 const HoldSpot = styled.button`
@@ -198,6 +200,8 @@ function Footer({
     setHighlightHoldSpot(false);
   }, [onDragEnd, holdTile, highlightHoldSpot]);
 
+  const hideHoldSpot = remainingTiles.length <= 1;
+
   return isSelecting ? (
     <SelectedFooter />
   ) : !remainingTiles[0] ? (
@@ -230,7 +234,10 @@ function Footer({
             {hold ? (
               <Tile pending onClick={swapHoldTile} letter={hold} />
             ) : (
-              <HoldSpotContainer>
+              <HoldSpotContainer
+                aria-hidden={hideHoldSpot}
+                hidden={hideHoldSpot}
+              >
                 <HoldSpot onClick={holdTile} data-hold-spot>
                   <HoldSpotDiamond highlight={highlightHoldSpot} />
                 </HoldSpot>
