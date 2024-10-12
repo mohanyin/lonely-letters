@@ -10,7 +10,7 @@ import { Column } from "@/styles/layout";
 
 const Container = styled.div`
   width: 100%;
-  max-width: ${page.maxWidth};
+  max-width: ${page.width};
   padding: 0 ${page.paddingHorizontal};
 `;
 

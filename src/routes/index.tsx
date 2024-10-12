@@ -30,8 +30,8 @@ const GridAndFooter = styled.div`
   flex: 1 1 100%;
   gap: 16px;
   justify-content: flex-start;
-  width: 55svh;
-  max-width: min(100vw, ${page.maxWidth});
+  width: ${page.width};
+  max-width: ${page.maxWidth};
   padding: 0 ${page.paddingHorizontal};
 `;
 
