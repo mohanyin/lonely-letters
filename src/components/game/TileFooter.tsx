@@ -1,5 +1,6 @@
 import { styled } from "@linaria/react";
-import { useCallback, useState } from "react";
+import { ReactPortal, useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import Tile from "@/components/game/Tile";
 import Text from "@/components/text";
@@ -84,7 +85,7 @@ const HoldSpotDiamond = styled.div<{ highlight?: boolean }>`
     props.highlight ? "rotate(45deg) scale(1.1)" : "rotate(45deg)"};
 `;
 
-function SelectedFooter({
+function TileFooter({
   onDragStart,
   onDragMove,
   onDragEnd,
@@ -186,6 +187,33 @@ function SelectedFooter({
 
   const hideHoldSpot = remainingTiles.length <= 1;
 
+  const [draggableTile, setDraggableTile] = useState<ReactPortal | null>(null);
+
+  useEffect(() => {
+    setDraggableTile(
+      createPortal(
+        <DraggedMainTile
+          data-draggable="main-tile"
+          key={remainingTiles.length}
+          dragging={!!dragStart}
+          letter={remainingTiles[0]}
+          location={dragLocation}
+          onTouchStart={(event) => handleTouchStart(event)}
+          onTouchMove={(event) => handleTouchMove(event)}
+          onTouchEnd={() => handleTouchEnd()}
+        />,
+        document.querySelector("[data-footer-append]")!,
+      ),
+    );
+  }, [
+    remainingTiles,
+    dragLocation,
+    dragStart,
+    handleTouchEnd,
+    handleTouchMove,
+    handleTouchStart,
+  ]);
+
   return (
     <>
       <ControlContainer>
@@ -211,18 +239,9 @@ function SelectedFooter({
           <Text style="overline">{hold ? "Swap" : "Hold"}</Text>
         </Column>
       </ControlContainer>
-      <DraggedMainTile
-        data-draggable="main-tile"
-        key={remainingTiles.length}
-        dragging={!!dragStart}
-        letter={remainingTiles[0]}
-        location={dragLocation}
-        onTouchStart={(event) => handleTouchStart(event)}
-        onTouchMove={(event) => handleTouchMove(event)}
-        onTouchEnd={() => handleTouchEnd()}
-      />
+      {draggableTile}
     </>
   );
 }
 
-export default SelectedFooter;
+export default TileFooter;

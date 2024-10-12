@@ -118,6 +118,7 @@ export default function Footer({
           <SelectedFooter />
           <DoneFooter />
         </Track>
+        <div data-footer-append />
       </ControlContainer>
     </FooterStyles>
   );
