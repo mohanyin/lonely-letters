@@ -1,10 +1,12 @@
 import { styled } from "@linaria/react";
+import { useEffect, useState } from "react";
 
 import xSvg from "@/assets/images/x.svg";
 import Button from "@/components/button";
-import { useStore } from "@/store";
+import { useSelectedWord, useStore } from "@/store";
 import { border } from "@/styles/core";
 import { CENTER } from "@/styles/layout";
+import { checkWord } from "@/utils/dictionary";
 
 const FooterStyles = styled.div<{ dragging: boolean }>`
   display: grid;
@@ -20,20 +22,30 @@ const FooterStyles = styled.div<{ dragging: boolean }>`
 
 const CancelButton = styled(Button)`
   ${CENTER}
-  min-height: 64px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 const DoneButton = styled(Button)`
   grid-column: 1 / 3;
-  min-height: 64px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 function SelectedFooter() {
   const cancelSelecting = useStore((store) => store.cancelSelecting);
   const finishSelecting = useStore((store) => store.finishSelecting);
 
+  const selectedWord = useSelectedWord();
+  const [isValid, setIsValid] = useState(false);
+  useEffect(() => {
+    checkWord(selectedWord).then((isValid) => setIsValid(isValid));
+  }, [selectedWord]);
+
   return (
     <FooterStyles dragging={false}>
-      <DoneButton onClick={finishSelecting}>Submit</DoneButton>
+      <DoneButton disabled={!isValid} onClick={finishSelecting}>
+        Submit
+      </DoneButton>
       <CancelButton destructive onClick={cancelSelecting}>
         <img src={xSvg} alt="Cancel" />
       </CancelButton>

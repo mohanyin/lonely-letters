@@ -56,6 +56,14 @@ const iconClass = css`
   padding: 0;
 `;
 
+const disabledClass = css`
+  --background: ${colors.gold600};
+
+  margin-top: 4px;
+  text-decoration: line-through;
+  border-bottom-width: 1px;
+`;
+
 const fullWidthClass = css`
   width: 100%;
 `;
@@ -64,6 +72,7 @@ export default function Button({
   children,
   fullWidth,
   small,
+  disabled,
   icon,
   className,
   to,
@@ -73,6 +82,7 @@ export default function Button({
   children: React.ReactNode;
   fullWidth?: boolean;
   small?: boolean;
+  disabled?: boolean;
   icon?: boolean;
   className?: string;
   to?: string;
@@ -93,9 +103,11 @@ export default function Button({
         fullWidth && fullWidthClass,
         hasTapped && tapAnimation,
         destructive && destructiveClass,
+        disabled && disabledClass,
         buttonClass,
         className,
       )}
+      disabled={disabled}
       to={to}
       onClick={_onClick}
       onAnimationEnd={() => setHasTapped(false)}
