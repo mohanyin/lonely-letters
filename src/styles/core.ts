@@ -41,7 +41,11 @@ const scoreBase = {
   fontFamily: font.score,
   lineHeight: 0.75,
 } as const;
-const score = { ...scoreBase, fontSize: "2.67em" } as const;
+const score = {
+  ...scoreBase,
+  fontSize: "2.67em",
+  letterSpacing: "0.05em",
+} as const;
 const scoreMedium = { ...scoreBase, fontSize: "2em" } as const;
 const scoreSmall = { ...scoreBase, fontSize: "1em" } as const;
 

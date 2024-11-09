@@ -74,7 +74,7 @@ function DisplayGame() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDelayedScore(score);
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(timeoutId);
   }, [score]);

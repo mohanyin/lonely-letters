@@ -23,6 +23,7 @@ const ControlContainer = styled.div`
   width: 100%;
   height: 140px;
   padding: 0 12px;
+  background: ${colors.gold500};
   outline: ${border.thin};
 `;
 
@@ -30,7 +31,7 @@ const MainTileContainer = styled.div`
   ${CENTER}
   grid-column: 1 / 3;
   height: 100%;
-  padding: 8px 0;
+  padding: 12px 0;
 `;
 
 const MainTile = styled(Tile)<{ dragging: boolean }>`
@@ -226,7 +227,7 @@ function TileFooter({
             onTouchEnd={() => handleTouchEnd()}
           />
         </MainTileContainer>
-        <Column padding="0 8px">
+        <Column padding="0 4px">
           {hold ? (
             <Tile pending onClick={swapHoldTile} letter={hold} />
           ) : (
@@ -236,7 +237,9 @@ function TileFooter({
               </HoldSpot>
             </HoldSpotContainer>
           )}
-          <Text style="overline">{hold ? "Swap" : "Hold"}</Text>
+          {!hideHoldSpot && (
+            <Text style="overline">{hold ? "Swap" : "Hold"}</Text>
+          )}
         </Column>
       </ControlContainer>
       {draggableTile}

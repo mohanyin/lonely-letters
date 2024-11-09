@@ -14,7 +14,7 @@ import { MEDALS, numberAsEmojis } from "@/utils/emojis";
 
 export const Route = createFileRoute("/results")({
   component: Component,
-  loader: async ({ navigate }) => {
+  loader: ({ navigate }) => {
     const currentPuzzle = useStore.getState().currentPuzzle;
     const lastPlayedPuzzle = useStore.getState().game.puzzle;
 
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/results")({
       navigate({ to: "/", replace: true });
     }
 
-    await initParticlesEngine(async (engine) => {
+    initParticlesEngine(async (engine) => {
       await loadFull(engine);
     });
   },
@@ -47,7 +47,7 @@ const PageBody = styled.div`
 
 const Title = styled.h1`
   ${type.headline2}
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const ScoreContainer = styled(Row)`
@@ -55,7 +55,7 @@ const ScoreContainer = styled(Row)`
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   padding: 16px;
   background: ${colors.white};
   border: ${border.thin};

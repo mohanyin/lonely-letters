@@ -23,17 +23,19 @@ const FooterStyles = styled.div`
   height: 140px;
 `;
 
-const ControlContainer = styled.div`
+const ControlContainer = styled.div<{ isInitialized: boolean }>`
   display: grid;
   grid-column: 2 / 5;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
   height: 140px;
   overflow: hidden;
-  background: ${colors.green600};
+  background: ${({ isInitialized }) =>
+    isInitialized ? colors.green600 : colors.green500};
   border: ${border.thin};
   border-top-width: 4px;
   border-radius: ${borderRadius.large};
+  transition: background 0.5s ease-in-out;
 `;
 
 const animationDistance = 140 + 12;
@@ -42,11 +44,13 @@ const Track = styled(Column)<{ slide: number }>`
   height: 140px;
   margin: -4px -1px -1px;
   transform: translateY(${({ slide }) => slide * -1 * animationDistance}px);
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease;
 `;
 
 const NextTile = styled(Tile)<{ dragging: boolean }>`
-  transform: ${({ dragging }) => (dragging ? "translateX(25%)" : "none")};
+  z-index: 1;
+  transform: ${({ dragging }) =>
+    dragging ? "translateX(50%) rotate(5deg)" : "rotate(-5deg)"};
   transition: transform 0.2s ease-in-out;
 `;
 
@@ -85,13 +89,13 @@ export default function Footer({
 
   const slideIndex = useMemo(() => {
     if (!isInitialized) {
-      return -1;
+      return 3;
     } else if (isSelecting) {
       return 1;
     } else if (!remainingTiles[0]) {
-      return 2;
+      return 0;
     }
-    return 0;
+    return 2;
   }, [isInitialized, isSelecting, remainingTiles]);
 
   return (
@@ -108,15 +112,15 @@ export default function Footer({
         </Column>
       ) : null}
 
-      <ControlContainer>
+      <ControlContainer isInitialized={isInitialized}>
         <Track slide={slideIndex}>
+          <DoneFooter />
+          <SelectedFooter />
           <TileFooter
             onDragStart={_onDragStart}
             onDragMove={onDragMove}
             onDragEnd={_onDragEnd}
           />
-          <SelectedFooter />
-          <DoneFooter />
         </Track>
         <div data-footer-append />
       </ControlContainer>
