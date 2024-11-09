@@ -18,20 +18,20 @@ const Wrapper = styled.div<{ initialized: boolean }>`
   height: ${display.height}px;
   overflow: hidden;
   background: ${({ initialized }) =>
-    initialized ? colors.green600 : colors.green500};
+    initialized ? colors.green600 : "transparent"};
   border: ${border.thin};
   border-top-width: ${({ initialized }) => (initialized ? "2px" : "1px")};
   border-radius: ${borderRadius.medium};
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out;
 `;
 
 const animationDistance = display.height + display.gap;
 const Track = styled(Column)<{ slide: number }>`
-  gap: 12px;
+  gap: ${display.gap}px;
   align-items: stretch;
   margin: -2px -1px -1px;
   transform: translateY(${({ slide }) => -1 * slide * animationDistance}px);
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease;
 `;
 
 function Display({ initialized }: { initialized: boolean }) {

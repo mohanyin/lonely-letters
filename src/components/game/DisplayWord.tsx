@@ -1,4 +1,6 @@
+import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
+import NumberFlow from "@number-flow/react";
 import { useEffect, useMemo, useState } from "react";
 
 import Text from "@/components/text";
@@ -7,12 +9,7 @@ import { colors, borderRadius, border, type } from "@/styles/core";
 import display from "@/styles/display";
 import { Row, Column } from "@/styles/layout";
 import { checkWord } from "@/utils/dictionary";
-import {
-  calculateBonus,
-  formatBonus,
-  getScore,
-  MIN_LETTER_BONUS,
-} from "@/utils/scoring";
+import { calculateBonus, getScore, MIN_LETTER_BONUS } from "@/utils/scoring";
 
 const Display = styled(Column)`
   ${display.baseStyles}
@@ -22,7 +19,7 @@ const Display = styled(Column)`
 
 const WordRow = styled(Row)`
   flex: none;
-  padding: 8px 12px;
+  padding: 12px 8px 8px 12px;
 `;
 
 const Word = styled.div`
@@ -32,7 +29,8 @@ const Word = styled.div`
 const Label = styled.div<{ color: string }>`
   ${type.overlineSmall}
   display: inline-block;
-  padding: 2px 4px;
+  margin-top: -8px;
+  padding: 4px;
   color: ${colors.black};
   background-color: ${({ color }) => color};
   border: ${border.thin};
@@ -41,12 +39,67 @@ const Label = styled.div<{ color: string }>`
 
 const ScoreRow = styled(Row)`
   flex: auto;
+  gap: 0;
   border-top: ${border.thin};
 `;
 
 const ScoreContainer = styled(Row)`
   flex: 1 1 auto;
   padding: 0 12px;
+`;
+
+const shake = css`
+  animation: shake 0.5s linear infinite;
+
+  @keyframes shake {
+    0% {
+      transform: scale(1) translate(0, 0) rotate(0deg);
+    }
+
+    10% {
+      transform: scale(0.97) translate(-2px, 1px) rotate(-3deg);
+    }
+
+    20% {
+      transform: scale(1.02) translate(2px, -2px) rotate(2deg);
+    }
+
+    30% {
+      transform: scale(0.97) translate(-1px, 2px) rotate(-3deg);
+    }
+
+    40% {
+      transform: scale(1.06) translate(1px, -1px) rotate(2deg);
+    }
+
+    50% {
+      transform: scale(0.96) translate(-2px, -2px) rotate(-3deg);
+    }
+
+    60% {
+      transform: scale(1.03) translate(1px, 2px) rotate(2deg);
+    }
+
+    70% {
+      transform: scale(0.99) translate(-2px, -2px) rotate(-2deg);
+    }
+
+    80% {
+      transform: scale(1.01) translate(2px, 1px) rotate(1deg);
+    }
+
+    100% {
+      transform: scale(1) translate(0, 0) rotate(0deg);
+    }
+  }
+`;
+
+const ScoreNumberFlow = styled(NumberFlow)<{ scale?: number }>`
+  ${type.scoreSmall}
+
+  transform: scale(${({ scale }) => scale ?? 1});
+  transform-origin: right;
+  transition: transform 0.1s ease;
 `;
 
 const BonusContainer = styled(Row)`
@@ -100,10 +153,40 @@ function DisplayWord() {
     return (bonus - MIN_LETTER_BONUS) * 2;
   }, [bonus]);
 
+  const scoreScale = useMemo(() => {
+    if (score < 10) {
+      return 1;
+    } else if (score < 20) {
+      return 1.2;
+    } else if (score < 30) {
+      return 1.4;
+    }
+    return 1.6;
+  }, [score]);
+
+  const shakeScore = useMemo(() => {
+    return score >= 30;
+  }, [score]);
+
+  const bonusScale = useMemo(() => {
+    if (bonus < 2) {
+      return 1;
+    } else if (bonus < 3) {
+      return 1.2;
+    } else if (bonus < 3.5) {
+      return 1.4;
+    }
+    return 1.6;
+  }, [bonus]);
+
+  const shakeBonus = useMemo(() => {
+    return bonus >= 2.5;
+  }, [bonus]);
+
   return (
     <Display>
       <WordRow>
-        <Word>{selectedWord ?? "&nbsp;"}</Word>
+        <Word>{selectedWord || "\u00A0"}</Word>
         {isValid ? (
           <Label color={colors.green500}>Valid</Label>
         ) : (
@@ -114,7 +197,9 @@ function DisplayWord() {
       <ScoreRow>
         <ScoreContainer>
           <Text style="overlineSmall">Score</Text>
-          <Text style="scoreSmall">{score}</Text>
+          <div className={shakeScore ? shake : ""}>
+            <ScoreNumberFlow continuous scale={scoreScale} value={score} />
+          </div>
         </ScoreContainer>
         <BonusContainer>
           <BonusBarGraph>
@@ -123,7 +208,14 @@ function DisplayWord() {
             ))}
           </BonusBarGraph>
           <Text style="overlineSmall">Bonus</Text>
-          <Text style="scoreSmall">{formatBonus(bonus)}</Text>
+          <div className={shakeBonus ? shake : ""}>
+            <ScoreNumberFlow
+              continuous
+              format={{ style: "percent" }}
+              scale={bonusScale}
+              value={bonus - 1}
+            />
+          </div>
         </BonusContainer>
       </ScoreRow>
     </Display>

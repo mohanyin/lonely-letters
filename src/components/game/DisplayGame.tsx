@@ -1,9 +1,11 @@
 import { styled } from "@linaria/react";
+import NumberFlow from "@number-flow/react";
+import { useEffect, useState } from "react";
 
 import Text from "@/components/text";
 import { useStore } from "@/store";
 import { BASE_TILE_COUNT } from "@/store/puzzle";
-import { colors, border } from "@/styles/core";
+import { colors, border, type } from "@/styles/core";
 import display from "@/styles/display";
 import { Column, Row } from "@/styles/layout";
 
@@ -17,11 +19,19 @@ const Section = styled(Column)`
   gap: 0;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 12px 0;
 `;
 
 const SectionScore = styled(Section)`
   flex: 1 1 auto;
+`;
+
+const Score = styled(NumberFlow)`
+  ${type.score}
+  --number-flow-char-height: 0.75;
+  --number-flow-mask-height: 0.25em;
+
+  margin: -0.25em 0;
 `;
 
 const SectionTiles = styled(Section)`
@@ -46,15 +56,34 @@ const TileBarGraphItem = styled.div<{ selected: boolean }>`
   transition: background 0.2s ease-in-out;
 `;
 
+const Tiles = styled(NumberFlow)`
+  ${type.scoreMedium}
+
+  --number-flow-char-height: 0.75;
+  --number-flow-mask-height: 0.25em;
+
+  margin: -0.25em 0;
+`;
+
 function DisplayGame() {
   const score = useStore((state) => state.game.score);
   const tiles = useStore((state) => state.game.remainingTiles.length);
+
+  // Delay the score update to let slide transition complete
+  const [delayedScore, setDelayedScore] = useState(score);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDelayedScore(score);
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [score]);
 
   return (
     <Display>
       <SectionScore>
         <Text style="overline">Score</Text>
-        <Text style="score">{score}</Text>
+        <Score continuous value={delayedScore} />
       </SectionScore>
 
       <TileBarGraph>
@@ -65,7 +94,7 @@ function DisplayGame() {
 
       <SectionTiles>
         <Text style="overline">Tiles</Text>
-        <Text style="scoreMedium">{tiles}</Text>
+        <Tiles continuous value={tiles} />
       </SectionTiles>
     </Display>
   );

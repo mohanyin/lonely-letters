@@ -1,7 +1,7 @@
 import { border, colors } from "@/styles/core";
 
 const height = 80;
-const gap = 12;
+const gap = 8;
 const baseStyles = {
   position: "relative",
   height: `${height}px`,

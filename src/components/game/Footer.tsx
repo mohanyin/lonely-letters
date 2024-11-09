@@ -30,7 +30,7 @@ const ControlContainer = styled.div`
   align-items: center;
   height: 140px;
   overflow: hidden;
-  background: ${colors.gold600};
+  background: ${colors.green600};
   border: ${border.thin};
   border-top-width: 4px;
   border-radius: ${borderRadius.large};

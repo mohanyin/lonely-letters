@@ -39,11 +39,11 @@ export const border = {
 
 const scoreBase = {
   fontFamily: font.score,
-  lineHeight: 1,
+  lineHeight: 0.75,
 } as const;
 const score = { ...scoreBase, fontSize: "2.67em" } as const;
 const scoreMedium = { ...scoreBase, fontSize: "2em" } as const;
-const scoreSmall = { ...scoreBase, fontSize: "1.125em" } as const;
+const scoreSmall = { ...scoreBase, fontSize: "1em" } as const;
 
 const headlineBase = {
   fontFamily: font.default,
