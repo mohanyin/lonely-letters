@@ -25,7 +25,7 @@ const Main = styled.main`
   padding: 12px 0 max(env(safe-area-inset-bottom), 12px);
 `;
 
-const GridAndFooter = styled.div`
+const Container = styled.div`
   ${CENTER_COLUMN}
   flex: 1 1 100%;
   gap: 16px;
@@ -66,8 +66,8 @@ function Index() {
   return (
     <Main>
       {drawer}
-      <Display initialized={initialized} />
-      <GridAndFooter>
+      <Container>
+        <Display initialized={initialized} />
         <Grid highlight={dragLocation} onHighlight={setActiveTile} />
         <Footer
           onDragStart={(pos) => setDragLocation(pos)}
@@ -80,7 +80,7 @@ function Index() {
             }
           }}
         />
-      </GridAndFooter>
+      </Container>
     </Main>
   );
 }

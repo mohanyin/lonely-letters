@@ -203,8 +203,8 @@ function DisplayWord() {
         </ScoreContainer>
         <BonusContainer>
           <BonusBarGraph>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <BonusBarGraphItem key={index} active={index < bonusRatio} />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <BonusBarGraphItem key={index} active={index <= bonusRatio} />
             ))}
           </BonusBarGraph>
           <Text style="overlineSmall">Bonus</Text>

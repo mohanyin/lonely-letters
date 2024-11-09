@@ -4,14 +4,12 @@ import { useMemo } from "react";
 import DisplayGame from "@/components/game/DisplayGame";
 import DisplayWord from "@/components/game/DisplayWord";
 import { useIsSelecting } from "@/store";
-import { border, borderRadius, colors, page } from "@/styles/core";
+import { border, borderRadius, colors } from "@/styles/core";
 import display from "@/styles/display";
 import { Column } from "@/styles/layout";
 
 const Container = styled.div`
   width: 100%;
-  max-width: ${page.width};
-  padding: 0 ${page.paddingHorizontal};
 `;
 
 const Wrapper = styled.div<{ initialized: boolean }>`
