@@ -47,11 +47,27 @@ const Track = styled(Column)<{ slide: number }>`
   transition: transform 0.4s ease;
 `;
 
-const NextTile = styled(Tile)<{ dragging: boolean }>`
+const nextTileTransform = ({
+  dragging,
+  isInitialized,
+}: {
+  dragging: boolean;
+  isInitialized: boolean;
+}) => {
+  if (!isInitialized) {
+    return "rotate(-20deg) translateX(-50%)";
+  } else if (dragging) {
+    return "translateX(50%) rotate(5deg)";
+  }
+  return "rotate(-5deg)";
+};
+const NextTile = styled(Tile)<{ dragging: boolean; isInitialized: boolean }>`
   z-index: 1;
-  transform: ${({ dragging }) =>
-    dragging ? "translateX(50%) rotate(5deg)" : "rotate(-5deg)"};
-  transition: transform 0.2s ease-in-out;
+  transform: ${nextTileTransform};
+  opacity: ${({ isInitialized }) => (isInitialized ? 1 : 0)};
+  transition:
+    transform 0.2s ease-in-out,
+    opacity 0.3s ease-in-out;
 `;
 
 export default function Footer({
@@ -106,6 +122,7 @@ export default function Footer({
             pending
             key={remainingTiles.length}
             dragging={!!isDragging}
+            isInitialized={isInitialized}
             letter={remainingTiles[1]}
           />
           <Text style="overline">Next</Text>
