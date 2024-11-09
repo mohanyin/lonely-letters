@@ -48,10 +48,32 @@ const TileBarGraph = styled(Column)`
   outline: ${border.thin};
 `;
 
-const TileBarGraphItem = styled.div<{ selected: boolean }>`
+const itemColor = ({
+  selected,
+  warn,
+  alert,
+}: {
+  selected: boolean;
+  warn: boolean;
+  alert: boolean;
+}) => {
+  if (!selected) {
+    return colors.black;
+  } else if (alert) {
+    return colors.red500;
+  } else if (warn) {
+    return colors.gold500;
+  }
+  return colors.green500;
+};
+const TileBarGraphItem = styled.div<{
+  selected: boolean;
+  warn: boolean;
+  alert: boolean;
+}>`
   flex: 1 1 auto;
   width: 100%;
-  background: ${({ selected }) => (selected ? colors.black : colors.green500)};
+  background: ${itemColor};
   outline: ${border.thin};
   transition: background 0.2s ease-in-out;
 `;
@@ -88,7 +110,12 @@ function DisplayGame() {
 
       <TileBarGraph>
         {Array.from({ length: BASE_TILE_COUNT }).map((_, index) => (
-          <TileBarGraphItem key={index} selected={index >= tiles} />
+          <TileBarGraphItem
+            key={index}
+            selected={index < tiles}
+            warn={tiles <= 10}
+            alert={tiles <= 3}
+          />
         ))}
       </TileBarGraph>
 

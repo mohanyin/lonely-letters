@@ -33,7 +33,6 @@ const Label = styled.div<{ color: string }>`
   padding: 4px;
   color: ${colors.black};
   background-color: ${({ color }) => color};
-  border: ${border.thin};
   border-radius: ${borderRadius.small};
 `;
 
