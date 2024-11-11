@@ -21,7 +21,7 @@ const ControlContainer = styled.div`
   gap: 12px;
   align-items: center;
   width: 100%;
-  height: 140px;
+  height: 120px;
   padding: 0 12px;
   background: ${colors.gold500};
   outline: ${border.thin};

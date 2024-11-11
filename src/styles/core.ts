@@ -1,5 +1,5 @@
 export const page = {
-  width: "55svh",
+  width: "56svh",
   maxWidth: "min(100vw, 500px)",
   paddingHorizontal: "20px",
 } as const;

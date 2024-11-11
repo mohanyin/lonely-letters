@@ -10,7 +10,7 @@ const FooterStyles = styled(Column)`
   flex: none;
   justify-content: center;
   width: 100%;
-  height: 140px;
+  height: 120px;
   padding: 0 12px;
   background: ${colors.green600};
   outline: ${border.thin};

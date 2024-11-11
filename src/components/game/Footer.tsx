@@ -20,7 +20,7 @@ const FooterStyles = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   width: 100%;
-  height: 140px;
+  height: 120px;
 `;
 
 const ControlContainer = styled.div<{ isInitialized: boolean }>`
@@ -28,7 +28,7 @@ const ControlContainer = styled.div<{ isInitialized: boolean }>`
   grid-column: 2 / 5;
   gap: 8px;
   align-items: center;
-  height: 140px;
+  height: 120px;
   overflow: hidden;
   background: ${({ isInitialized }) =>
     isInitialized ? colors.green600 : colors.green500};
@@ -38,10 +38,10 @@ const ControlContainer = styled.div<{ isInitialized: boolean }>`
   transition: background 0.5s ease-in-out;
 `;
 
-const animationDistance = 140 + 12;
+const animationDistance = 120 + 12;
 const Track = styled(Column)<{ slide: number }>`
   gap: 12px;
-  height: 140px;
+  height: 120px;
   margin: -4px -1px -1px;
   transform: translateY(${({ slide }) => slide * -1 * animationDistance}px);
   transition: transform 0.4s ease;

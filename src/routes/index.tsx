@@ -18,17 +18,14 @@ export const Route = createFileRoute("/")({
 
 const Main = styled.main`
   ${CENTER_COLUMN}
-  flex: 1 1 auto;
-  gap: 16px;
-  justify-content: space-between;
   width: 100%;
-  padding: 12px 0 max(env(safe-area-inset-bottom), 12px);
+  padding: 4px 0 max(env(safe-area-inset-bottom), 12px);
 `;
 
 const Container = styled.div`
   ${CENTER_COLUMN}
   flex: 1 1 100%;
-  gap: 16px;
+  gap: 12px;
   justify-content: flex-start;
   width: ${page.width};
   max-width: ${page.maxWidth};
