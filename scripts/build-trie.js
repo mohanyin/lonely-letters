@@ -4,27 +4,20 @@ import lzString from "lz-string";
 
 const { compressToUTF16 } = lzString;
 
-const sowpodsPath = new URL("sowpods.txt", import.meta.url);
-const sowpodsData = fs.readFileSync(sowpodsPath, "utf8");
-const words = sowpodsData.split("\n");
-
-class TrieNode {
-  constructor() {}
-}
-
 class Trie {
   constructor() {
-    this.root = new TrieNode();
+    this.root = {};
   }
 
   insert(word) {
     let node = this.root;
     for (const char of word) {
       if (!node[char]) {
-        node[char] = new TrieNode();
+        node[char] = {};
       }
       node = node[char];
     }
+    // Mark the end of the word
     node._ = 1;
   }
 
@@ -32,6 +25,10 @@ class Trie {
     return JSON.stringify(node);
   }
 }
+
+const sowpodsPath = new URL("sowpods.txt", import.meta.url);
+const sowpodsData = fs.readFileSync(sowpodsPath, "utf8");
+const words = sowpodsData.split("\n");
 
 const trie = new Trie();
 words.forEach((word) => {
